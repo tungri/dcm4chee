@@ -60,7 +60,8 @@ public class CollapseStudyCtrl extends Dcm4cheeFormController {
         this.studyPk = studyPk;
     }
 
-    protected String perform() throws Exception {
+    @Override
+	protected String perform() throws Exception {
         FolderForm folderForm = FolderForm.getFolderForm(getCtx());
         folderForm.getStudyByPk(patPk, studyPk).getSeries().clear();
         return SUCCESS;
