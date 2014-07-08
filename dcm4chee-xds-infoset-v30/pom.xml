@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dcm4che</groupId>
+    <artifactId>dcm4chee-xds-infoset</artifactId>
+    <version>1.0.3</version>
+  </parent>
+  <groupId>dcm4che</groupId>
+  <artifactId>dcm4chee-xds-infoset-v30</artifactId>
+  <version>1.0.3</version>
+  <packaging>jar</packaging>
+  <name>Infoset classes for XDS.b (ebRS v3.0)</name>
+  <dependencies>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.6.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jboss.jbossws</groupId>
+      <artifactId>jbossws-core</artifactId>
+      <version>3.0.1-native-2.0.4.GA</version>
+      <scope>provided</scope>
+    </dependency>    
+    <dependency>
+      <groupId>jboss.jbossws</groupId>
+      <artifactId>jboss-jaxws-ext</artifactId>
+      <version>3.0.1-native-2.0.4.GA</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <packageName>org.dcm4chee.xds.infoset.v30</packageName>
+          <wsdlFiles> 
+          	<wsdlFile>registry.wsdl</wsdlFile>
+          	<wsdlFile>repository.wsdl</wsdlFile>
+          </wsdlFiles>
+          <extension>true</extension>
+          <keep>true</keep>
+          <verbose>true</verbose>
+          <xdebug>true</xdebug>
+        </configuration>
+
+        <!-- if you want to use a specific version of JAX-WS, you can do so like this -->
+        <dependencies>
+		  <dependency>
+	        <groupId>com.sun.xml.ws</groupId>
+	        <artifactId>jaxws-tools</artifactId>
+	        <version>2.1.1</version>
+		  </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+</project>
