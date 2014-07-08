@@ -1,0 +1,29 @@
+dcm4che is an implementation in java of the DICOM  (=Digital Imaging and
+Communications in Medicine) standard, which addresses the exchange of digital
+information between medical imaging equipment.
+
+Additionally to the core library, which is splitted into a specification part 
+and the (reference) implementation, it also contains (sample) applications
+which are useful for (end-)users on its own. 
+
+dcm4che 1.x is a complete rewrite of dcm4che 0.9.9 for java 1.4 (J2SE 1.4).
+dcm4che 1.x only contains the DICOM core implementation.
+The - also rewritten - IHE compliant image archive, based on J2EE/EJB 2.0,
+is available as separate package: dcm4jboss 1.x.
+
+Improvements of the DICOM Implementation in dcm4che 1.x against
+dcm4che 0.x.x are
++ import/export of XML presentation of DICOM Data-Sets
++ serializable Data-Set (will simplify communication to EJBs)
++ increase robustness of FSM of DICOM UL protocol engine
++ support of asynchrone operation mode
+:
+
+But I have not yet found any time to update the documentation to v1.x.
+So, I can only invite everyone, to improve the documentation by his/her own 
+contributions.  
+
+Have Fun,
+
+gunter zeilinger   mailto:gunter.zeilinger@tiani.com
+TIANI MEDGRAPH AG  http://www.tiani.com

@@ -1,0 +1,22 @@
+<?xml encoding="UTF-8"?>
+<!ELEMENT dictionary (elements*,uids*)>
+
+<!ELEMENT elements (element*)>
+<!ATTLIST elements type (Command|Data|FileMetaInfo|DicomDir) #REQUIRED>
+
+<!ELEMENT element EMPTY>
+<!ATTLIST element tag     CDATA #REQUIRED
+                  name    CDATA #REQUIRED
+                  vr      CDATA "UN"
+                  vm      CDATA "1"
+                  retired (true|false) "false"
+                  key     CDATA #REQUIRED>
+
+<!ELEMENT uids (uid*)>
+<!ATTLIST uids type (TransferSyntax|SOPClass|MetaSOPClass|SOPInstance|ApplicationContextName) #REQUIRED>
+
+<!ELEMENT uid EMPTY>
+<!ATTLIST uid value   CDATA #REQUIRED
+              name    CDATA #REQUIRED
+              retired (true|false) "false"
+              key     CDATA #REQUIRED>

@@ -1,0 +1,21 @@
+dcm4che 1.x.x requires Java 2 Platform, Standard Edition version 1.4+!
+(Download for Windows/Linux/Solaris from Sun
+[http://java.sun.com/j2se/1.5.0/download.jsp]
+It will NOT run  with JDK/JRE 1.3 anymore!
+
+dcm4che 1.3+ additionally requires
+Sun's Java Advanced Imaging Image I/O Tools 1.0_01
+(Download for Windows/Linux/Solaris from Sun 
+[http://java.sun.com/products/java-media/jai/downloads/download-iio-1_0_01.html]
+
+dcm4che 1.3.28+
+Already includes Sun's Java Advanced Imaging Image I/O Tools 2 for Windows
+and Linux on i586 platfroms. Its native components (Windows: clib_jiio.dll,
+clib_jiio_sse2.dll, clib_jiio_util.dll; Linux: libclib_jiio.so) is located
+at $DCM4CHE_HOME/bin by default. Therefore you have to take care to include
+this directory into your PATH (Windows) or LD_LIBRARY_PATH (Linux).
+
+To run a sample applications:
+
+cd $DCM4CHE_HOME/bin
+java -jar SAMPLE.jar --help

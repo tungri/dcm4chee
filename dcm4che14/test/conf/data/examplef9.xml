@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dicomfile>
+<dataset>
+<elm tag="00080016" vr="UI" pos="0" name="SOP Class UID">
+<val vm="1" len="30" data="1.2.840.10008.5.1.4.1.1.88.33"/>
+</elm>
+<elm tag="00080018" vr="UI" pos="38" name="SOP Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.300"/>
+</elm>
+<elm tag="00080020" vr="DA" pos="64" name="Study Date">
+<val vm="1" len="8" data="19991029"/>
+</elm>
+<elm tag="00080023" vr="DA" pos="80" name="Content Date">
+<val vm="1" len="8" data="19991029"/>
+</elm>
+<elm tag="00080030" vr="TM" pos="96" name="Study Time">
+<val vm="1" len="6" data="154500"/>
+</elm>
+<elm tag="00080033" vr="TM" pos="110" name="Content Time">
+<val vm="1" len="6" data="154510"/>
+</elm>
+<elm tag="00080050" vr="SH" pos="124" name="Accession Number">
+<val vm="1" len="6" data="123456"/>
+</elm>
+<elm tag="00080060" vr="CS" pos="138" name="Modality">
+<val vm="1" len="2" data="SR"/>
+</elm>
+<elm tag="00080070" vr="LO" pos="148" name="Manufacturer">
+<val vm="1" len="4" data="WG6 "/>
+</elm>
+<elm tag="00080090" vr="PN" pos="160" name="Referring Physician's Name">
+<val vm="1" len="20" data="Luke^Will^^Dr.^M.D. "/>
+</elm>
+<elm tag="00081111" vr="SQ" pos="-1" name="Referenced Study Component Sequence">
+<seq len="-1"/>
+</elm>
+<elm tag="00100010" vr="PN" pos="208" name="Patient's Name">
+<val vm="1" len="14" data="Homer^Jane^^^ "/>
+</elm>
+<elm tag="00100020" vr="LO" pos="230" name="Patient ID">
+<val vm="1" len="6" data="234567"/>
+</elm>
+<elm tag="00100030" vr="DA" pos="244" name="Patient's Birth Date">
+<val vm="1" len="8" data="19991109"/>
+</elm>
+<elm tag="00100040" vr="CS" pos="260" name="Patient's Sex">
+<val vm="1" len="2" data="F "/>
+</elm>
+<elm tag="0020000d" vr="UI" pos="270" name="Study Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.100"/>
+</elm>
+<elm tag="0020000e" vr="UI" pos="296" name="Series Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.200"/>
+</elm>
+<elm tag="00200010" vr="SH" pos="322" name="Study ID">
+<val vm="1" len="6" data="345678"/>
+</elm>
+<elm tag="00200011" vr="IS" pos="336" name="Series Number">
+<val vm="1" len="2" data="1 "/>
+</elm>
+<elm tag="00200013" vr="IS" pos="346" name="Instance Number">
+<val vm="1" len="2" data="1 "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="356" name="Value Type">
+<val vm="1" len="10" data="CONTAINER "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="386" len="-1">
+<elm tag="00080100" vr="SH" pos="394" name="Code Value">
+<val vm="1" len="6" data="333300"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="408" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="422" name="Code Meaning">
+<val vm="1" len="12" data="Chest X-Ray "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a050" vr="CS" pos="458" name="Continuity Of Content">
+<val vm="1" len="8" data="SEPARATE"/>
+</elm>
+<elm tag="0040a073" vr="SQ" pos="-1" name="Verifying Observer Sequence">
+<seq len="-1">
+<item id="1" pos="486" len="-1">
+<elm tag="0040a027" vr="LO" pos="494" name="Verifying Organization">
+<val vm="1" len="4" data="WG6 "/>
+</elm>
+<elm tag="0040a030" vr="DT" pos="506" name="Verification DateTime">
+<val vm="1" len="14" data="19991029154510"/>
+</elm>
+<elm tag="0040a075" vr="PN" pos="528" name="Verifying Observer Name">
+<val vm="1" len="14" data="Jones^Joe^^Dr^"/>
+</elm>
+<elm tag="0040a088" vr="SQ" pos="-1" name="Verifying Observer Identification Code Sequence">
+<seq len="-1">
+<item id="1" pos="562" len="-1">
+<elm tag="00080100" vr="SH" pos="570" name="Code Value">
+<val vm="1" len="6" data="369842"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="584" name="Coding Scheme Designator">
+<val vm="1" len="14" data="99STElsewhere "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="606" name="Code Meaning">
+<val vm="1" len="6" data="369842"/>
+</elm>
+<elm tag="0008010c" vr="UI" pos="620" name="Private Coding Scheme Creator UID">
+<val vm="1" len="16" data="1.2.3.4.6.7.8.91"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a370" vr="SQ" pos="-1" name="Referenced Request Sequence">
+<seq len="-1">
+<item id="1" pos="688" len="-1">
+<elm tag="00080050" vr="SH" pos="696" name="Accession Number">
+<val vm="1" len="6" data="123456"/>
+</elm>
+<elm tag="00081110" vr="SQ" pos="-1" name="Referenced Study Sequence">
+<seq len="-1"/>
+</elm>
+<elm tag="0020000d" vr="UI" pos="730" name="Study Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.100"/>
+</elm>
+<elm tag="00321060" vr="LO" pos="756" name="Requested Procedure Description">
+<val vm="1" len="10" data="Chest Xray"/>
+</elm>
+<elm tag="00321064" vr="SQ" pos="-1" name="Requested Procedure Code Sequence">
+<seq len="-1">
+<item id="1" pos="786" len="-1">
+<elm tag="00080100" vr="SH" pos="794" name="Code Value">
+<val vm="1" len="6" data="369475"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="808" name="Coding Scheme Designator">
+<val vm="1" len="14" data="99STElsewhere "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="830" name="Code Meaning">
+<val vm="1" len="10" data="Chest XRay"/>
+</elm>
+<elm tag="0008010c" vr="UI" pos="848" name="Private Coding Scheme Creator UID">
+<val vm="1" len="16" data="1.2.3.4.6.7.8.91"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="00401001" vr="SH" pos="888" name="Requested Procedure ID">
+<val vm="1" len="6" data="012340"/>
+</elm>
+<elm tag="00402016" vr="LO" pos="902" name="Placer Order Number / Imaging Service Request">
+<val vm="0" len="0" data=""/>
+</elm>
+<elm tag="00402017" vr="LO" pos="910" name="Filler Order Number / Imaging Service Request">
+<val vm="0" len="0" data=""/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a372" vr="SQ" pos="-1" name="Performed Procedure Code Sequence">
+<seq len="-1">
+<item id="1" pos="946" len="-1">
+<elm tag="00080100" vr="SH" pos="954" name="Code Value">
+<val vm="1" len="6" data="369475"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="968" name="Coding Scheme Designator">
+<val vm="1" len="14" data="99STElsewhere "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="990" name="Code Meaning">
+<val vm="1" len="10" data="Chest XRay"/>
+</elm>
+<elm tag="0008010c" vr="UI" pos="1008" name="Private Coding Scheme Creator UID">
+<val vm="1" len="16" data="1.2.3.4.6.7.8.91"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a375" vr="SQ" pos="-1" name="Current Requested Procedure Evidence Sequence">
+<seq len="-1">
+<item id="1" pos="1060" len="-1">
+<elm tag="00081115" vr="SQ" pos="-1" name="Referenced Series Sequence">
+<seq len="-1">
+<item id="1" pos="1080" len="-1">
+<elm tag="00081199" vr="SQ" pos="-1" name="Referenced SOP Sequence">
+<seq len="-1">
+<item id="1" pos="1100" len="-1">
+<elm tag="00081150" vr="UI" pos="1108" name="Referenced SOP Class UID">
+<val vm="1" len="8" data="1.2.3.4"/>
+</elm>
+<elm tag="00081155" vr="UI" pos="1124" name="Referenced SOP Instance UID">
+<val vm="1" len="10" data="1.2.3.4.5"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0020000e" vr="UI" pos="1158" name="Series Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.200"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0020000d" vr="UI" pos="1200" name="Study Instance UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.100"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a491" vr="CS" pos="1242" name="Completion Flag">
+<val vm="1" len="8" data="COMPLETE"/>
+</elm>
+<elm tag="0040a493" vr="CS" pos="1258" name="Verification Flag">
+<val vm="1" len="8" data="VERIFIED"/>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="1286" len="-1">
+<elm tag="0040a010" vr="CS" pos="1294" name="Relationship Type">
+<val vm="1" len="16" data="HAS OBS CONTEXT "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="1318" name="Value Type">
+<val vm="1" len="6" data="PNAME "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="1344" len="-1">
+<elm tag="00080100" vr="SH" pos="1352" name="Code Value">
+<val vm="1" len="6" data="000555"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="1366" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="1380" name="Code Meaning">
+<val vm="1" len="18" data="Recording 0bserver"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a123" vr="PN" pos="1422" name="Person Name">
+<val vm="1" len="16" data="Smith^John^^Dr^ "/>
+</elm>
+</item>
+<item id="2" pos="1454" len="-1">
+<elm tag="0040a010" vr="CS" pos="1462" name="Relationship Type">
+<val vm="1" len="16" data="HAS OBS CONTEXT "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="1486" name="Value Type">
+<val vm="1" len="6" data="UIDREF"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="1512" len="-1">
+<elm tag="00080100" vr="SH" pos="1520" name="Code Value">
+<val vm="1" len="6" data="000599"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="1534" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="1548" name="Code Meaning">
+<val vm="1" len="54" data="Study Instance UID of Evidence Directly Examined by RO"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a124" vr="UI" pos="1626" name="UID">
+<val vm="1" len="18" data="1.2.3.4.5.6.7.100"/>
+</elm>
+</item>
+<item id="3" pos="1660" len="-1">
+<elm tag="0040a010" vr="CS" pos="1668" name="Relationship Type">
+<val vm="1" len="16" data="HAS OBS CONTEXT "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="1692" name="Value Type">
+<val vm="1" len="6" data="PNAME "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="1718" len="-1">
+<elm tag="00080100" vr="SH" pos="1726" name="Code Value">
+<val vm="1" len="6" data="000579"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="1740" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="1754" name="Code Meaning">
+<val vm="1" len="32" data="Patient-Data-Acquisition Subject"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a123" vr="PN" pos="1810" name="Person Name">
+<val vm="1" len="14" data="Homer^Jane^^^ "/>
+</elm>
+</item>
+<item id="4" pos="1840" len="-1">
+<elm tag="0040a010" vr="CS" pos="1848" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="1864" name="Value Type">
+<val vm="1" len="4" data="CODE"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="1888" len="-1">
+<elm tag="00080100" vr="SH" pos="1896" name="Code Value">
+<val vm="1" len="6" data="000444"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="1910" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="1924" name="Code Meaning">
+<val vm="1" len="8" data="Finding "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a168" vr="SQ" pos="-1" name="Concept Code Sequence">
+<seq len="-1">
+<item id="1" pos="1968" len="-1">
+<elm tag="00080100" vr="SH" pos="1976" name="Code Value">
+<val vm="1" len="6" data="000333"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="1990" name="Coding Scheme Designator">
+<val vm="1" len="14" data="99STElsewhere "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2012" name="Code Meaning">
+<val vm="1" len="4" data="Mass"/>
+</elm>
+<elm tag="0008010c" vr="UI" pos="2024" name="Private Coding Scheme Creator UID">
+<val vm="1" len="16" data="1.2.3.4.6.7.8.91"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="2076" len="-1">
+<elm tag="0040a010" vr="CS" pos="2084" name="Relationship Type">
+<val vm="1" len="14" data="HAS PROPERTIES"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="2106" name="Value Type">
+<val vm="1" len="4" data="NUM "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="2130" len="-1">
+<elm tag="00080100" vr="SH" pos="2138" name="Code Value">
+<val vm="1" len="6" data="000222"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2152" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2166" name="Code Meaning">
+<val vm="1" len="8" data="Diameter"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a300" vr="SQ" pos="-1" name="Measured Value Sequence">
+<seq len="-1">
+<item id="1" pos="2210" len="-1">
+<elm tag="004008ea" vr="SQ" pos="-1" name="Measurement Units Code Sequence">
+<seq len="-1">
+<item id="1" pos="2230" len="-1">
+<elm tag="00080100" vr="SH" pos="2238" name="Code Value">
+<val vm="1" len="6" data="000111"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2252" name="Coding Scheme Designator">
+<val vm="1" len="8" data="SNMdemo "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2268" name="Code Meaning">
+<val vm="1" len="2" data="cm"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a30a" vr="DS" pos="2294" name="Numeric Value">
+<val vm="1" len="4" data="1.3 "/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+<item id="2" pos="2330" len="-1">
+<elm tag="0040a010" vr="CS" pos="2338" name="Relationship Type">
+<val vm="1" len="14" data="HAS PROPERTIES"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="2360" name="Value Type">
+<val vm="1" len="4" data="CODE"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="2384" len="-1">
+<elm tag="00080100" vr="SH" pos="2392" name="Code Value">
+<val vm="1" len="6" data="111000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2406" name="Coding Scheme Designator">
+<val vm="1" len="8" data="SNMdemo "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2422" name="Code Meaning">
+<val vm="1" len="12" data="Margination "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a168" vr="SQ" pos="-1" name="Concept Code Sequence">
+<seq len="-1">
+<item id="1" pos="2470" len="-1">
+<elm tag="00080100" vr="SH" pos="2478" name="Code Value">
+<val vm="1" len="6" data="222000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2492" name="Coding Scheme Designator">
+<val vm="1" len="8" data="SNMdemo "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2508" name="Code Meaning">
+<val vm="1" len="12" data="Infiltrative"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+<item id="5" pos="2568" len="-1">
+<elm tag="00081199" vr="SQ" pos="-1" name="Referenced SOP Sequence">
+<seq len="-1">
+<item id="1" pos="2588" len="-1">
+<elm tag="00081150" vr="UI" pos="2596" name="Referenced SOP Class UID">
+<val vm="1" len="8" data="1.2.3.4"/>
+</elm>
+<elm tag="00081155" vr="UI" pos="2612" name="Referenced SOP Instance UID">
+<val vm="1" len="10" data="1.2.3.4.5"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a010" vr="CS" pos="2646" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="2662" name="Value Type">
+<val vm="1" len="6" data="IMAGE "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="2688" len="-1">
+<elm tag="00080100" vr="SH" pos="2696" name="Code Value">
+<val vm="1" len="6" data="333000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2710" name="Coding Scheme Designator">
+<val vm="1" len="8" data="SNMdemo "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2726" name="Code Meaning">
+<val vm="1" len="8" data="Baseline"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+<item id="6" pos="2766" len="-1">
+<elm tag="0040a010" vr="CS" pos="2774" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="2790" name="Value Type">
+<val vm="1" len="10" data="CONTAINER "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="2820" len="-1">
+<elm tag="00080100" vr="SH" pos="2828" name="Code Value">
+<val vm="1" len="6" data="555000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2842" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="2856" name="Code Meaning">
+<val vm="1" len="12" data="Conclusions "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a050" vr="CS" pos="2892" name="Continuity Of Content">
+<val vm="1" len="8" data="SEPARATE"/>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="2920" len="-1">
+<elm tag="0040a010" vr="CS" pos="2928" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="2944" name="Value Type">
+<val vm="1" len="4" data="CODE"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="2968" len="-1">
+<elm tag="00080100" vr="SH" pos="2976" name="Code Value">
+<val vm="1" len="6" data="777000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="2990" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="3004" name="Code Meaning">
+<val vm="1" len="10" data="Conclusion"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a168" vr="SQ" pos="-1" name="Concept Code Sequence">
+<seq len="-1">
+<item id="1" pos="3050" len="-1">
+<elm tag="00080100" vr="SH" pos="3058" name="Code Value">
+<val vm="1" len="6" data="888000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="3072" name="Coding Scheme Designator">
+<val vm="1" len="14" data="99STElsewhere "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="3094" name="Code Meaning">
+<val vm="1" len="20" data="Probable malignancy "/>
+</elm>
+<elm tag="0008010c" vr="UI" pos="3122" name="Private Coding Scheme Creator UID">
+<val vm="1" len="16" data="1.2.3.4.6.7.8.91"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="3174" len="-1">
+<elm tag="0040a010" vr="CS" pos="3182" name="Relationship Type">
+<val vm="1" len="14" data="INFERRED FROM "/>
+</elm>
+<elm tag="0040db73" vr="UL" pos="3204" name="Referenced Content Item Identifier">
+<val vm="3" len="12" data="1\4\2"/>
+</elm>
+</item>
+<item id="2" pos="3232" len="-1">
+<elm tag="0040a010" vr="CS" pos="3240" name="Relationship Type">
+<val vm="1" len="14" data="INFERRED FROM "/>
+</elm>
+<elm tag="0040db73" vr="UL" pos="3262" name="Referenced Content Item Identifier">
+<val vm="3" len="12" data="1\7\1"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+<item id="7" pos="3322" len="-1">
+<elm tag="0040a010" vr="CS" pos="3330" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="3346" name="Value Type">
+<val vm="1" len="10" data="CONTAINER "/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="3376" len="-1">
+<elm tag="00080100" vr="SH" pos="3384" name="Code Value">
+<val vm="1" len="6" data="999000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="3398" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="3412" name="Code Meaning">
+<val vm="1" len="24" data="Specific Image Findings "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a050" vr="CS" pos="3460" name="Continuity Of Content">
+<val vm="1" len="8" data="SEPARATE"/>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="3488" len="-1">
+<elm tag="0040a010" vr="CS" pos="3496" name="Relationship Type">
+<val vm="1" len="8" data="CONTAINS"/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="3512" name="Value Type">
+<val vm="1" len="6" data="SCOORD"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="3538" len="-1">
+<elm tag="00080100" vr="SH" pos="3546" name="Code Value">
+<val vm="1" len="6" data="333000"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="3560" name="Coding Scheme Designator">
+<val vm="1" len="8" data="SNMdemo "/>
+</elm>
+<elm tag="00080104" vr="LO" pos="3576" name="Code Meaning">
+<val vm="1" len="30" data="Best illustration of findings "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a730" vr="SQ" pos="-1" name="Content Sequence">
+<seq len="-1">
+<item id="1" pos="3642" len="-1">
+<elm tag="00081199" vr="SQ" pos="-1" name="Referenced SOP Sequence">
+<seq len="-1">
+<item id="1" pos="3662" len="-1">
+<elm tag="00081150" vr="UI" pos="3670" name="Referenced SOP Class UID">
+<val vm="1" len="8" data="1.2.3.4"/>
+</elm>
+<elm tag="00081155" vr="UI" pos="3686" name="Referenced SOP Instance UID">
+<val vm="1" len="10" data="1.2.3.4.6"/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a010" vr="CS" pos="3720" name="Relationship Type">
+<val vm="1" len="14" data="SELECTED FROM "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="3742" name="Value Type">
+<val vm="1" len="6" data="IMAGE "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="00700022" vr="FL" pos="3772" name="Graphic Data">
+<val vm="8" len="32" data="0.0\0.0\0.0\0.0\0.0\0.0\0.0\0.0"/>
+</elm>
+<elm tag="00700023" vr="CS" pos="3812" name="Graphic Type">
+<val vm="1" len="8" data="POLYLINE"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+<item id="8" pos="3852" len="-1">
+<elm tag="0040a010" vr="CS" pos="3860" name="Relationship Type">
+<val vm="1" len="16" data="HAS CONCEPT MOD "/>
+</elm>
+<elm tag="0040a040" vr="CS" pos="3884" name="Value Type">
+<val vm="1" len="4" data="CODE"/>
+</elm>
+<elm tag="0040a043" vr="SQ" pos="-1" name="Concept-name Code Sequence">
+<seq len="-1">
+<item id="1" pos="3908" len="-1">
+<elm tag="00080100" vr="SH" pos="3916" name="Code Value">
+<val vm="1" len="6" data="123456"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="3930" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="3944" name="Code Meaning">
+<val vm="1" len="6" data="Views "/>
+</elm>
+</item>
+</seq>
+</elm>
+<elm tag="0040a168" vr="SQ" pos="-1" name="Concept Code Sequence">
+<seq len="-1">
+<item id="1" pos="3986" len="-1">
+<elm tag="00080100" vr="SH" pos="3994" name="Code Value">
+<val vm="1" len="6" data="123457"/>
+</elm>
+<elm tag="00080102" vr="SH" pos="4008" name="Coding Scheme Designator">
+<val vm="1" len="6" data="LNdemo"/>
+</elm>
+<elm tag="00080104" vr="LO" pos="4022" name="Code Meaning">
+<val vm="1" len="14" data="PA and Lateral"/>
+</elm>
+</item>
+</seq>
+</elm>
+</item>
+</seq>
+</elm>
+</dataset>
+</dicomfile>

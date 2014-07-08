@@ -1,0 +1,264 @@
+Revision History
+=================
+
+-------------------------------------------------------------------------------
+dcm4che 1.3.7
+-------------------------------------------------------------------------------
+BUG FIXES:
++ Dataset: skip dump of long attribute values by dumpDataset, which 
+    caused hang-ups if an objects contains MB of data in private attributs.
++ SAXHandlerAdapter2: Fix XML Import concerning empty SQs
+:
+
+ENHANCEMENTS:
++ ImageReader: JPEG-Baseline, JPEG-Extended, JPEG-Lossless, JPEG-LS, JPEG2000 
+    Mask-out overlay bits from Raster
+    Auto-windowing for >8bit images without specified Window Center/Width
++ DcmParser: make more lenient
++ Dataset: all put??(int tag, String val) methods accept null or "" as val.
++ Update Tag/UID dictionary
+:
+                     
+-------------------------------------------------------------------------------
+dcm4che 1.0.7 -  - Changes since dcm4che 1.0.5
+-------------------------------------------------------------------------------
+BUG FIXES:
++ class org.dcm4che.data.DcmElement: Fix
+  getInt, getInts for elements with VR=OW
+  getFloat, getFloats for elements with VR=OF
++ class org.dcm4che.data.Dataset: Fix
+  writeFile(OutputStream out, DcmEncodeParam param)
+  writeFile(ImageOutputStream out, DcmEncodeParam param)
+  to throw IllegalArgumentException, if param does not match with 
+  Transfer Syntax of File Meta Information, to prevent writting illegal file
+  formats.
++ class org.dcm4che.imageio.plugins.DcmImageWriteParam:
+  Fix value for Pixel Aspect Ratio from 1 to int[]{1,1}
++ class org.dcm4che.imageio.plugin.DcmImageReader#getAspectRatio
+  did not consider pixel aspect ratio != 1:1
+
+ENHANCEMENTS:
++ class org.dcm4che.data.DcmParser: add method
+  long parseDataset(String tsUID, int stopTag) throws IOException
++ add Status Code Definitions for Print Management Service Class
++ class org.dcm4che.imageio.plugin.DcmImageReader: support of P-value to
+  Device-Driver-Level transformation by DcmReadImageParam#setPValToDDL
++ class org.dcm4che.data.DcmObject: add methodes getTag/getTags
++ sample/utility MoveStudy (mvstudy.jar)
+
+CHANGES:
++ change schema of Implementation Version Name in META-INF/MANIFEST.MF and
+  A-ASSOCIATE-RQ/AC to dcm4che-1.x.y (from DCM4CHEyyyymmdd)
++ add properties port and serverSocketFactory to org.dcm4che.server.Server
++ org.dcm4che.data.DcmObject: change getter methodes to do not throw
+  org.dcm4che.data.DcmValueException, but return null or default value, if
+  a decoding error occurs.
++ org.dcm4che.image.ColorModelFactory: replace DcmValueException by
+  IllegalArgumentException
++ Association#write(Dimse) now only pack Command PDV and (first) Data PDV
+  in P-DATA-TF PDU, if new property PackPDVs=true  
+
+-------------------------------------------------------------------------------
+dcm4che 1.0.5 -  - Changes since dcm4che 1.0.4
+-------------------------------------------------------------------------------
+BUG FIXES:
++ org.dcm4che.srom.HL7Export#toHL7(String..):
+  Fix Inconsistence between API and Implementation of String argument order
++ Fix bug in mppssnd utility (did not send anything)
++ add missing Def of Tag (0040,030E) Exposure Dose Sequence
+
+ENHANCEMENTS:
+org.dcm4che.data.Dataset:
++ Float getFloat(tag, index)
++ Double getDouble(tag, index)
+org.dcm4che.hl7.MSHSegment
++ String getCharset
+
+CHANGES:
++ ren build target publish to release
++ import TIANI IHE connectathon certficate to trusted cacerts
++ Tag.RefStudyComponentSeq -> Tag.RefPPSSeq (s. DICOM CP 257)
+
+-------------------------------------------------------------------------------
+dcm4che 1.0.4 -  - Changes since dcm4che 1.0.3
+-------------------------------------------------------------------------------
+BUG FIXES:
++ org.dcm4che.hl7.HL7Segment#id(): Fix StackOverflowError
++ org.dcm4che.net.ActiveAssociation: Fix wrong dispatch of N_CREATE_RQ dimse
+  to DcmServiceBase#n_action handler
++ org.dcm4che.srom.SRDocumentFactory#newSRDocument(Dataset):
+  Fix NullPointerException for Datasets without
+  Content Template Sequence (0040,A504)
+
+ENHANCEMENTS:
+org.dcm4che.net.Association:
++ add properties rqTimeout, acTimeout, dimseTimeout
+org.dcm4che.server.DcmHandler:
++ add properties rqTimeout, dimseTimeout, soCloseDelay
+DcmSnd, MppsSnd:
++ add options --ac-timeout, --dimse-timeout, --so-close-delay
+DcmRcv:
++ add options --max-clients, --rq-timeout, --dimse-timeout, --so-close-delay
+Hl7Snd, Hl7Rcv:
++ new utilities to send and receive HL7 Messages - using Minimal-Lower-Level
+  Protocol.
+org.dcm4che.auditlog:
++ new package for support of IHE 4 compliant audit logging
+
+CHANGES:
+org.dcm4che.data.Dataset:
++ log warning and ignore attributes with tag < (0004,0000), instead
+  throw new IllegalArgumentException
+org.dcm4che.net.Association:
++ rename property TCPCloseTimeout to soCloseDelay
++ remove timeout param from connect(), accept(), read()
+org.dcm4che.srom.RelationConstraints:
++ allow not only TextConent, but also CodeContent and NumContent
+  as source of hasProperties and inferredFrom relationship (DICOM CP-266)
++ move "BUILD" info file from root into doc directory to avoid conflict
+  with "build" directory on Windows platform.
+ 
+-------------------------------------------------------------------------------
+dcm4che 1.0.3 -  - Changes since dcm4che 1.0.2
+-------------------------------------------------------------------------------
+BUG FIXES:
+org.dcm4cheri.data
++ Fix DcmStreamHandlerImpl#fragment (=> error writing encapsed pixel data)
++ Fix value of Command#C_CANCEL_RQ
++ Fix DcmElement#addItem for SQ Elements (UnsupportedOperationException)
+org.dcm4cheri.srom
++ Fix KeyObjectImpl#sopInstanceRefListToSQ (ClassCastException srom->Dataset)
++ Fix RefSOPImpl#toDataset (SOPInstanceUID <-> SOPClassUID)
+samples:
++ Fix build.xml to include missing .class into imgread.jar & imgdisp.jar
++ DcmRcv: Fix write to file - wasn't MT safe
+
+ENHANCEMENTS:
+dcm4che API:
++ add org.dcm4che.data.DcmObject#getDateRange
++ add org.dcm4che.data.DcmObject#getDateTimeRange
++ add org.dcm4che.data.DcmObject#setPrivateCreatorID (access private attributs)
++ add org.dcm4che.data.DcmObject#getPrivateCreatorID
++ org.dcm4che.data.DcmObject#put??(tag, value) except value=null 
++ add org.dcm4che.data.Tags#valueOf(short,short)
++ add org.dcm4che.data.DcmElement#getDateRange
++ add org.dcm4che.media.DirBuilder#getDirWriter
++ add org.dcm4che.net.FutureRSP#listPending
++ add org.dcm4che.net.DcmServiceBase.MultiDimseRsp#release
++ add org.dcm4che.net.DcmServiceBase#doAfterRsp
++ add org.dcm4che.net.Association#getAAssociateRQ
++ add org.dcm4che.net.Association#getAAssociateAC
++ add org.dcm4che.net.Association#getAAssociateRJ
++ add org.dcm4che.net.Association#getAAbort
++ add org.dcm4che.net.DcmServiceException
++ add org.dcm4che.net.AAssociateAC#countAcceptedPresContext
++ add org.dcm4che.net.AAssociation#countAcceptedPresContext
++ add org.dcm4che.net.AAssociation#listAcceptedPresContext
++ add org.dcm4che.net.AAssociation#putProperty
++ add org.dcm4che.net.AAssociation#getProperty
++ make org.dcm4cheri.data.DcmParserImpl tolerant for redundant
+  Sequence Delimiter Items of Sequences with explicit length encoding
++ add org.dcm4che.data.FileMetaInfo#getImplementationClassUID
++ add org.dcm4che.data.FileMetaInfo#getImplementationVersionName
++ add org.dcm4che.dict.Status
++ add org.dcm4che.srom.IconImage
++ extends org.dcm4che.util.DcmURL for dicom-tls
+
+
+CHANGES:
+dcm4che API:
++ rename org.dcm4che.net.Factory to org.dcm4che.net.AssociationFactory
++ relax VR value check for most VR types to log warning insteed
+  throw IllegalValueException
++ org.dcm4che.data.DcmObject#get??(tag, index)
+  return null/0, if index >= vm(), instead throw RuntimeException
++ org.dcm4che.net.AcceptorPolicy: rename map related insert methods from 
+    addXX to putXX. Also allows null value -> remove a previous added item
+    from the map. -> eliminate redundant removeXXX methodes.
++ org.dcm4che.net.AcceptorPolicy#setAsyncOpsWindow(AsyncOpsWindow) removed,
+    use setAsyncOpsWindow(int, int) instead
++ org.dcm4che.net.AcceptorPolicy#addRoleSelection(RoleSelection) ->
+    #addRoleSelection(String uid, boolean scu, boolean scp)
++ org.dcm4che.util.SSLContextAdapter:
+   make enabledCipherSuites param of SocketFactory instead of Adapter,
+   add support of pkcs12 keystore
++ org.dcm4che.srom.*: add IconImage param to factory methodes for ImageContent
+samples:
++ dcmsnd, dcmrcv, mppssnd: change TLS related command line syntax
+distribution:
++ split distribution in 3 ZIP archives:
+  - dcm4che-##.zip - compiled jars
+  - dcm4che-apidoc-##.zip - API javadoc
+  - dcm4che-src-##.zip - source + build scripts
+
+-------------------------------------------------------------------------------
+dcm4che 1.0.2 -  - Changes since dcm4che 1.0.1
+-------------------------------------------------------------------------------
+DISTRIBUTION:
++ demo -> samples
++ include javadoc
+
+BUG FIXES:
+org.dcm4cheri.data
++ Fix DcmObject.putUT (inserted element returned wrong vr(=UL))
++ Fix BaseDatasetImpl.calcLength (ArrayOutOfBoundsException if #groups=8^n)
+org.dcm4che.imageio.plugins.DcmMetadataFormat*
+  Add missing definitions for "pos" attribute of elements "elm", "item", "frag"
+org.dcm4cheri.media:
++ Fix DirBuilderImpl to merge PATIENT/STUDY/SERIES records with
+  same primary key
+samples/dcmdir:
++ Fix remove operation (ArrayOutOfBoundsException)
++ Fix load of readme file configuration parameter
+
+ENHANCEMENTS:
+dcm4che API:
++ add org.dcm4che.data.DicomObject#vm(int)
+dcmdir sample:
++ command -c create root directory, if no such directory exists
++ add command -P dir-file: purge records from existing DICOMDIR file,
+  with referenced files do not exist anymore
+
+CHANGES:
+dcm4che API:
++ org.dcm4cheri.data.Dataset#subset -> #subSet: adjust method name and
+  semantic according java.util.SortedSet#subSet
+dcm4che Impl:
++ DcmImageReaderConf: change default resource location of properties from
+  /resources/DcmImageReader.properties to /DcmImageReader.properties
+samples:
++ change resource location of Resource Bundles from
+  resources/BUNDLE.properties to BUNDLE.properties
+
+-------------------------------------------------------------------------------
+dcm4che 1.0.1 -  - Changes since dcm4che 1.0.0
+-------------------------------------------------------------------------------
+dcmrcv Sample Application:
++ change default File ID scheme in dcmrcv demo application
+  from StudyDate,SeriesNumber,InstanceNumber
+  to StudyDate,StudyID,SeriesNumber,InstanceNumber
++ change(generalize) commandline syntax for replacing attribute values in
+  received objects to --set=TAG:VAL.
+dcmsnd Sample Application:
++ change(generalize) commandline syntax for replacing attribute values in
+  transmitted objects to --set=TAG:VAL.
++ add --poll-dir option (may be used for as DICOM router - in combination with
+  dcmrcv --dest DIR).
+new syslog Sample Application:
++ to send/generate syslog messages
+new mppssnd Sample Application:
++ to send MPPS messages to remote DICOM node
+new Image I/O compatible DICOM ImageWriter (contributed by Dr. Hacklaender)
++ org.dcm4che.imageio.plugins.DcmImageWriteParam
++ org.dcm4cheri.imageio.plugins.DcmImageWriteParamImpl
++ org.dcm4cheri.imageio.plugins.DcmImageWriter
++ org.dcm4cheri.imageio.plugins.DcmImageWriterSpi
+new simple HL7 Parser:
++ org.dcm4che.hl7.*
++ org.dcm4cheri.hl7.*
+dcm4che API:
++ org.dcm4cheri.data.DicomObject#getInteger
+
+Bug Fixes:
++ org.dcm4cheri.data.DicomObjectImpl#putAll - did not insert any element
++ org.dcm4cheri.data.DicomObjectImpl#getDateTime

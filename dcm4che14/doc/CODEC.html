@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice.org 1.1.2  (Linux)">
+	<meta name="AUTHOR" content="Gunter Zeilinger">
+	<meta name="CREATED" content="20060814;13420000">
+	<meta name="CHANGEDBY" content="Gunter Zeilinger">
+	<meta name="CHANGED" content="20060814;13435100">
+	<style>
+	<!--
+		@page { size: 8.27in 11.69in; margin-left: 1.25in; margin-right: 1.25in; margin-top: 1in; margin-bottom: 1in }
+		P { margin-bottom: 0.08in }
+		td P { margin-bottom: 0.08in }
+	-->
+	</style>
+</head>
+<body lang="en-US" dir="LTR">
+<p style="margin-top: 0.17in"><font face="Albany, sans-serif"><font size=4>Java
+Platform</font></font></p>
+<p>dcm4che requires Java 2 Platform, Standard Edition version 1.4 or
+1.5</p>
+<p><br>Download for Windows/Linux/Solaris from Sun
+<a href="http://java.sun.com/j2se/1.5.0/download.jsp" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/j2se/1.5.0/download.jsp</a>
+.<br>Macintosh OS X has installed the Java 2 Platform by default. <br><br><br>
+</p>
+<p style="margin-top: 0.17in"><font face="Albany, sans-serif"><font size=4>CODECs
+(COder and DECoder) for JPEG, JPEG2000 and RLE</font></font></p>
+<p>Since version 1.3 dcm4che supports some transfer syntaxes for
+encapsulation of encoded pixel data:</p>
+<p>PS 3.5 – Annex A.4 Transfer Syntaxes for Encapsulation of
+Encoded Pixel Data</p>
+<table width=1111 border=1 cellpadding=4 cellspacing=3>
+	<col width=149>
+	<col width=935>
+	<thead>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.50 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG Baseline (Process 1): Default Transfer Syntax for Lossy
+				JPEG 8 Bit Image Compression</p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.51 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG Extended (Process 2 &amp; 4): Default Transfer Syntax for
+				Lossy JPEG 12 Bit Image Compression (Process 4 only) 
+				</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.57 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG Lossless, Non-Hierarchical (Process 14)</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.70 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG Lossless, Non-Hierarchical, First-Order Prediction
+				(Process 14 [Selection Value 1]): Default Transfer Syntax for
+				Lossless JPEG Image Compression</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.80 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG-LS Lossless Image Compression</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.81 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG-LS Lossy (Near-Lossless) Image Compression</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.90 
+				</p>
+			</td>
+			<td width=935>
+				<p>JPEG 2000 Image Compression (Lossless Only)</p>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.4.91</p>
+			</td>
+			<td width=935>
+				<p>JPEG 2000 Image Compression</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p><br>PS 3.5 - Annex G Encapsulated RLE Compressed Images</p>
+<table width=1111 border=1 cellpadding=4 cellspacing=3>
+	<col width=149>
+	<col width=935>
+	<thead>
+		<tr valign=TOP>
+			<td width=149>
+				<p>1.2.840.10008.1.2.5 
+				</p>
+			</td>
+			<td width=935>
+				<p><font face="Arial, sans-serif"><font size=2>RLE (Run Length
+				Encoding) Lossless</font></font></p>
+			</td>
+		</tr>
+	</thead>
+</table>
+
+<p>Coding and encoding of the JPEG pixel data is done using the Image
+I/O API, which is part of the Java 2 Platform Standard Edition. By
+default the J2SE includes CODECs for PNG and JPEG as well as a
+decoder for GIF. As the built-in JPEG CODEC does not support all
+functionallity needed by the transfer syntaces, additional CODECS are
+used, which are distributed under the name <i>JAI Image I/O</i>
+(<a href="hhttp://java.sun.com/products/java-media/jai/downloads/download-iio-1_1.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/products/java-media/jai/downloads/download-iio-1_1.html</a>
+). This CODEC package has been packaged with JAI (Java Advanced Imaging)
+since the release of JAI 1.0. The image formats supported by these
+ancillary codec classes are: BMP, GIF (decoder only), FlashPix
+(decoder only), JPEG, JPEG2000, PNG, PNM, TIFF, and WBMP. The latest
+version distributed by SUN is 1.1 (October 2006). The <i>JAI Image
+I/O</i> package is now licensed under the open source Berkeley
+Software Distribution (BSD) License. The latest developer version is
+available at <a href="https://jai-imageio.dev.java.net/" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">https://jai-imageio.dev.java.net/</a>
+(jai-imageio-1_2-pre-dr-b04, 2006-12-01).</p>
+<p>The <i>JAI Image I/O </i>package is not a pure Java
+implementation: Some of its function are implemented in native code,
+some CODECs are accelerated by additional native classes. If
+available, the pure Java implementation is used if the native library
+could not be found.</p>
+<p>Coding and encoding of the RLE pixel data is done by a CODEC of
+the dcm4che project, which is included as the separate archive
+<font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che-imageio-rle-2.0.4.jar</font></font>
+within the distribution.</p>
+
+<p style="margin-top: 0.17in"><font face="Albany, sans-serif"><font size=4>Using
+the CODECs</font></font></p>
+<p>To ease the setting of the classpath, dcm4che includes several
+archives implicitely from within the MANIFEST.MF of the <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>
+file. Therefore the archives</p>
+<p><font face="Courier New, monospace"><font size=2 style="font-size: 11pt">log4j.jar<br>dcm4che-imageio-rle-2.0.4.jar<br>jai_imageio.jar<br>clibwrapper_jiio.jar<br>jai_imageio_api.zip</font></font></p>
+<p>are added automatically to the classpath as long as <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>
+is part of the classpath and the archives reside in the same
+directory as <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar.</font></font></p>
+
+
+<p><b>1.If the application does not use encoded pixel data:</b></p>
+<p>In this case it is not neccessary to include the <i>JAI Image I/O</i>
+package or the RLE archive into the classpath. To ensure a reliable
+functionality of dcm4che, the archive</p>
+<p><font face="Courier New, monospace"><font size=2 style="font-size: 11pt">jai_imageio_api.zip</font></font></p>
+<p>should be included into the classpath. The archive is part of the
+binary distribution of dcm4che and includes the required subset of
+classes of the <i>JAI Image I/O</i> package. If the archive resides
+in the same directory as <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>,
+it is included implicitly into the classpath by the MANIFEST of
+<font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>.</p>
+
+<p><b>2. If the application uses encoded pixel data:</b></p>
+<p>The RLE CODEC <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che-imageio-rle-2.0.4.jar</font></font>
+must be included into the classpath. This is done implicitly, if
+<font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>
+is part of the classpath and the archive reside in the same directory
+as <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar.</font></font></p>
+
+<p><i>a) Using the installer of the JAI Image I/O package</i></p>
+<p>As the <i>JAI Image I/O</i> package requires native libraries, Sun
+provides separate downloads for Windows, Linux, Solaris SPARC and
+Solaris x86. Download and install the JDK and/or JRE version,
+depending of what type of Java 2 Platform is installed on the host
+system. If both a JDK and a JRE make sure that the <i>JAI Image I/O</i>
+package is installed for the virtual machine that will be invoked by
+the application.</p>
+<p>On Macintosh OS X systems the JAI Image I/O package is installed as
+part of the JAI package by default.</p>
+<p><i>b) Custom installation of the JAI Image I/O package</i></p>
+<p>The binary distribution of dcm4che already includes the required
+files of the <i>JAI Image I/O</i> package for Windows and i568 Linux:</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<table width=878 border=1 cellpadding=2 cellspacing=3>
+	<col width=483>
+	<col width=376>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">lib/clibwrapper_jiio.jar</font></tt></p>
+		</td>
+		<td width=376>
+			<p>CcodecLib JNI interfaces.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">lib/jai_imageio.jar</font></tt></p>
+		</td>
+		<td width=376>
+			<p>JAR file containing core JAI Image I/O class files.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">bin/clib_jiio.dll</font></tt></p>
+		</td>
+		<td width=376>
+			<p>codecLib JNI DLL libraries. <br>(Microsoft Windows operating
+			environment)</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">bin/libclib_jiio.so</font></tt></p>
+		</td>
+		<td width=376>
+			<p>codecLib JNI shared libraries. <br>(Linux operating
+			environment)</p>
+		</td>
+	</tr>
+</table>
+
+<p>Both JAR archives are implicitly included in the classpath, if
+<font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar</font></font>
+is part of the classpath and the archives reside in the same
+directory as <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">dcm4che.jar.</font></font></p>
+<p>The directory in which the codecLib JNI DLL libraries resides,
+must be included into PATH system variable (Windows) or
+LD_LIBRARY_PATH (Linux). In a Windows environment the PATH system
+variable can be set by selecting System Properties, Advanced tab,
+Enviro<u>n</u>ment Variable button. Append the directory path of
+<tt><font size=2 style="font-size: 11pt">clib_jiio.dll</font></tt>
+preceeded by a ';'. The new value of the PATH variable is valid
+without the need of a restart. To check the content of PATH variable in a
+command window, type <tt>set PATH</tt>.</p>
+
+<p style="margin-top: 0.17in"><font face="Albany, sans-serif"><font size=4>JAI
+Image I/O</font></font></p>
+<p>Java Advanced Imaging Image I/O Tools will be installed under the
+$JDK directory with the files in the locations given in the following
+table. The same files will appear in analogous locations in the JRE
+installation. In the CLASSPATH installation they will be located in
+the installation directory and its <tt>lib</tt> subdirectory.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<table width=878 border=1 cellpadding=2 cellspacing=3>
+	<col width=483>
+	<col width=376>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">COPYRIGHT-jai_imageio.txt</font></tt></p>
+		</td>
+		<td width=376>
+			<p>Copyright notice.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">UNINSTALL-jai_imageio</font></tt></p>
+		</td>
+		<td width=376>
+			<p>Uninstall script (Solaris and Linux operating environments
+			only).</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">LICENSE-jai_imageio.txt</font></tt></p>
+		</td>
+		<td width=376>
+			<p>License agreement.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">jre/lib/ext/jai_imageio.jar</font></tt></p>
+		</td>
+		<td width=376>
+			<p>JAR file containing core JAI Image I/O class files.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">jre/lib/ext/clibwrapper_jiio.jar</font></tt></p>
+		</td>
+		<td width=376>
+			<p>codecLib JNI interfaces.</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">jre/lib/i386/libclib_jiio.so</font></tt></p>
+		</td>
+		<td width=376>
+			<p>codecLib JNI shared libraries. <br>(Linux operating
+			environment)</p>
+		</td>
+	</tr>
+	<tr valign=TOP>
+		<td width=483>
+			<p><tt><font size=2 style="font-size: 11pt">jre/bin/clib_jiio.dll</font></tt></p>
+		</td>
+		<td width=376>
+			<p>codecLib JNI DLL libraries. <br>(Microsoft Windows operating
+			environment)</p>
+		</td>
+	</tr>
+</table>
+<p><br>If use of native code is disallowed then the JPEG and PNG
+reader-writer plug-ins and some accelerations used for bilevel TIFF
+compression will not be available, nor will the native Implementation
+of the JPEG 2000 reader-writer plug-in; the Java implementation of
+the JPEG 2000 plug-in will however be available. The respective
+plug-ins will detect that native libraries cannot be used and respond
+accordingly.</p>
+
+<p><b>Links</b></p>
+<p>Installation:
+<a href="http://java.sun.com/products/java-media/jai/INSTALL-jai_imageio-1_1.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/products/java-media/jai/INSTALL-jai_imageio-1_1.html</a>
+</p>
+<p>Features:
+<a href="http://java.sun.com/products/java-media/jai/RELEASE-jai_imageio_1_1.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/products/java-media/jai/RELEASE-jai_imageio_1_1.html</a><a href="http://java.sun.com/products/java-media/jai/README-1_1_1_01.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">
+</a>
+</p>
+<p>Introduction to the API:
+<a href="http://java.sun.com/j2se/1.4.2/docs/guide/imageio/spec/imageio_guideTOC.fm.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/j2se/1.4.2/docs/guide/imageio/spec/imageio_guideTOC.fm.html</a>
+</p>
+<p>Description of the CODECs :
+<a href="http://java.sun.com/products/java-media/jai/forDevelopers/jai-imageio-1_1-alpha-docs/overview-summary.html" TARGET="_blank" ONCLICK="return top.js.OpenExtLink(window,event,this)">http://java.sun.com/products/java-media/jai/forDevelopers/jai-imageio-1_1-alpha-docs/overview-summary.html</a>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-top: 0.17in"><font face="Albany, sans-serif"><font size=4>Implementation</font></font></p>
+<p><b>Mapping of transfer syntaxes</b></p>
+<p>Inside the dcm4che package the encapsulated tansfer syntaxes are
+mapped to a CODEC by the property file
+<font size=2 style="font-size: 11pt"><font face="Courier New, monospace">org/dcm4cheri/image/ImageReaderFactory.properties</font></font>:</p>
+<table width=786 border=1 cellpadding=4 cellspacing=3>
+	<col width=173>
+	<col width=586>
+	<thead>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.5</pre>
+			</td>
+			<td width=586>
+				<pre>org.dcm4che2.imageioimpl.plugins.rle.RLEImageReader</pre>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.50</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.51</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.57</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.70</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.80</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.81</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg.CLibJPEGImageReader</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.90</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg2000.J2KImageReaderCodecLib</pre>
+			</td>
+		</tr>
+		<tr valign=TOP>
+			<td width=173>
+				<pre>1.2.840.10008.1.2.4.91</pre>
+			</td>
+			<td width=586>
+				<pre>com.sun.media.imageioimpl.plugins.jpeg2000.J2KImageReaderCodecLib</pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><b>Classes in the archive <font size=2 style="font-size: 11pt"><font face="Courier New, monospace">jai_imageio_api.zip:</font></font></b></p>
+<p><font face="Courier New, monospace"><font size=2 style="font-size: 11pt">com/sun/media/imageio/stream/SectorStreamSegmentMapper.class<br>com/sun/media/imageio/stream/SegmentedImageInputStream.class<br>com/sun/media/imageio/stream/StreamSegment.class<br>com/sun/media/imageio/stream/StreamSegmentMapper.class<br>com/sun/media/imageio/stream/StreamSegmentMapperImpl.class</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+</body>
+</html>

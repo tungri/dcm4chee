@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="build/generate"/>
+	<classpathentry kind="src" path="build/resources"/>
+	<classpathentry kind="src" path="src/resources"/>
+	<classpathentry kind="src" path="samples/java"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="test/java"/>
+	<classpathentry kind="src" path="samples/conf"/>
+	<classpathentry kind="src" path="samples/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/getopt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/majix.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jai_imageio.jar"/>
+	<classpathentry kind="lib" path="lib/clibwrapper_jiio.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/dcm4che-imageio-rle-2.0.25.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
