@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentStoreCfg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="dcm4chee-docstore-cfg.xsd">
+    <StoreDomain name="RID" >
+        <Store name="RIDStore" type="SimpleFileStorage" desc="File Storage for RID Domain" >
+            <!--  SimpleFileStorage supports following init parameter:
+                    BASE_DIR........Base directory default:store/docs
+                    minFree.........Min free space in bytes (if freeSpace < minFree: UNAVAILABLE) default:10000000
+                    checkIntervall..After this period of time in ms a new checkAvailability is forced. default:
+                    dfCmdName.......Name of DFCommand Service which provide a platform independent freeSpace method. default:600000
+                    disableHash.....If set no SHA1 hash calculation is performed. default: SHA1 is enabled.
+            -->
+    		<init>BASE_DIR=docstore/rid/store
+            	  ;disableHash=true
+    		</init>
+            <FeatureList>
+                <Feature name="CACHE"/>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+    </StoreDomain>
+    <StoreDomain name="XDS" >
+        <Store name="XDSStore_1" type="SimpleFileStorage" desc="File Storage for XDS Domain" pool="uncommitted">
+            <init>BASE_DIR=docstore/xds/uncommitted</init>
+            <FeatureList>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+        <Store name="XDSStore_2" type="SimpleFileStorage" desc="File Storage for XDS Domain" pool="committed">
+            <init>BASE_DIR=docstore/xds/committed</init>
+            <FeatureList>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+        <Store name="XDSMetadata" type="SimpleFileStorage" desc="File Storage for XDS Metadata" pool="metadata" >
+            <init>BASE_DIR=docstore/xds/metadata</init>
+            <FeatureList>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+    </StoreDomain>
+ </DocumentStoreCfg>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentStoreCfg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="dcm4chee-docstore-cfg.xsd">
+    <StoreDomain name="TEST" >
+        <Store name="TestStore" type="SimpleFileStorage" desc="TEST File Storage (Domain: TEST)" >
+    		<init>BASE_DIR=target/docstore/test/store
+            	  ;disableHash=true
+    		</init>
+            <FeatureList>
+                <Feature name="cache"/>
+                <Feature name="TEST_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+    </StoreDomain>
+    <StoreDomain name="POOL" >
+        <Store name="PoolStore_1_1" type="SimpleFileStorage" desc="File Storage (Domain POOL)" pool="pool1">
+            <init>BASE_DIR=target/docstore/test/pool1_1
+                  checkIntervall=-1    
+            </init>
+            <FeatureList>
+                <Feature name="TEST_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+        <Store name="PoolStore_1_2" type="SimpleFileStorage" desc="File Storage (Domain POOL)" pool="pool1">
+            <init>BASE_DIR=target/docstore/test/pool1_2
+                  checkIntervall=-1    
+            </init>
+            <FeatureList>
+                <Feature name="TEST_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+        <Store name="PoolStore_2_1" type="SimpleFileStorage" desc="File Storage (Domain POOL)" pool="pool2">
+            <init>BASE_DIR=target/docstore/test/pool2_1
+                  checkIntervall=-1    
+            </init>
+            <FeatureList>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+        <Store name="PoolStore_2_2" type="SimpleFileStorage" desc="File Storage (Domain POOL)" pool="pool2">
+            <init>BASE_DIR=target/docstore/test/pool2_2
+                  checkIntervall=-1    
+            </init>
+            <FeatureList>
+                <Feature name="RID_RETRIEVE"/>
+            </FeatureList>
+        </Store>
+    </StoreDomain>
+ </DocumentStoreCfg>

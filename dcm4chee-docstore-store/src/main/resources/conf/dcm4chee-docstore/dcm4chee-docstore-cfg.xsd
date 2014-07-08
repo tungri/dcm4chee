@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="DocumentStoreCfg">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="StoreDomain"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreDomain">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Store"/>
+      </xs:sequence>
+      <xs:attribute name="desc" />
+      <xs:attribute name="name" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Store">
+    <xs:complexType>
+       <xs:sequence>
+         <xs:element minOccurs="1" maxOccurs="1" name="init"/>
+         <xs:element ref="FeatureList" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute name="desc" />
+      <xs:attribute name="name" use="required" />
+      <xs:attribute name="type" use="required" />
+      <xs:attribute name="pool" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FeatureList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="Feature"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Feature">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" />
+      <xs:attribute name="desc" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
