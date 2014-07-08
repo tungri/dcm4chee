@@ -1,0 +1,25 @@
+<mbean name="dcm4chee.archive:service=MWLReplica">
+<attribute name="AcceptTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="TLSConfigName"/>
+<attribute name="CalledAET"/>
+<attribute name="CallingAET"/>
+<attribute name="TaskInterval"/>
+<attribute name="TimeBefore"/>
+<attribute name="TimeAfter"/>
+<attribute name="IssuerOfPatient"/>
+<attribute name="ForceIssuerCoercion"/>
+<attribute name="CoerceConfigDirectory"/>
+<attribute name="PatientMatching"/>
+<attribute name="DebugMode"/>
+<attribute name="Priority"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="TimerID"/>
+<attribute name="State"/>
+</mbean>

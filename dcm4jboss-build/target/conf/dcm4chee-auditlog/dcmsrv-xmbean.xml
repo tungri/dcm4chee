@@ -1,0 +1,19 @@
+<mbean name="dcm4chee.archive:service=DcmServer">
+<attribute name="TCPPort" type="Network"/>
+<attribute name="LocalAddress"/>
+<attribute name="SecurityProtocol" type="Security"/>
+<attribute name="SSLHandshakeSocketTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="RequestTimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="PackPDVs"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="MaximumDICOMClients"/>
+<attribute name="MaximumIdleThreads"/>
+<attribute name="DicomSecurityServiceName"/>
+<attribute name="TLSConfigName"/>
+<attribute name="State"/>
+</mbean>

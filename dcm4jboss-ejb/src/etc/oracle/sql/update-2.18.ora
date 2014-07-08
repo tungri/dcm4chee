@@ -1,0 +1,17 @@
+-- Update DB from dcm4chee-2.17.x to dcm4chee-2.18.x
+
+CREATE SEQUENCE published_study_pk_seq;
+CREATE TABLE published_study (
+    pk                NUMBER(38,0) NOT NULL CONSTRAINT published_study_pk PRIMARY KEY,
+    study_fk          NUMBER(38,0),
+    created_time      TIMESTAMP,
+    updated_time      TIMESTAMP,
+    doc_uid           VARCHAR2(255),
+    docentry_uid      VARCHAR2(255),
+    repository_uid    VARCHAR2(255),
+    status     	      NUMBER(1) NOT NULL,
+FOREIGN KEY (study_fk) REFERENCES study(pk)
+);
+CREATE INDEX published_study ON published_study(study_fk);
+CREATE INDEX published_study_status ON published_study(status);
+CREATE INDEX repository_uid ON published_study(repository_uid);

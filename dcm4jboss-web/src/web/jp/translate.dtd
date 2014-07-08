@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Used in page-tpl.xsl -->
+<!ENTITY English "エゲレス語">
+<!ENTITY German "ドイツん語">
+<!ENTITY French "おフランス語">
+<!ENTITY Japanese "大日本帝国語">
+<!ENTITY Folder "アーカイブ一覧">
+<!ENTITY Trash "ゴミ箱">
+<!ENTITY AEManagement "AE管理">
+<!ENTITY OfflineStorage "オフラインストレージ">
+<!ENTITY WorklistConsole "ワークリストコンソール">
+<!ENTITY MPPSConsole "MPPS コンソール">
+<!ENTITY GPWorklistConsole "GP ワークリストコンソール">
+<!ENTITY GPPPSConsole "GPPPS コンソール">
+<!ENTITY UserAdmin "ユーザー管理">
+<!ENTITY AuditRepository "監査リポジトリ">
+<!ENTITY Logout "ログアウト">
+
+<!-- Used in folder-tpl.xsl and trash-tpl.xsl -->
+<!ENTITY ShowPatientsWithoutStudies "患者表示 検査あり">
+<!ENTITY woStudies "検査なし">
+<!ENTITY ListStudiesOfOnePatientBeginningWithTheMostRecentStudy "患者の最新検査一覧">
+<!ENTITY latestStudiesFirst "最後の検査を一番最初にする">
+<!ENTITY NoMatchingStudiesFound "該当する検査はないお!">
+<!ENTITY NoQueryPerformed "検索してないお!">
+<!ENTITY DisplayingStudies "検査を表示">
+<!ENTITY DisplayingStudiesAndEmptyPatients "エントリを表示">
+<!ENTITY to "から">
+<!ENTITY of "のうち">
+<!ENTITY matchingStudies "検査がまいっちんぐ">
+<!ENTITY matchingStudiesAndEmptyPatients "エントリがまいっちんぐ">
+<!ENTITY NewSearch "新しいサーチ">
+<!ENTITY PreviousSearchResults "以前のサーチ結果">
+<!ENTITY NextSearchResults "次のサーチ結果">
+<!ENTITY AddNewPatient  "新しい患者を追加">
+<!ENTITY MergeSelectedPatients "選択した患者をくっつける">
+<!ENTITY MoveSelectedEntities "選択したエントリを移動">
+<!ENTITY ExportSelectedEntitiesToTeachingFileSystem "選択したエントリをティーチングファイルシステムへ書き出し">
+<!ENTITY ExportSelectedEntitiesToXDSRepository "選択したエントリをXDSリポジトリへ書き出し">
+<!ENTITY DeleteSelectedEntities "選択したエントリを削除">
+<!ENTITY RecoverSelectedEntities "選択したエントリを元に戻す">
+<!ENTITY DeleteSelectedEntitiesIrrevocable "選択したエントリを「未来永劫」削除">
+<!ENTITY EmptyTrash "ゴミ箱を空にする (「取り返しがつきませんよ)">
+<!ENTITY SendSelectedEntitiesToSpecifiedDestination "選択したエントリを指定したところへ送る">
+<!ENTITY confirmSendSelectedEntitiesTo1 "選択したエントリを送ってもいいかね ">
+<!ENTITY confirmSendSelectedEntitiesTo2 "?">
+<!ENTITY SendDestination "送り先へ送っておいたよ">
+<!ENTITY ShowOnlyStudiesFromSelectedSourceAET "選択したAEタイトルの検査のみ表示">
+<!ENTITY AETFilter "AEタイトルでフィルタ">
+<!ENTITY PatientName "患者名">
+<!ENTITY PatientID "患者ID">
+<!ENTITY formatPatientID "書式: id[^^^問題]">
+<!ENTITY StudyIUID "スタディ インスタンス UID">
+<!ENTITY SeriesIUID "シリーズ インスタンス UID">
+<!ENTITY StudyID "検査ID">
+<!ENTITY StudyDate "検査日">
+<!ENTITY formatStudyDate "検査日書式 : yyyy/mm/dd または yyyy/mm/dd-yyyy/mm/dd">
+<!ENTITY formatBirthDate "誕生日書式: yyyy/mm/dd または yyyy/mm/dd-yyyy/mm/dd">
+<!ENTITY AccessionNo "受入番号 ">
+<!ENTITY Modality "モダリティ">
+<!ENTITY Patient "患者">
+<!ENTITY Name "氏名">
+<!ENTITY BirthDate "誕生日">
+<!ENTITY BirthDateShort "誕生日">
+<!ENTITY Sex "性別">
+<!ENTITY Study "検査">
+<!ENTITY StudyIDMedia "検査ID (メディア)">
+<!ENTITY Date "日付">
+<!ENTITY Time "時間">
+<!ENTITY StudyDescription "検査概要">
+<!ENTITY ShowStudyIUID "スタディ インスタンス UIDを表示">
+<!ENTITY ShowStudyDescription "検査概要を表示">
+<!ENTITY AccNo "受入番号">
+<!ENTITY RefPhysician "医師名">
+<!ENTITY Status "ステータス">
+<!ENTITY NoS "シリーズ数">
+<!ENTITY NoI "イメージ数">
+<!ENTITY Series "シリーズ">
+<!ENTITY SeriesNoMedia "シリーズ番号 (メディア)">
+<!ENTITY SeriesDescription "シリーズ概要">
+<!ENTITY BodyPart "検査部位">
+<!ENTITY ShowSeriesIUID "シリーズ インスタンス UIDを表示">
+<!ENTITY ShowSeriesDescription "シリーズ概要を表示">
+<!ENTITY PPSStatus "PPS ステータス">
+<!ENTITY Model "モデル">
+<!ENTITY Vendor "ベンダ">
+<!ENTITY SelectAllStudies "全検査を選択">
+<!ENTITY DeselectAll "全て選択解除">
+<!ENTITY ShowStudies "検査表示">
+<!ENTITY HideStudies "検査非表示">
+<!ENTITY XDS "XDS">
+<!ENTITY ShowXDSDocuments "XDS書類を表示">
+<!ENTITY HideXDSDocuments "XDS書類を非表示">
+<!ENTITY AddNewStudy "新しい検査を追加">
+<!ENTITY EditPatientAttributes "患者属性を編集">
+<!ENTITY ShowPatientAttributesInDB "DBの患者属性を表示">
+<!ENTITY ShowStudyPermissionsForPatient "患者の検査権限を表示">
+<!ENTITY RecoverPatient "患者を元に戻す">
+<!ENTITY ShowSeries "シリーズ表示">
+<!ENTITY HideSeries "シリーズ非表示">
+<!ENTITY StudyDateTime "検査日/時">
+<!ENTITY StudyStatusID "検査ステータス ID">
+<!ENTITY NumberOfSeries "シリーズ数">
+<!ENTITY NumberOfInstances "インスタンス数">
+<!ENTITY ViewStudyInWebviewer "Webviewerで検査表示">
+<!ENTITY AddWorklistItem "ワークリストアイテムを追加">
+<!ENTITY AddNewSeries "新しいシリーズを追加">
+<!ENTITY EditStudyAttributes "検査属性を編集">
+<!ENTITY ShowStudyAttributesInDB "DBの検査属性を表示">
+<!ENTITY ShowStudyPermissions "検査権限を表示">
+<!ENTITY RecoverStudy "検査を元に戻す">
+<!ENTITY ShowInstances "インスタンス表示">
+<!ENTITY HideInstances "インスタンス非表示">
+<!ENTITY SeriesDateTime "シリーズ日/時">
+<!ENTITY ViewSeriesInWebviewer "Webviewerでシリーズ表示">
+<!ENTITY ViewKeyObjectsInWebviewer "Webviewerでキー画像表示">
+<!ENTITY EditSeriesAttributes "シリーズ属性を編集">
+<!ENTITY ShowSeriesAttributesInDB "DBのシリーズ属性を表示">
+<!ENTITY RecoverSeries "シリーズを元に戻す">
+<!ENTITY ShowFiles "ファイル表示">
+<!ENTITY HideFiles "ファイル非表示">
+<!ENTITY ContentDateTime "コンテンツ日/時">
+<!ENTITY InstanceNumber "インスタンス番号">
+<!ENTITY ImageType "画像タイプ">
+<!ENTITY PixelMatrix "ピクセルマトリックス">
+<!ENTITY NumberOfFiles "ファイル数">
+<!ENTITY RetrieveAET "リトリーブ AET">
+<!ENTITY SopIUID "SOP インスタンス UID">
+<!ENTITY ViewImage "画像表示">
+<!ENTITY ShowInstanceAttributesInDB "DBのインスタンス属性を表示">
+<!ENTITY ShowDICOMAttributes "DICOM属性を表示">
+<!ENTITY DownloadDICOMObject "DICOMオブジェクトをお手元に">
+<!ENTITY RecoverInstance "インスタンスを元に戻す">
+<!ENTITY notOnline "オンラインじゃないよ">
+<!ENTITY CreationDateTime "作成日/時">
+<!ENTITY PresentationDescription "プレゼンテーション概要">
+<!ENTITY PresentationLabel "プレゼンテーションラベル">
+<!ENTITY NumberOfReferencedImages "参照画像数">
+<!ENTITY ViewImagesWithAppliedPresentationStateInWebviewer "確定されたプレゼンテーションステータス画像をWebviewerで表示">
+<!ENTITY DocumentTitle "書類タイトル">
+<!ENTITY DocumentStatus "書類ステータス">
+<!ENTITY ViewReportAsPDF "レポートをPDFで表示">
+<!ENTITY ViewReportAsHTML "レポートをHTMLで表示">
+<!ENTITY ExportPDFtoXDSRepository "PDFをXDS Repositoryへ書き出し">
+<!ENTITY WaveformType "波形タイプ">
+<!ENTITY ViewWaveform "波形表示">
+<!ENTITY MIMEType "MIMEタイプ">
+<!ENTITY ViewDocument "書類表示">
+<!ENTITY TSUID "トランスファー シンタックス UID" >
+<!ENTITY OK "おけ" >
+<!ENTITY toArchive "アーカイブへ" >
+<!ENTITY archived "アーカイブされたお" >
+<!ENTITY compressionFailed "圧縮に失敗" >
+<!ENTITY compressionVerificationFailed "圧縮照合に失敗" >
+<!ENTITY MD5CheckFailed "MD5チェックに失敗">
+<!ENTITY HSMQueryFailed "HSM検索に失敗">
+<!ENTITY FileSize "ファイルサイズ">
+<!ENTITY FilePath "ファイルパス">
+<!ENTITY MD5Sum "MD5サム">
+<!ENTITY ShowOriginalReceivedDICOMAttributes "オリジナルのDICOM属性を表示">
+<!ENTITY DownloadOriginalReceivedDICOMObject "オリジナルのDICOMオブジェクトをダウソ">
+<!ENTITY XDSDocuments "XDS書類">
+<!ENTITY QueryForXDSDocuments "XDS書類の検索">
+<!ENTITY ClearListOfXDSDocuments "XDS書類一覧のクリア">
+<!ENTITY DocumentID "書類ID">
+<!ENTITY OpenXDSIManifest "XDSIマニフェストを開く">
+<!ENTITY ViewManifestInWebviewer "Webviewerでマニフェスト表示">
+<!ENTITY OpenPDFDocument "PDF書類を開く">
+<!ENTITY OpenXDSDocument "XDS書類を開く">
+<!ENTITY QueryHasIssuer "患者IDに問題がある、あるいはない検査のみ表示">
+<!ENTITY QueryHasIssuer_text1 "あり">
+<!ENTITY QueryHasIssuer_text2 "なし">
+<!ENTITY QueryHasIssuer_text3 "患者IDに問題">
+<!ENTITY AlternativeStudyUID "Alternative query to find study with Study IUID of an order that doesn't match with StudyIUID of received composite object.">
+<!ENTITY AlternativeStudyUID_text "of Order">

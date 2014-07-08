@@ -1,0 +1,18 @@
+<mbean name="dcm4chee.archive:service=MPPSScu">
+<attribute name="AcceptTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="TLSConfigName"/>
+<attribute name="ForwardingRules"/>
+<attribute name="CallingAETitle"/>
+<attribute name="Concurrency"/>
+<attribute name="RetryIntervals"/>
+<attribute name="QueueName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="State"/>
+</mbean>

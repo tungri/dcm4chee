@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-md5check-service.xml 16622 2012-02-27 14:43:13Z javawilli $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.mbean.MD5CheckService"
+    name="dcm4chee.archive:service=MD5CheckService"
+    xmbean-dd="xmdesc/dcm4chee-md5check-xmbean.xml">
+    <depends optional-attribute-name="SchedulerServiceName"
+      >dcm4chee.archive:service=Scheduler</depends>
+    <depends>jboss.j2ee:jndiName=ejb/FileSystemMgt2,service=EJB</depends>
+    <attribute name="TimerIDCheckMD5">CheckMD5</attribute>
+  </mbean>
+</server>

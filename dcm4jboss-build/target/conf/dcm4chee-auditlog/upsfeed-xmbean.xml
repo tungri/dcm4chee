@@ -1,0 +1,7 @@
+<mbean name="dcm4chee.archive:service=UPSFeed">
+<attribute name="WorkItemConfigDirectory"/>
+<attribute name="UPSScpServiceName"/>
+<attribute name="IANScuServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

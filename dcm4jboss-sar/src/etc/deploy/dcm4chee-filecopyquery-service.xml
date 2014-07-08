@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-filecopyquery-service.xml 3310 2010-10-06 23:42:06Z franz.willer $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.hsm.FileCopyByQueryService"
+    name="dcm4chee.archive:service=FileCopyByQuery"
+    xmbean-dd="xmdesc/dcm4chee-filecopyquery-xmbean.xml">
+    <depends optional-attribute-name="FilecopyServiceName"
+    	>dcm4chee.archive:service=FileCopy</depends>
+	<depends optional-attribute-name="SchedulerServiceName"
+		>dcm4chee.archive:service=Scheduler</depends>
+  </mbean>
+</server>

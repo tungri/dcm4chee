@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Soundex service. Provides operations to update Soundex
+   codes for person names after change of Soundex algorithm configured in
+   <code>conf/dcm4chee-attribute-filter.xml</code>.]]>
+   </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.mbean.SoundexUpdateService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>SoundexUpdateService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   <operation impact="ACTION">
+      <description>Update Soundex code of Patient name.</description>
+      <name>updatePatientNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Update Soundex code of Referring Physician name.</description>
+      <name>updateReferringPhysicianNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Update Soundex code of Performing Physician name.</description>
+      <name>updatePerformingPhysicianNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Update Soundex code of Requesting Physician name.</description>
+      <name>updateRequestingPhysicianNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Update Soundex code of Verifying Observer name.</description>
+      <name>updateVerifyingObserverNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+    <operation impact="ACTION">
+      <description>Update Soundex code of Performing Physician name in MWL items.</description>
+      <name>updateMWLPerformingPhysicianNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Update Soundex code of Human Performer name in GPSPS.</description>
+      <name>updateGPSPSHumanPerformerNameSoundex</name>
+      <return-type>int</return-type>
+   </operation>   
+</mbean>
+

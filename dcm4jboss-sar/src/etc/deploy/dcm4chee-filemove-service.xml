@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<!-- $Id: dcm4chee-filecopy-service.xml 12644 2010-01-22 12:41:29Z gunterze $ -->
+
+<server>
+
+  <mbean code="org.jboss.jms.server.destination.QueueService"
+    name="dcm4chee.archive:service=Queue,name=FileMove"
+    xmbean-dd="xmdesc/Queue-xmbean.xml">
+	<attribute name="FullSize">500</attribute>
+	<attribute name="PageSize">100</attribute>
+	<attribute name="DownCacheSize">100</attribute>
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+  </mbean>
+
+  <mbean code="org.dcm4chex.archive.hsm.FileMoveService"
+    name="dcm4chee.archive:service=FileMove"
+    xmbean-dd="xmdesc/dcm4chee-filemove-xmbean.xml">
+    <attribute name="QueueName">FileMove</attribute>
+    <attribute name="TimerIDScheduleStudiesForMove"
+      >ScheduleStudiesForMove</attribute>
+    <attribute name="FileSystemMgtServiceNamePrefix"
+      >dcm4chee.archive:service=FileSystemMgt,group=</attribute>
+    <depends optional-attribute-name="JMSServiceName"
+      >dcm4chee.archive:service=JMS</depends>
+    <depends>dcm4chee.archive:service=Queue,name=FileMove</depends>
+    <depends optional-attribute-name="SchedulerServiceName"
+      >dcm4chee.archive:service=Scheduler</depends>
+    <depends optional-attribute-name="FindScuServiceName"
+      >dcm4chee.archive:service=FindScu</depends>
+    <depends>jboss.j2ee:jndiName=ejb/FileSystemMgt2,service=EJB</depends>
+  </mbean>
+</server>

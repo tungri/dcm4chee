@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[<b>ADT HL7 Service</v>. Receives and processes incoming
+   ADT messages, based on which messages are accepted as defined in the 
+   MessageTypes attribute. If a patient record does not exist in the database 
+   about the patient in the incoming ADT message, one is created.<br/>
+   Note that ADT^A10 messages do not affect the patient record, but instead
+   checks if pending worklist items exist for this patient in the worklist
+   managed by the archive, and if so, changes the status of worklist item to 
+   <tt>ARRIVED</tt>.]]>
+   </description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hl7.ADTService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>ADTService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getMessageTypes"
+      setMethod="setMessageTypes">
+      <description><![CDATA[Comma separated list of Message Types handled by
+       this service.]]>
+      </description>
+      <name>MessageTypes</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A01,ADT^A04,ADT^A05,ADT^A08,ADT^A10,ADT^A23,ADT^A28,ADT^A31,ADT^A34,ADT^A40,ADT^A47" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientArrivingMessageType"
+      setMethod="setPatientArrivingMessageType">
+      <description><![CDATA[Message Type for Patient Arriving.
+       Messages of this type will cause to change the status of Scheduled
+       Procedure Steps for this patient in the modality worklist from SCHEDULED
+       to ARRIVED<br/>
+       The message type must be also listed in configured <i>MessageTypes</i>
+       handled by this service.]]>
+      </description>
+      <name>PatientArrivingMessageType</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A10" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDeletePatientMessageType"
+      setMethod="setDeletePatientMessageType">
+      <description><![CDATA[Message Type for deletion of a Patient record.
+       Messages of this type will cause to delete a Patient, which all
+       associated entities, in particular including his/her studies, from the
+       system.<br/>
+       The message type must be also listed in configured <i>MessageTypes</i>
+       handled by this service.]]>
+      </description>
+      <name>DeletePatientMessageType</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A23" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientMergeMessageTypes"
+      setMethod="setPatientMergeMessageTypes">
+      <description><![CDATA[Comma separated list of message types for merge of
+two Patients. Messages of this type will cause to merge two Patients.<br/>
+The message type must be also listed in configured <i>MessageTypes</i>
+handled by this service.]]>
+      </description>
+      <name>PatientMergeMessageTypes</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A40" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getChangePatientIdentifierListMessageType"
+      setMethod="setChangePatientIdentifierListMessageType">
+      <description><![CDATA[Message Type for change of the Patient Identifier
+       List of one Patient.<br/>
+       The message type must be also listed in configured <i>MessageTypes</i>
+       handled by this service.]]>
+      </description>
+      <name>ChangePatientIdentifierListMessageType</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A47" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPixUpdateNotificationMessageType"
+      setMethod="setPixUpdateNotificationMessageType">
+      <description><![CDATA[Message Type for PIX Update Notification.
+       Messages of this type <b>and</b> without (non-whitespace) Patient Name
+       (PID-5) will be interpreted as PIX Update Notification according <i>IHE
+       Transaction ITI-10</i> specified in the <i>IHE IT Infrastructure
+       Technical Framework</i>. <i>IHE Transaction ITI-10</i> specifies 
+       <code>ADT^A31</code> as message type for PIX Update Notification.<br/>
+       The message type must be also listed in configured <i>MessageTypes</i>
+       handled by this service.]]>
+      </description>
+      <name>PixUpdateNotificationMessageType</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ADT^A31" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getIssuersOfOnlyOtherPatientIDs"
+      setMethod="setIssuersOfOnlyOtherPatientIDs">
+      <description><![CDATA[Comma separated list of Issuers/Authorities,
+      which only qualifies Other Patient IDs - and NOT primary Patient IDs.
+      Patient IDs in PIX Update Notifications with such Issuer/Authority will
+      NOT cause to create a new Patient Record, in the case that there is no 
+      Patient Record with such primary Patient ID]]>
+      </description>
+      <name>IssuersOfOnlyOtherPatientIDs</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="SSN" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getIgnoredIssuersOfPatientIDPattern"
+      setMethod="setIgnoredIssuersOfPatientIDPattern">
+      <description><![CDATA[A regular expression of Issuer patterns to ignore
+      in PIX Update Notifications, or "NONE".  Any Issuer of Patient ID that
+      matches the pattern will be removed from the list of patient identifiers
+      before the updates are applied to the database.]]>
+      </description>
+      <name>IgnoredIssuersOfPatientIDPattern</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE" />
+      </descriptors>
+   </attribute>   
+   <attribute access="read-write"
+      getMethod="getPatientMatching"
+      setMethod="setPatientMatching">
+      <description><![CDATA[Defines which Patient Attributes in received HL7
+ADT messages are considered for selecting existing Patient records in the
+archive.
+<p>
+Format: 'pid'['?']',issuer'['?'][',' ['['] <i>demograhic-matches</i> [']'] ]
+<br/><i>demograhic-matches</i> ::= <i>demograhic-match</i>['|' ...]
+<br/><i>demograhic-match</i> ::= [<i>ignore</i>',']<i>demograhic-fields</i>
+<br/><i>ignore</i> ::= 'ignore("' <i>regular-expression</i> '")'
+<br/><i>demograhic-fields</i> ::= <i>demograhic-field</i>['?'][',' ...]
+<br/><i>demograhic-field</i> ::= 'familyname'['(1)'] | 'givenname'['(1)'] | 'middlename'['(1)'] | 'nameprefix'['(1)'] | 'namesuffix'['(1)'] | birthdate | sex
+<p>
+Multiple alternative <i>demograhic-matches</i> can be specified using '|' as
+delimiter.
+<p>
+Substrings specified by 'ignore("' <i>regular-expression</i> '")' will be ignored for matching patient name
+components.
+<p>
+A '(1)' suffix of the attribute name specifies that only the first character
+need to match.
+<p>
+A question mark('?') after a field name specifies that a missing value in
+received HL7 ADT messages will match with any value for that field in
+existing Patient Records, as Patient Records with missing values for that field
+will match with any value for that field in received HL7 ADT messages. Field
+names without question marks specifies, that HL7 ADT messages without values
+for such fields will not match any existing Patient Record, and Patient Records
+without values for such fields will not get selected on receive of any HL7 ADT
+message.
+<p>
+Surrounding <i>demograhic-match</i> by brackets('[]') defines, that
+demographic fields shall *not* be considered for the selection of an existing
+Patient record, if the Patient ID is qualified by an Issuer/Authority in the
+HL7 ADT message *and* in the matching Patient Record.
+<p><b>Warning:</b>Improper configuration may cause update/deletion of wrong patient or creation of doublets.<br/>
+Furthermore, the consideration of demographic fields for the selection of
+existing Patient records disables the update of such Patient Demographics
+attributes by HL7 ADT messages!
+<p>Default: <code>pid,issuer?</code>
+]]>
+      </description>
+      <name>PatientMatching</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid,issuer?" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTemplateDir"
+      setMethod="setTemplateDir">
+      <description><![CDATA[Directory where template file(s) are located.<br />
+      A style sheet can be placed in this directory or in a sub-directory to select a style sheet according to the sender.<br />
+      This sub-directory can be &lt;IPAddr&gt;, &lt;hostname&gt; or '&lt;Sending Application&gt;^&lt;Sending Facility&gt;' (In this order).<br />
+      (See also UseHostSubdirs attribute in HL7Server service to enable IP/hostname selection)<br />
+      A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>TemplateDir</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-hl7"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPidStylesheet"
+      setMethod="setPidStylesheet">
+      <description><![CDATA[Stylesheet for HL7 PID to DICOM Patient Module mapping. <br />
+      Base dir: <code>TemplateDir</code><br/>
+      If this name contains a '/' or '\' the configured <code>TemplateDir</code> will be NOT applied! 
+      In this case the name is the full path of the stylesheet and a relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>PidStylesheet</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid2dcm.xsl" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMrgStylesheet"
+      setMethod="setMrgStylesheet">
+      <description><![CDATA[Stylesheet for HL7 MRG to DICOM Patient Module mapping.<br />
+      Base dir: <code>TemplateDir</code><br/>
+      If this name contains a '/' or '\' the configured <code>TemplateDir</code> will be NOT applied! 
+      In this case the name is the full path of the stylesheet and a relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>MrgStylesheet</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="mrg2dcm.xsl" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isIgnoreDeleteErrors"
+      setMethod="setIgnoreDeleteErrors">
+      <description>Ignore errors processing ADT^A23 messages (delete patient).
+      </description>
+      <name>IgnoreDeleteErrors</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isHandleEmptyMrgAsUpdate"
+      setMethod="setHandleEmptyMrgAsUpdate">
+      <description><![CDATA[Handle ADT messages with empty MGR segment as update.<br/>
+      		This will allow processing of update/delete/arrived messages wich 
+      		contains an irregular empty MRG segment. (Missing MRG-1: Prior Patient ID)		
+      ]]></description>
+      <name>HandleEmptyMrgAsUpdate</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isKeepPriorPatientAfterMerge"
+      setMethod="setKeepPriorPatientAfterMerge">
+      <description><![CDATA[Keep prior patient after Patient Merge.<br/>
+      		This will allow to get correct patient information even the received DICOM objects contains a patient id of an merged patient.<br />
+      		If disabled, the prior patient will be deleted.
+      ]]></description>
+      <name>KeepPriorPatientAfterMerge</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getContentEditServiceName"
+      setMethod="setContentEditServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>ContentEditServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getHL7ServerName"
+      setMethod="setHL7ServerName">
+      <description>Used internally - do NOT modify.
+      </description>
+      <name>HL7ServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+</mbean>
+    

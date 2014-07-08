@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=TarRetriever">
+<attribute name="HSMModulServicename"/>
+<attribute name="CacheRoot"/>
+<attribute name="CacheJournalRootDirectory"/>
+<attribute name="CacheJournalFilePathFormat"/>
+<attribute name="MinimumFreeDiskSpace"/>
+<attribute name="PreferredFreeDiskSpace"/>
+<attribute name="CheckMD5"/>
+<attribute name="BufferSize"/>
+<attribute name="State"/>
+</mbean>

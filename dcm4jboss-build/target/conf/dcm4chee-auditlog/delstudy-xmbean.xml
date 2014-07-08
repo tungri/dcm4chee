@@ -1,0 +1,10 @@
+<mbean name="dcm4chee.archive:service=DeleteStudy">
+<attribute name="DeleteSeriesBySeries"/>
+<attribute name="DeleteStudyFromDB"/>
+<attribute name="DeletePatientWithoutObjects"/>
+<attribute name="CreateIANonStudyDelete"/>
+<attribute name="RetryIntervalsForJmsOrder"/>
+<attribute name="DeleteStudyQueueName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="State"/>
+</mbean>

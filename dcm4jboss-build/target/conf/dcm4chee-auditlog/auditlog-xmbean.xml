@@ -1,0 +1,16 @@
+<mbean name="dcm4chee.archive:service=AuditLogger">
+<attribute name="AuditSourceID"/>
+<attribute name="AuditEnterpriseSiteID"/>
+<attribute name="AuditSourceTypeCodes"/>
+<attribute name="ProcessName"/>
+<attribute name="LocalAETitles"/>
+<attribute name="EnableDNSLookups"/>
+<attribute name="IncludeXMLDeclaration"/>
+<attribute name="TimezonedDateTime"/>
+<attribute name="UtcDateTime"/>
+<attribute name="QualifyHostname"/>
+<attribute name="EncodeUserIsRequestorTrue"/>
+<attribute name="AllowMultipleRequestors"/>
+<attribute name="ConfigurationDirectory"/>
+<attribute name="State"/>
+</mbean>

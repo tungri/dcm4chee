@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=MPPSEmulator">
+<attribute name="ModalityAETitles"/>
+<attribute name="MPPSDelay"/>
+<attribute name="PollInterval"/>
+<attribute name="CalledAETitle"/>
+<attribute name="IgnoreReqAttrIfNoStudyAccNo"/>
+<attribute name="TimerIDCheckSeriesWithoutMPPS"/>
+<attribute name="MppsScuServiceName"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="State"/>
+</mbean>

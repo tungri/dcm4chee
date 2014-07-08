@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC 
+    "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" 
+    "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+<mbean>
+   <description><![CDATA[<b>Rejection Note Stored Service</b>. Responsible to
+move previous received DICOM Composite Objects referenced in <i>Key Object
+Selection Documents</i> with particular Document Titles (=<i>Rejection Note</i>
+received afterwards into the trash.
+<p>
+Fullfills the requirement for <i>IHE Mammography Acquisition Workflow (MAWF)
+Integration Profile</i> compliant <i>Image Managers</i> to support
+<i>Transaction: Image Rejection Note Stored [RAD-66]</i>.
+</p><p>
+To also notify <i>Application Entities</i> configured in the
+<b>IAN SCU Service</b> by <i>Instance Availability Notifications</i> about 
+the deletion of DICOM Composite Objects referenced in the received <i>Rejection
+Note</i> - as required by IHE MAWF - <b>Content Edit Service</b> attribute
+<tt>CreateIANonMoveToTrash</tt> must be <tt>= true</tt>.
+</p>]]></description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate" />
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.mawf.RejectionNoteStoredService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>RejectionNoteStoredService</name>
+   </constructor>
+
+   <!-- Attributes -->
+
+   &defaultAttributes;
+
+   <attribute access="read-write"
+      getMethod="getRejectionNoteCodes"
+      setMethod="setRejectionNoteCodes">
+      <description><![CDATA[Controls which Key Object Selection Objects,
+identified by its document title, shall trigger the move of referenced
+DICOM Composite Objects from the archive. For compliance with
+<i>IHE Mammography Acquisition Workflow (MAWF) Integration Profile</i>, the
+list must contain
+<pre>
+  (113037, DCM, "Rejected for Patient Safety Reasons")</code>,
+</pre>
+and optionally also
+<pre>
+  (113001,, DCM, "Rejected for Quality Reasons")
+</pre>,
+]]></description>
+      <name>RejectionNoteCodes</name>
+      <type>java.lang.String</type>
+    <descriptors>
+      <value value='
+      (113001, DCM, "Rejected for Quality Reasons")
+      (113037, DCM, "Rejected for Patient Safety Reasons")
+      '/>
+    </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="isCheckCallingAET"
+      setMethod="setCheckCallingAET">
+      <description><![CDATA[Check source AET of series with calling AET of RejectionNote request.<br/>
+      	Skip Instances of Series if source and calling AET's are different.
+		]]></description>
+      <name>CheckCallingAET</name>
+      <type>boolean</type>
+    <descriptors>
+      <value value="true"/>
+    </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getDeletionDelay"
+      setMethod="setDeletionDelay">
+      <description><![CDATA[Controls the delay between the receive of an
+Key Object Selection Objects which document title match one of the configured
+<b>RejectionNoteCodes</b> and the deletion of the referenced objects in
+seconds (##s), minutes (##m) or hours (##h). If <b>KeepRejectionNote</b>
+=<code>false</code>, the delay shall be configured large enough, so the
+Storage Commitment Request for Key Object Selection Object is always received
+before its deletion.]]>
+      </description>
+      <name>DeletionDelay</name>
+      <type>java.lang.String</type>
+    <descriptors>
+      <value value="1m"/>
+    </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="isKeepRejectionNote"
+      setMethod="setKeepRejectionNote">
+      <description><![CDATA[Controls, if the Key Object Selection Object, which
+triggered the deletion of referenced objects, will not be deleted, but be kept
+stored in the archive. ]]>
+      </description>
+      <name>KeepRejectionNote</name>
+      <type>boolean</type>
+    <descriptors>
+      <value value="true"/>
+    </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getRetryIntervals"
+      setMethod="setRetryIntervals">
+      <description><![CDATA[Number and interval of retries made for failed
+deletion of referenced objects.
+<p>
+Format: Comma separated list of <i>number</i>x<i>interval</i> pairs. The
+interval can be specified in seconds (##s), minutes (##m), hours (##h) or
+days (##d).
+</p><p>
+Example: <code>5x1m,10x10m</code>, means retry a total of 5 times, one minute
+apart for each retry; then retry a total of 10 times, 10 minutes apart for each
+retry.</p>]]>
+    </description>
+    <name>RetryIntervalsForJmsOrder</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="5x1m,1x1h,1x1d" />
+    </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getQueueName"
+      setMethod="setQueueName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>QueueName</name>
+      <type>java.lang.String</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getJmsServiceName"
+      setMethod="setJmsServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>JMSServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getContentEditServiceName"
+      setMethod="setContentEditServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>ContentEditServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getStoreScpServiceName"
+      setMethod="setStoreScpServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>StoreScpServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <!-- Operations -->
+   &defaultOperations;
+
+</mbean>

@@ -1,0 +1,17 @@
+<mbean name="dcm4chee.archive:service=HL7Send">
+<attribute name="SendingApplication"/>
+<attribute name="SendingFacility"/>
+<attribute name="ForwardingRules"/>
+<attribute name="RetryIntervalls"/>
+<attribute name="Concurrency"/>
+<attribute name="ForwardTemplateDir"/>
+<attribute name="AcTimeout"/>
+<attribute name="SoCloseDelay"/>
+<attribute name="AuditPIXQuery"/>
+<attribute name="QueueName"/>
+<attribute name="HL7ServerName"/>
+<attribute name="TLSConfigName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

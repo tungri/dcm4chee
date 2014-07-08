@@ -1,0 +1,12 @@
+<mbean name="dcm4chee.archive:service=ECHOService">
+<attribute name="AcceptTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="TLSConfigName"/>
+<attribute name="CallingAETitle"/>
+<attribute name="State"/>
+</mbean>

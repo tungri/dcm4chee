@@ -1,0 +1,15 @@
+<mbean name="dcm4chee.archive:service=StudyPermission">
+<attribute name="UpdateOnHl7Received" type="Security"/>
+<attribute name="Hl7ReceivedStylesheet" type="Security"/>
+<attribute name="UpdateOnMppsCreate" type="Security"/>
+<attribute name="MppsCreateStylesheet" type="Security"/>
+<attribute name="UpdateOnSeriesStored" type="Security"/>
+<attribute name="SeriesStoredStylesheet" type="Security"/>
+<attribute name="UpdateOnNewStudy" type="Security"/>
+<attribute name="HL7ServerName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="ContentEditServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

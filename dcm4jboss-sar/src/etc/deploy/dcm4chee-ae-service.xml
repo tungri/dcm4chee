@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server>
+<!-- $Id: dcm4chee-ae-service.xml 12275 2009-10-12 07:07:31Z javawilli $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.mbean.AEService" 
+	name="dcm4chee.archive:service=AE"
+	xmbean-dd="xmdesc/dcm4chee-ae-xmbean.xml">	
+    <depends>jboss.j2ee:service=EJB,jndiName=ejb/AEManager</depends>
+    <depends>dcm4chee.archive:service=AuditLogger</depends>
+    <depends optional-attribute-name="EchoServiceName"
+      >dcm4chee.archive:service=ECHOService</depends>
+  </mbean>
+</server>

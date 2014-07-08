@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+<!-- $Id$ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar" />
+
+  <mbean code="org.dcm4chex.archive.dcm.ups.UPSFeedService" name="dcm4chee.archive:service=UPSFeed"
+    xmbean-dd="xmdesc/dcm4chee-upsfeed-xmbean.xml">
+    <depends optional-attribute-name="UPSScpServiceName"
+      >dcm4chee.archive:service=UPSScp</depends>
+    <depends optional-attribute-name="IANScuServiceName"
+      >dcm4chee.archive:service=IANScu</depends>
+    <depends optional-attribute-name="TemplatesServiceName"
+      >dcm4chee.archive:service=Templates</depends>
+  </mbean>
+</server>

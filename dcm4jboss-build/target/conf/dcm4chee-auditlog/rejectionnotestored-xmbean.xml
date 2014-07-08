@@ -1,0 +1,12 @@
+<mbean name="dcm4chee.archive:service=RejectionNoteStored">
+<attribute name="RejectionNoteCodes"/>
+<attribute name="CheckCallingAET"/>
+<attribute name="DeletionDelay"/>
+<attribute name="KeepRejectionNote"/>
+<attribute name="RetryIntervalsForJmsOrder"/>
+<attribute name="QueueName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="ContentEditServiceName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="State"/>
+</mbean>

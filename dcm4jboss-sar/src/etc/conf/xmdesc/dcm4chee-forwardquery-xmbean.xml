@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Query based Forward Service.<br />
+		Provides auto-routing of DICOM objects to a remote DICOM application 
+		that fulfills criteria defined by an SQL Query.
+		<p>The SQL statement must be defined with following rules:</p>
+		1) Series.series_iuid and Series.retrieve_aets must be the first columns of the select statement.<br />
+		2) The where clause should contain a Series.updated_time. ]]>
+   </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.movescu.ForwardByQueryService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>ForwardByQueryService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" getMethod="getCalledAET" setMethod="setCalledAET">
+      <description>AE title of the STORE SCP, to which the Dicom objects should be forwarded.
+      </description>
+      <name>CalledAETitle</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="STORE1"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getPollInterval" setMethod="setPollInterval">
+      <description><![CDATA[Interval for polling for series to forward.
+          The interval can be specified in seconds (##s) or minutes (##m). 
+          NEVER = disable Forwarding of Dicom objects.]]>
+      </description>
+      <name>PollInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getQuery"
+      setMethod="setQuery">
+      <description><![CDATA[SQL statement to filter series for forwarding.<p />
+      	Default Query to find series that are stored (series_status=0) and not forwarded (ext_retr_aet is null) 
+      	and has associated Request Attributes (a reference in series_req):<br />
+      	SELECT DISTINCT series.series_iuid, series.retrieve_aets, series.pk 
+         	FROM series INNER JOIN series_req ON series.pk = series_req.series_fk 
+         	WHERE series.series_status = 0 AND series.ext_retr_aet IS NULL 
+         		AND series.updated_time &lt; ? ORDER BY series.pk<br />
+        Mote: The first three columns in the SELECT statement must be: series_iuid, retrieve_aets and pk (Series table)!<br />
+        If limit > 0 the SQL statement is extended with: <br />
+        1) a database specific LIMIT <br /> 
+        2) a 'series.pk > ?' as first criteria in WHERE clause (if sql hasn't already a 'pk > ?')<br />
+        3) an 'ORDER BY series.pk' (if sql hasn't already a 'ORDER BY')]]>  
+      </description>
+      <name>Query</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="SELECT DISTINCT series.series_iuid, series.retrieve_aets, series.pk 
+         	FROM series INNER JOIN series_req ON series.pk = series_req.series_fk 
+         	WHERE series.series_status = 0 AND series.ext_retr_aet IS NULL 
+         		AND series.updated_time &lt; ? ORDER BY series.pk"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only" getMethod="getLastQueryCheckResult">
+      <description><![CDATA[Result of last check of Query statement.<br />
+      	If there is an error no automatic forward will be perfromed until the Query is corrected. <br /> ]]>
+      </description>
+      <name>LastQueryCheckResult</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write" getMethod="getDelay" setMethod="setDelay">
+      <description><![CDATA[Delay in seconds (##s), minutes (##m) or hours (##h) for which a series must be unchanged before forward is triggered.
+      			Use NONE to disable parameter setting of Prepared Statement! (This would be necessary if your SQL statement doesn't contain a '?')]]>
+      </description>
+      <name>Delay</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1h"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getLimit"
+      setMethod="setLimit">
+      <description><![CDATA[Limit number of series for forwarding in one step. <br />
+            This will add database specfic limit statements to the Query!
+      		Set this to 0 if the query already contains a limitation.]]>  
+      </description>
+      <name>Limit</name>
+      <type>int</type>
+      <descriptors>
+         <value value="2000"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if a forward task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+   <attribute access="read-only"
+      getMethod="getLastSeriesPk">
+      <description>Last used Series.pk. Used as additional query parameter (SERIES.pk > lastPk) if a Limit > 0 is specified!
+      </description>
+      <name>LastSeriesPk</name>
+      <type>long</type>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getForwardPriority" setMethod="setForwardPriority">
+      <description>Forwarding priority. Enumerated Values: LOW, MEDIUM, HIGH.
+      </description>
+      <name>ForwardPriority</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="MEDIUM"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTimerIDForwardByQuery"
+      setMethod="setTimerIDForwardByQuery">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDForwardByQuery</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TimerIDForwardByQuery"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" 
+      getMethod="getMoveScuServiceName"
+      setMethod="setMoveScuServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>MoveScuServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSchedulerServiceName"
+      setMethod="setSchedulerServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>SchedulerServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   <operation impact="ACTION">
+      <description><![CDATA[Check for series to forward and schedule MOVE requests for these.<br />
+      	Return number of series that are scheduled to be sent to calledAET.]]>
+      </description>
+      <name>checkForward</name>
+      <return-type>int</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description><![CDATA[Show actual SQL statement as it will be used to find series.]]>
+      </description>
+      <name>showSQL</name>
+      <return-type>java.lang.String</return-type>
+   </operation>
+   
+</mbean>
+

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC 
+    "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" 
+    "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+  <description><![CDATA[
+Lossy Compression Service. The Lossy Compression Service supports delayed,
+JPEG Lossy compression of received images.
+]]></description>
+
+  <descriptors>
+    <persistence persistPolicy="OnUpdate" />
+    <persistence-manager
+      value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+  </descriptors>
+
+  <class>org.dcm4chex.archive.mbean.LossyCompressionService</class>
+
+  <constructor>
+
+    <description>The default constructor</description>
+    <name>LossyCompressionService</name>
+  </constructor>
+
+   <!-- Attributes -->
+  &defaultAttributes;
+
+  <attribute access="read-write" getMethod="getSourceFileSystemGroupID"
+    setMethod="setSourceFileSystemGroupID">
+    <description><![CDATA[Group ID of file systems which are scanned
+     for image files to compress in configured <b>TaskInterval</b>.]]>
+    </description>
+    <name>SourceFileSystemGroupID</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="ONLINE_STORAGE" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getDestinationFileSystemGroupID"
+    setMethod="setDestinationFileSystemGroupID">
+    <description><![CDATA[Group ID of writable file systems to which lossy
+      compressed images are stored.]]>
+    </description>
+    <name>DestinationFileSystemGroupID</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="LOSSY_STORAGE" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getTaskInterval"
+    setMethod="setTaskInterval">
+    <description><![CDATA[Interval in which the database is checked for image
+      files located on file systems of the configured
+      <b>SourceFileSystemGroupID</b> to compress.
+      <br>Format: 
+      <br><i>interval</i>!<i>from</i>-<i>to</i> or NEVER
+      <br><i>interval</i> = ##s (in seconds), ##m (in minutes), ##h (in hours).
+      <br><i>from</i> = start hour (0-23) when no compression should be performed
+      <br><i>to</i> = end hour (0-23) when no compression should be performed
+      <br>NEVER = disable automatic compression
+      <br>Example:10s!9-17 means every 10 seconds, poll the database and check
+      for images to compress, except between the hours of 9:00am and 5:00pm.
+      By setting this type of TaskInterval, you can ensure compression of
+      images happens outside of peak imaging hours.]]>
+    </description>
+    <name>TaskInterval</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NEVER" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if compression task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+  <attribute access="read-write" getMethod="getLimitNumberOfFilesPerTask"
+    setMethod="setLimitNumberOfFilesPerTask">
+    <description>Maximum number of files that are compressed in
+      one task.</description>
+    <name>LimitNumberOfFilesPerTask</name>
+    <type>int</type>
+    <descriptors>
+      <value value="1000" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getCompressionRules"
+    setMethod="setCompressionRules">
+    <description><![CDATA[Specifies compression rules for particular SOP Class, Body Part Examined, Source AE Title.
+<br>
+<br>Format: <i>sop-class-name-or-uid</i>:<i>body-part</i>:<i>source-aet</i>:<i>delay</i>:<i>quality</i>:<i>description</i>:<i>ratio</i>:<i>near</i>
+<br>
+<br><i>sop-class-name-or-uid</i> = the UID of the SOP class, or a string name defined in the dictionary.xml file under uids type="SOPClass"
+<br>
+<br><i>body-part</i> = Body Part Examined or '*'
+<br>
+<br><i>source-aet</i> = Source AE Title
+<br>
+<br><i>delay</i> = compression delay in minutes (##m), hours (##h) or days (##d)
+<br>
+<br><i>quality</i> = compression quality between 0 (= lowest image quality / highest compression ratio) and 1.0 (= highest quality / lowest compression ratio)
+<br>
+<br><i>description</i> = description stored in attribute <i>Derivation Description (0008,2111)</i> of compressed DICOM image
+<br>
+<br><i>ratio</i> = estimated compression ratio stored in attribute <i>Lossy Image Compression Ratio (0028,2112)</i> of compressed DICOM image
+<br>
+<br><i>near</i> = maximal absolute derivation of pixel sample values by lossy compression+decompression. -1 = disables validation of compressed images 
+]]>
+    </description>
+    <name>CompressionRules</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value
+        value="
+         ComputedRadiographyImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         DigitalXRayImageStorageForPresentation:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         DigitalXRayImageStorageForProcessing:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         DigitalMammographyXRayImageStorageForPresentation:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         DigitalMammographyXRayImageStorageForProcessing:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         CTImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         MRImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         UltrasoundImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         UltrasoundMultiframeImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         UltrasoundImageStorageRetired:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         UltrasoundMultiframeImageStorageRetired:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         SecondaryCaptureImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         XRayAngiographicImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         XRayRadiofluoroscopicImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         NuclearMedicineImageStorage:*:MOD_AET:5d:0.75:JPEG Lossy Compression with quality=0.75:5.0:64;
+         " />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getExternalRetrieveAET"
+    setMethod="setExternalRetrieveAET">
+    <description><![CDATA[Constrains lossy compression to objects which are
+     external retrievable from specified Application Entity.
+     <br>'-' = no such constrain.]]>
+    </description>
+    <name>ExternalRetrieveAETitle</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="-" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getCopyOnFSGroupID"
+    setMethod="setCopyOnFSGroupID">
+    <description><![CDATA[Constrains lossy compression to objects for which
+     there is a copy available on a file system of the specified file system
+     group. Only effective if <b>ExternalRetrieveAETitle</b> = '-'.
+     <br>'-' = no such constrain.]]>
+    </description>
+    <name>CopyOnOtherFileSystemGroupID</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="-" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getSourceAET"
+    setMethod="setSourceAET">
+    <description><![CDATA[Source AE Title used by operation
+    <b>compressSeriesJPEGLossy</b> for new created Series.]]>
+    </description>
+    <name>SourceAETitle</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="DCM4CHEE" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getSeriesDescription"
+    setMethod="setSeriesDescription">
+    <description><![CDATA[Series Description used by operation
+    <b>compressSeriesJPEGLossy</b> for new created Series. '{}' will
+    be replaced by Series Description of uncompressed objects.]]>
+    </description>
+    <name>SeriesDescription</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="JPEG Lossy compressed {}" />
+    </descriptors>
+  </attribute>
+
+ <attribute access="read-write" getMethod="getBufferSize"
+    setMethod="setBufferSize">
+    <description>Size of write byte buffer. </description>
+    <name>BufferSize</name>
+    <type>int</type>
+    <descriptors>
+      <value value="8192" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getTempDir"
+    setMethod="setTempDir">
+    <description><![CDATA[Directory to spool decompressed already lossless
+      compressed files for its lossy compression. Relative path names are
+      resolved relative to $DCM4CHEE_HOME/server/default/.]]>
+    </description>
+    <name>TempDirectory</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="tmp" />
+    </descriptors>
+  </attribute>
+   <attribute access="read-write" 
+      getMethod="getFetchSize"
+      setMethod="setFetchSize">
+      <description>JDBC Fetch size.
+      </description>
+      <name>FetchSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="50"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getStoreScpServiceName"
+      setMethod="setStoreScpServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>StoreScpServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+  <attribute access="read-write" getMethod="getSchedulerServiceName"
+    setMethod="setSchedulerServiceName">
+    <description>Used internally. Do NOT modify. </description>
+    <name>SchedulerServiceName</name>
+    <type>javax.management.ObjectName</type>
+  </attribute>
+
+   <attribute access="read-write"
+      getMethod="getFileSystemMgtServiceNamePrefix"
+      setMethod="setFileSystemMgtServiceNamePrefix">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>FileSystemMgtServiceNamePrefix</name>
+      <type>java.lang.String</type>
+   </attribute>
+
+  <attribute access="read-write" getMethod="getTimerIDCheckFilesToCompress"
+    setMethod="setTimerIDCheckFilesToCompress">
+    <description>Used internally. Do NOT modify. </description>
+    <name>TimerIDCheckFilesToCompress</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+  <!-- Operations -->
+  &defaultOperations;
+
+  <operation impact="ACTION">
+    <description>Compress specified file JPEG Lossy with specified quality.
+    Prompts Compression Ratio, measured on file length and on bits per pixel.
+    </description>
+    <name>compressFileJPEGLossy</name>
+    <parameter>
+      <name>inFilePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <name>outFilePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <name>compressionQuality</name>
+      <type>float</type>
+    </parameter>
+    <parameter>
+      <name>derivationDescription</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <name>estimatedCompressionRatio</name>
+      <type>float</type>
+    </parameter>
+    <parameter>
+      <name>newSOPInstanceUID</name>
+      <type>boolean</type>
+    </parameter>
+    <parameter>
+      <name>newSeriesInstanceUID</name>
+      <type>boolean</type>
+    </parameter>
+    <return-type>java.lang.String</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description><![CDATA[Compress specified Series located on file systems of
+    the configured <b>SourceFileSystemGroupID</b> JPEG Lossy with specified
+    quality. Prompts number of compressed images and minimum/average/maximum
+    Compression Ratio, measured on file length and on bits per pixel. If
+    decompress = True, also prompts minimum/average/maximum of maximal absolute
+    derivation of pixel sample values in decompressed images.]]>
+    </description>
+    <name>compressSeriesJPEGLossy</name>
+    <parameter>
+      <description>Series Instance UID of Series to compress</description>
+      <name>seriesIUID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>Compression quality in the range 0.0 - 1.0.</description>
+      <name>compressionQuality</name>
+      <type>float</type>
+    </parameter>
+    <parameter>
+      <description>Description stored in Derivation Description (0008,2111) of
+      compressed images.</description>
+      <name>derivationDescription</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>Estimated Compression Ratio stored in Lossy Image 
+      Compression Ratio (0028,2112) of compressed images.</description>
+      <name>estimatedCompressionRatio</name>
+      <type>float</type>
+    </parameter>
+    <parameter>
+      <description>Decompress lossy compressed images and calculate maximal
+      absolute derivation of pixel sample values.</description>
+      <name>decompress</name>
+      <type>boolean</type>
+    </parameter>
+    <parameter>
+      <description>Archive lossy compressed image as additional Series of the
+      same Study.</description>
+      <name>archive</name>
+      <type>boolean</type>
+    </parameter>
+    <return-type>java.lang.String</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description><![CDATA[Checked for image files located on file systems of
+    the configured <b>SourceFileSystemGroupID</b> to compress according the
+    configured <b>CompressionRules</b>.]]>
+    </description>
+    <name>checkForFilesToCompress</name>
+  </operation>
+</mbean>

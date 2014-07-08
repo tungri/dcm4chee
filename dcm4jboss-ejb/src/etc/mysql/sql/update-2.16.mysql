@@ -1,0 +1,105 @@
+-- Update DB from dcm4chee-2.15.x to dcm4chee-2.16.x
+
+CREATE INDEX inst_created ON instance(created_time);
+CREATE INDEX hostname ON ae(hostname(16));
+
+ALTER TABLE study_on_fs ADD (mark_to_delete BIT);
+
+UPDATE study_on_fs SET mark_to_delete=0;
+ALTER TABLE study_on_fs MODIFY mark_to_delete BIT NOT NULL;
+
+CREATE INDEX mark_to_delete ON study_on_fs(mark_to_delete);
+
+ALTER TABLE ae ADD acc_no_issuer VARCHAR(250) BINARY;
+
+CREATE TABLE issuer (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    entity_id         VARCHAR(250) BINARY,
+    entity_uid        VARCHAR(250) BINARY,
+    entity_uid_type   VARCHAR(250) BINARY
+) ENGINE=INNODB;
+CREATE UNIQUE INDEX entity_id ON issuer(entity_id(64));
+CREATE UNIQUE INDEX entity_uid ON issuer(entity_uid(64),entity_uid_type(64));
+
+ALTER TABLE patient ADD (
+   pat_fn_sx VARCHAR(250) BINARY,
+   pat_gn_sx VARCHAR(250) BINARY);
+CREATE INDEX pat_fn_sx ON patient(pat_fn_sx(16));
+CREATE INDEX pat_gn_sx ON patient(pat_gn_sx(16));
+
+ALTER TABLE study ADD (
+   accno_issuer_fk BIGINT,
+   ref_phys_fn_sx VARCHAR(250) BINARY,
+   ref_phys_gn_sx VARCHAR(250) BINARY);
+ALTER TABLE study
+   ADD INDEX accno_issuer_fk (accno_issuer_fk),
+   ADD CONSTRAINT accno_issuer_fk FOREIGN KEY (accno_issuer_fk) REFERENCES issuer(pk);
+CREATE INDEX ref_phys_fn_sx ON study(ref_phys_fn_sx(16));
+CREATE INDEX ref_phys_gn_sx ON study(ref_phys_gn_sx(16));
+
+ALTER TABLE series ADD (
+   inst_code_fk BIGINT,
+   perf_phys_fn_sx VARCHAR(250) BINARY,
+   perf_phys_gn_sx VARCHAR(250) BINARY);
+ALTER TABLE series ADD FOREIGN KEY (inst_code_fk) REFERENCES code(pk);
+CREATE INDEX series_inst_code_fk ON series(inst_code_fk);
+CREATE INDEX perf_phys_fn_sx ON series(perf_phys_fn_sx(16));
+CREATE INDEX perf_phys_gn_sx ON series(perf_phys_gn_sx(16));
+
+ALTER TABLE instance 
+   ADD archived BIT;
+UPDATE instance SET archived=0;
+ALTER TABLE instance MODIFY archived BIT NOT NULL;   
+CREATE INDEX inst_archived ON instance(archived);
+UPDATE instance SET archived=1 WHERE EXISTS (SELECT 1 FROM files 
+   WHERE instance.pk = files.instance_fk AND files.file_status = 2);
+
+ALTER TABLE series_req ADD (
+   accno_issuer_fk BIGINT,
+   accession_no VARCHAR(250) BINARY,
+   req_phys_fn_sx VARCHAR(250) BINARY,
+   req_phys_gn_sx VARCHAR(250) BINARY);
+ALTER TABLE series_req
+   ADD INDEX ser_req_accno_issuer_fk (accno_issuer_fk),
+   ADD CONSTRAINT ser_req_accno_issuer_fk FOREIGN KEY (accno_issuer_fk) REFERENCES issuer(pk);
+CREATE INDEX ser_req_accession_no ON series_req(accession_no(16));
+CREATE INDEX ser_req_phys_fn_sx ON series_req(req_phys_fn_sx(16));
+CREATE INDEX ser_req_phys_gn_sx ON series_req(req_phys_gn_sx(16));
+
+ALTER TABLE verify_observer ADD (
+   observer_fn_sx VARCHAR(250) BINARY,
+   observer_gn_sx VARCHAR(250) BINARY);
+CREATE INDEX observer_fn_sx ON verify_observer(observer_fn_sx(16));
+CREATE INDEX observer_gn_sx ON verify_observer(observer_gn_sx(16));
+
+ALTER TABLE mwl_item ADD (
+   perf_phys_fn_sx VARCHAR(250) BINARY,
+   perf_phys_gn_sx VARCHAR(250) BINARY);
+CREATE INDEX mwl_perf_phys_fn_sx ON mwl_item(perf_phys_fn_sx(16));
+CREATE INDEX mwl_perf_phys_gn_sx ON mwl_item(perf_phys_gn_sx(16));
+
+ALTER TABLE gpsps_perf ADD (
+   hum_perf_fn_sx VARCHAR(250) BINARY,
+   hum_perf_gn_sx VARCHAR(250) BINARY);
+CREATE INDEX gpsps_perf_fn_sx ON gpsps_perf(hum_perf_fn_sx(16));
+CREATE INDEX gpsps_perf_gn_sx ON gpsps_perf(hum_perf_gn_sx(16));
+
+CREATE TABLE content_item (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    instance_fk       BIGINT,
+    name_fk           BIGINT,
+    code_fk           BIGINT,
+    rel_type          VARCHAR(250) BINARY,
+    text_value        VARCHAR(250) BINARY
+);
+ALTER TABLE content_item
+    ADD INDEX content_item_inst_fk (instance_fk),
+    ADD CONSTRAINT content_item_inst_fk FOREIGN KEY (instance_fk) REFERENCES instance(pk);
+ALTER TABLE content_item
+    ADD INDEX content_item_name_fk (name_fk),
+    ADD CONSTRAINT content_item_name_fk FOREIGN KEY (name_fk) REFERENCES code(pk);
+ALTER TABLE content_item
+    ADD INDEX content_item_code_fk (code_fk),
+    ADD CONSTRAINT content_item_code_fk FOREIGN KEY (code_fk) REFERENCES code(pk);
+CREATE INDEX content_item_rel_type ON content_item(rel_type(16));
+CREATE INDEX content_item_text_value ON content_item(text_value(64));

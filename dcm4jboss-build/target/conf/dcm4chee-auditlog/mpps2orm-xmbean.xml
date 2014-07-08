@@ -1,0 +1,21 @@
+<mbean name="dcm4chee.archive:service=MPPS2ORM">
+<attribute name="MPPSReceivedEnabled"/>
+<attribute name="ReceivingApplication"/>
+<attribute name="ReceivingFacility"/>
+<attribute name="SendingApplication"/>
+<attribute name="SendingFacility"/>
+<attribute name="MPPSLinkedEnabled"/>
+<attribute name="LinkedReceivingApplication"/>
+<attribute name="LinkedReceivingFacility"/>
+<attribute name="LinkedSendingApplication"/>
+<attribute name="LinkedSendingFacility"/>
+<attribute name="IgnoreUnscheduled"/>
+<attribute name="IgnoreInProgress"/>
+<attribute name="OneORMperSPS"/>
+<attribute name="LogXSLT"/>
+<attribute name="Stylesheet"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="Hl7SendServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

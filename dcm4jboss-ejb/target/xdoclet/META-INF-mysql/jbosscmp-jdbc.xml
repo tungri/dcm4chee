@@ -1,0 +1,4643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jbosscmp-jdbc PUBLIC "-//JBoss//DTD JBOSSCMP-JDBC 4.0//EN" "http://www.jboss.org/j2ee/dtd/jbosscmp-jdbc_4_0.dtd">
+
+<jbosscmp-jdbc>
+   <defaults>
+     <datasource>java:/pacsDS</datasource>
+     <datasource-mapping>mySQL</datasource-mapping>
+     <create-table>false</create-table>
+   </defaults>
+
+   <enterprise-beans>
+
+     <!--
+       To add beans that you have deployment descriptor info for, add
+       a file to your XDoclet merge directory called jbosscmp-jdbc-beans.xml
+       that contains the <entity></entity> markup for those beans.
+     -->
+
+      <entity>
+         <ejb-name>PrivateInstance</ejb-name>
+         <table-name>priv_instance</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>privateType</field-name>
+            <column-name>priv_type</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>sop_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>inst_attrs</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>MWLItem</ejb-name>
+         <table-name>mwl_item</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>spsId</field-name>
+            <column-name>sps_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>spsStartDateTime</field-name>
+            <column-name>start_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>scheduledStationAET</field-name>
+            <column-name>station_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>scheduledStationName</field-name>
+            <column-name>station_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>modality</field-name>
+            <column-name>modality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianName</field-name>
+            <column-name>perf_physician</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianFamilyNameSoundex</field-name>
+            <column-name>perf_phys_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianGivenNameSoundex</field-name>
+            <column-name>perf_phys_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianIdeographicName</field-name>
+            <column-name>perf_phys_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianPhoneticName</field-name>
+            <column-name>perf_phys_p_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestedProcedureId</field-name>
+            <column-name>req_proc_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyIuid</field-name>
+            <column-name>study_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>item_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>spsStatusAsInt</field-name>
+            <column-name>sps_status</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>VerifyingObserver</ejb-name>
+         <table-name>verify_observer</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>verificationDateTime</field-name>
+            <column-name>verify_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>verifyingObserverName</field-name>
+            <column-name>observer_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>verifyingObserverFamilyNameSoundex</field-name>
+            <column-name>observer_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>verifyingObserverGivenNameSoundex</field-name>
+            <column-name>observer_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>verifyingObserverIdeographicName</field-name>
+            <column-name>observer_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>verifyingObserverPhoneticName</field-name>
+            <column-name>observer_p_name</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Device</ejb-name>
+         <table-name>device</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>stationName</field-name>
+            <column-name>station_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>stationAET</field-name>
+            <column-name>station_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>modality</field-name>
+            <column-name>modality</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByStationName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByProtocolCode</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.CodeLocal</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPSRelatedPS</ejb-name>
+         <table-name>ups_rel_ps</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>refSOPInstanceUID</field-name>
+            <column-name>sop_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>refSOPClassUID</field-name>
+            <column-name>sop_cuid</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>PrivateFile</ejb-name>
+         <table-name>priv_file</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>filePath</field-name>
+            <column-name>filepath</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileTsuid</field-name>
+            <column-name>file_tsuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileMd5Field</field-name>
+            <column-name>file_md5</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileStatus</field-name>
+            <column-name>file_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileSize</field-name>
+            <column-name>file_size</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findDereferencedInFileSystem</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM PrivateFile AS f WHERE f.instance IS NULL AND f.fileSystem.directoryPath = ?1 LIMIT ?2]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findOrphanedOnFSGroup</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM PrivateFile AS f WHERE f.instance IS NULL AND f.fileSystem.groupID = ?1 AND f.fileSystem.status IN (0,1) LIMIT ?2]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Media</ejb-name>
+         <table-name>media</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetId</field-name>
+            <column-name>fileset_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetIuid</field-name>
+            <column-name>fileset_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mediaCreationRequestIuid</field-name>
+            <column-name>media_rq_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mediaUsage</field-name>
+            <column-name>media_usage</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mediaStatus</field-name>
+            <column-name>media_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mediaStatusInfo</field-name>
+            <column-name>media_status_info</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByStatus</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByFilesetIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGeneric</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+			<read-ahead>
+				<strategy>on-load</strategy>
+				  <page-size>20</page-size>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGenericInt</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectInstanceAvailability</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT MAX(i.availability) FROM Instance i WHERE i.media.pk = ?1]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>PrivateStudy</ejb-name>
+         <table-name>priv_study</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>privateType</field-name>
+            <column-name>priv_type</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>study_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyIuid</field-name>
+            <column-name>study_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM PrivateInstance i WHERE i.series.study.pk = ?1]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>PrivatePatient</ejb-name>
+         <table-name>priv_patient</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>privateType</field-name>
+            <column-name>priv_type</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientId</field-name>
+            <column-name>pat_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfPatientId</field-name>
+            <column-name>pat_id_issuer</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientName</field-name>
+            <column-name>pat_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>pat_attrs</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Code</ejb-name>
+         <table-name>code</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>codeValue</field-name>
+            <column-name>code_value</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>codingSchemeDesignator</field-name>
+            <column-name>code_designator</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>codingSchemeVersion</field-name>
+            <column-name>code_version</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>codeMeaning</field-name>
+            <column-name>code_meaning</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>HP</ejb-name>
+         <table-name>hp</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>hp_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopCuid</field-name>
+            <column-name>hp_cuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>hangingProtocolName</field-name>
+            <column-name>hp_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>hangingProtocolLevelAsInt</field-name>
+            <column-name>hp_level</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>numberOfPriorsReferenced</field-name>
+            <column-name>num_priors</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>hangingProtocolUserGroupName</field-name>
+            <column-name>hp_group</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>numberOfScreens</field-name>
+            <column-name>num_screens</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>hp_attrs</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>MPPS</ejb-name>
+         <table-name>mpps</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>mpps_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsStartDateTime</field-name>
+            <column-name>pps_start</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performedStationAET</field-name>
+            <column-name>station_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>modality</field-name>
+            <column-name>modality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsStatusAsInt</field-name>
+            <column-name>mpps_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>mpps_attrs</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findBySopIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>Patient</ejb-name>
+         <table-name>patient</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientId</field-name>
+            <column-name>pat_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfPatientId</field-name>
+            <column-name>pat_id_issuer</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientName</field-name>
+            <column-name>pat_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientFamilyNameSoundex</field-name>
+            <column-name>pat_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientGivenNameSoundex</field-name>
+            <column-name>pat_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientIdeographicName</field-name>
+            <column-name>pat_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientPhoneticName</field-name>
+            <column-name>pat_p_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientBirthDate</field-name>
+            <column-name>pat_birthdate</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientSex</field-name>
+            <column-name>pat_sex</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientCustomAttribute1</field-name>
+            <column-name>pat_custom1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientCustomAttribute2</field-name>
+            <column-name>pat_custom2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientCustomAttribute3</field-name>
+            <column-name>pat_custom3</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>pat_attrs</column-name>
+
+        </cmp-field>
+
+         <load-groups>
+               <load-group>
+                     <description/>
+                  <load-group-name>pid</load-group-name>
+                           <field-name>patientId</field-name>
+                           <field-name>issuerOfPatientId</field-name>
+               </load-group>
+         </load-groups>
+
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(p) FROM Patient AS p ORDER BY p.pk OFFSET ?1 LIMIT ?2]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientId</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientIdLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientIdWithIssuer</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientIdWithIssuerLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(p) FROM Patient AS p WHERE p.patientName LIKE ?1]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorresponding</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorrespondingLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(p1) FROM Patient AS p1, IN(p1.otherPatientIds) opid, IN(opid.patients) p2 WHERE (p1.patientId LIKE ?1 AND p1.issuerOfPatientId = ?2) OR (p2.patientId LIKE ?1 AND p2.issuerOfPatientId = ?2) OR (opid.patientId LIKE ?1 AND opid.issuerOfPatientId = ?2)]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorrespondingByPrimaryPatientID</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorrespondingByPrimaryPatientIDLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(p1) FROM Patient AS p1, IN(p1.otherPatientIds) opid, IN(opid.patients) p2 WHERE (p1.patientId LIKE ?1 AND p1.issuerOfPatientId = ?2) OR (p2.patientId LIKE ?1 AND p2.issuerOfPatientId = ?2)]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorrespondingByOtherPatientID</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findCorrespondingByOtherPatientIDLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(p1) FROM Patient AS p1, IN(p1.otherPatientIds) opid WHERE (opid.patientId LIKE ?1 AND opid.issuerOfPatientId = ?2)]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>pid</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>Instance</ejb-name>
+         <table-name>instance</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>sop_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopCuid</field-name>
+            <column-name>sop_cuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>instanceNumber</field-name>
+            <column-name>inst_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>contentDateTime</field-name>
+            <column-name>content_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>srCompletionFlag</field-name>
+            <column-name>sr_complete</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>srVerificationFlag</field-name>
+            <column-name>sr_verified</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>instanceCustomAttribute1</field-name>
+            <column-name>inst_custom1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>instanceCustomAttribute2</field-name>
+            <column-name>inst_custom2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>instanceCustomAttribute3</field-name>
+            <column-name>inst_custom3</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>inst_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>externalRetrieveAET</field-name>
+            <column-name>ext_retr_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>retrieveAETs</field-name>
+            <column-name>retrieve_aets</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>availability</field-name>
+            <column-name>availability</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>instanceStatus</field-name>
+            <column-name>inst_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>archived</field-name>
+            <column-name>archived</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>allAttributes</field-name>
+            <column-name>all_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>commitment</field-name>
+            <column-name>commitment</column-name>
+
+        </cmp-field>
+
+         <load-groups>
+               <load-group>
+                     <description/>
+                  <load-group-name>most</load-group-name>
+                           <field-name>sopIuid</field-name>
+                           <field-name>sopCuid</field-name>
+                           <field-name>externalRetrieveAET</field-name>
+                           <field-name>retrieveAETs</field-name>
+                           <field-name>availability</field-name>
+                           <field-name>archived</field-name>
+                              <field-name>series</field-name>
+               </load-group>
+         </load-groups>
+
+         <eager-load-group>most</eager-load-group>
+
+         <query>
+            <query-method>
+               <method-name>findBySopIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>most</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findBySeriesPk</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findBySeriesIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>most</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGeneric</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+			<read-ahead>
+				<strategy>on-load</strategy>
+				  <page-size>20</page-size>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>StudyPermission</ejb-name>
+         <table-name>study_permission</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyIuid</field-name>
+            <column-name>study_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>action</field-name>
+            <column-name>action</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>role</field-name>
+            <column-name>roles</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByStudyIuidAndAction</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByStudyIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientPk</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>AE</ejb-name>
+         <table-name>ae</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>title</field-name>
+            <column-name>aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>hostName</field-name>
+            <column-name>hostname</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>port</field-name>
+            <column-name>port</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>cipherSuites</field-name>
+            <column-name>cipher_suites</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfPatientID</field-name>
+            <column-name>pat_id_issuer</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfAccessionNumber</field-name>
+            <column-name>acc_no_issuer</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>stationName</field-name>
+            <column-name>station_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>institution</field-name>
+            <column-name>institution</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>department</field-name>
+            <column-name>department</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>installed</field-name>
+            <column-name>installed</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>userID</field-name>
+            <column-name>user_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>password</field-name>
+            <column-name>passwd</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileSystemGroupID</field-name>
+            <column-name>fs_group_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>group</field-name>
+            <column-name>ae_group</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>description</field-name>
+            <column-name>ae_desc</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>wadoURL</field-name>
+            <column-name>wado_url</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>vendorData</field-name>
+            <column-name>vendor_data</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByAET</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByHostName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPSSubscription</ejb-name>
+         <table-name>ups_subscr</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>receivingAETitle</field-name>
+            <column-name>aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>deletionLock</field-name>
+            <column-name>deletion_lock</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberDeletionLocks</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.UPSLocal</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM UPSSubscription AS s WHERE s.uPS = ?1 AND s.deletionLock = TRUE]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>FileSystem</ejb-name>
+	     <read-ahead>
+	        <strategy>on-find</strategy>
+			<eager-load-group>*</eager-load-group>
+         </read-ahead>
+         <table-name>filesystem</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>directoryPath</field-name>
+            <column-name>dirpath</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>groupID</field-name>
+            <column-name>fs_group_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>retrieveAET</field-name>
+            <column-name>retrieve_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>availability</field-name>
+            <column-name>availability</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>status</field-name>
+            <column-name>fs_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>userInfo</field-name>
+            <column-name>user_info</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByLikeDirectoryPath</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(fs) FROM FileSystem AS fs WHERE fs.directoryPath LIKE ?1 AND fs.availability = ?2 AND fs.status = ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfFiles</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(f) FROM File f WHERE f.fileSystem.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfPrivateFiles</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(f) FROM PrivateFile f WHERE f.fileSystem.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectSizeOfFilesCreatedAfter</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT SUM(f.fileSize) FROM File f WHERE f.fileSystem.pk = ?1 AND f.createdTime > ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectAllRetrieveAETs</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT f.retrieveAET FROM FileSystem f]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectMinCreatedTimeOnFsWithFileStatus</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT MIN(f.createdTime) FROM File f WHERE f.fileSystem.directoryPath = ?1 AND f.fileStatus = ?2]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPSGlobalSubscription</ejb-name>
+         <table-name>ups_glob_subscr</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>receivingAETitle</field-name>
+            <column-name>aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>deletionLock</field-name>
+            <column-name>deletion_lock</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>GPSPSPerformer</ejb-name>
+         <table-name>gpsps_perf</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>humanPerformerName</field-name>
+            <column-name>human_perf_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>humanPerformerFamilyNameSoundex</field-name>
+            <column-name>hum_perf_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>humanPerformerGivenNameSoundex</field-name>
+            <column-name>hum_perf_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>humanPerformerIdeographicName</field-name>
+            <column-name>hum_perf_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>humanPerformerPhoneticName</field-name>
+            <column-name>hum_perf_p_name</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>OtherPatientID</ejb-name>
+         <table-name>other_pid</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>patientId</field-name>
+            <column-name>pat_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfPatientId</field-name>
+            <column-name>pat_id_issuer</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByPatientId</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientIdLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByPatientIdAndIssuerLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(opid) FROM OtherPatientID AS opid WHERE (opid.patientId LIKE ?1 AND opid.issuerOfPatientId = ?2)]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Series</ejb-name>
+         <table-name>series</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesIuid</field-name>
+            <column-name>series_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesNumber</field-name>
+            <column-name>series_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>modality</field-name>
+            <column-name>modality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>bodyPartExamined</field-name>
+            <column-name>body_part</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>laterality</field-name>
+            <column-name>laterality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesDescription</field-name>
+            <column-name>series_desc</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>institutionalDepartmentName</field-name>
+            <column-name>department</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>institutionName</field-name>
+            <column-name>institution</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>stationName</field-name>
+            <column-name>station_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianName</field-name>
+            <column-name>perf_physician</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianFamilyNameSoundex</field-name>
+            <column-name>perf_phys_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianGivenNameSoundex</field-name>
+            <column-name>perf_phys_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianIdeographicName</field-name>
+            <column-name>perf_phys_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>performingPhysicianPhoneticName</field-name>
+            <column-name>perf_phys_p_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsStartDateTime</field-name>
+            <column-name>pps_start</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsIuid</field-name>
+            <column-name>pps_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesCustomAttribute1</field-name>
+            <column-name>series_custom1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesCustomAttribute2</field-name>
+            <column-name>series_custom2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesCustomAttribute3</field-name>
+            <column-name>series_custom3</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>numberOfSeriesRelatedInstances</field-name>
+            <column-name>num_instances</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>series_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetIuid</field-name>
+            <column-name>fileset_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetId</field-name>
+            <column-name>fileset_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sourceAET</field-name>
+            <column-name>src_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>externalRetrieveAET</field-name>
+            <column-name>ext_retr_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>retrieveAETs</field-name>
+            <column-name>retrieve_aets</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>availability</field-name>
+            <column-name>availability</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesStatus</field-name>
+            <column-name>series_status</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findBySeriesIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findWithNoPpsIuidFromSrcAETReceivedLastOfStudyBefore</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfSeriesRelatedInstancesOnMediaWithStatus</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM Instance i WHERE i.series.pk = ?1 AND i.media.mediaStatus = ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfSeriesRelatedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM Instance i WHERE i.series.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectAvailability</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT MAX(i.availability) FROM Instance i WHERE i.series.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectMaxUpdatedTimeOfSeriesRelatedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT MAX(i.updatedTime) FROM Instance i WHERE i.series.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectSeriesIuidsByModalityAndSrcAETAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT s.seriesIuid FROM Series AS s WHERE s.availability = ?1 AND s.modality = ?2 AND s.sourceAET = ?3 AND s.updatedTime BETWEEN ?4 AND ?5 ORDER BY s.pk DESC OFFSET ?6 LIMIT ?7]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectSeriesIuidsByModalityAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT s.seriesIuid FROM Series AS s WHERE s.availability = ?1 AND s.modality = ?2 AND s.updatedTime BETWEEN ?3 AND ?4 ORDER BY s.pk DESC OFFSET ?5 LIMIT ?6]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectSeriesIuidsBySrcAETAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT s.seriesIuid FROM Series AS s WHERE s.availability = ?1 AND s.sourceAET = ?2 AND s.updatedTime BETWEEN ?3 AND ?4 ORDER BY s.pk DESC OFFSET ?5 LIMIT ?6]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectSeriesIuidsByUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT s.seriesIuid FROM Series AS s WHERE s.availability = ?1 AND s.updatedTime BETWEEN ?2 AND ?3 ORDER BY s.pk DESC OFFSET ?4 LIMIT ?5]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectCountSeriesByModalityAndSrcAETAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series AS s WHERE s.availability = ?1 AND s.modality = ?2 AND s.sourceAET = ?3 AND s.updatedTime BETWEEN ?4 AND ?5]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectCountSeriesByModalityAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series AS s WHERE s.availability = ?1 AND s.modality = ?2 AND s.updatedTime BETWEEN ?3 AND ?4]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectCountSeriesBySrcAETAndUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series AS s WHERE s.availability = ?1 AND s.sourceAET = ?2 AND s.updatedTime BETWEEN ?3 AND ?4]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectCountSeriesByUpdatedTime</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series AS s WHERE s.availability = ?1 AND s.updatedTime BETWEEN ?2 AND ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGeneric</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+			<read-ahead>
+				<strategy>on-load</strategy>
+				  <page-size>20</page-size>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>StudyOnFileSystem</ejb-name>
+         <table-name>study_on_fs</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessTime</field-name>
+            <column-name>access_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>markedForDeletion</field-name>
+            <column-name>mark_to_delete</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByStudyAndFileSystem</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(sof) FROM StudyOnFileSystem sof WHERE sof.study.studyIuid=?1 AND sof.fileSystem.directoryPath=?2]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByFSGroupAndAccessedBetween</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(sof) FROM StudyOnFileSystem sof WHERE sof.markedForDeletion = FALSE AND sof.fileSystem.groupID = ?1 AND sof.fileSystem.status IN (0,1) AND sof.accessTime > ?2 AND sof.accessTime < ?3 ORDER BY sof.accessTime ASC LIMIT ?4]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithGroupIdAndStatusAndFileStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID = ?2 AND f.fileSystem.status = ?3 AND f.fileStatus = ?4]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithGroupIdAndFileStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID = ?2 AND f.fileStatus = ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithGroupIdAndStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID = ?2 AND f.fileSystem.status = ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithGroupId</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID = ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithDifferentGroupIdAndStatusAndFileStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID <> ?2 AND f.fileSystem.status = ?3 AND f.fileStatus = ?4]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithDifferentGroupIdAndFileStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID <> ?2 AND f.fileStatus = ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnFSWithDifferentGroupIdAndStatus</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.StudyLocal</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study = ?1 AND f.fileSystem.groupID <> ?2 AND f.fileSystem.status = ?3]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPSRequest</ejb-name>
+         <table-name>ups_req</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestedProcedureId</field-name>
+            <column-name>req_proc_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>confidentialityCode</field-name>
+            <column-name>confidentiality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingService</field-name>
+            <column-name>req_service</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPSReplacedPS</ejb-name>
+         <table-name>ups_repl_ps</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>refSOPInstanceUID</field-name>
+            <column-name>sop_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>refSOPClassUID</field-name>
+            <column-name>sop_cuid</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>File</ejb-name>
+         <table-name>files</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>timeOfLastMd5Check</field-name>
+            <column-name>md5_check_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filePath</field-name>
+            <column-name>filepath</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileTsuid</field-name>
+            <column-name>file_tsuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileMd5Field</field-name>
+            <column-name>file_md5</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>origMd5Field</field-name>
+            <column-name>orig_md5</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileStatus</field-name>
+            <column-name>file_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>fileSize</field-name>
+            <column-name>file_size</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findFilesToCompress</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 0 AND f.fileTsuid IN ('1.2.840.10008.1.2','1.2.840.10008.1.2.1','1.2.840.10008.1.2.2') AND f.fileSystem.pk = ?1 AND f.instance.sopCuid = ?2 AND f.createdTime < ?3 LIMIT ?4]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findToCheckMd5</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileSystem.directoryPath = ?1 AND f.fileMd5Field IS NOT NULL AND (f.timeOfLastMd5Check IS NULL OR f.timeOfLastMd5Check < ?2) LIMIT ?3]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByStatusAndFileSystem</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileSystem.directoryPath = ?1 AND f.fileStatus = ?2 AND f.createdTime >= ?3 AND f.createdTime < ?4 LIMIT ?5]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByFileSystem</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileSystem.directoryPath = ?1 OFFSET ?2 LIMIT ?3]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompress</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f.instance.sopCuid = ?2 AND f.instance.series.sourceAET = ?3 AND f.createdTime < ?4 LIMIT ?5]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompress</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f.instance.sopCuid = ?2 AND f.instance.series.bodyPartExamined = ?3 AND f.instance.series.sourceAET = ?4 AND f.createdTime < ?5 LIMIT ?6]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompressWithExternalRetrieveAET</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f.instance.externalRetrieveAET = ?2 AND f.instance.sopCuid = ?3 AND f.instance.series.sourceAET = ?4 AND f.createdTime < ?5 LIMIT ?6]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompressWithExternalRetrieveAET</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f.instance.externalRetrieveAET = ?2 AND f.instance.sopCuid = ?3 AND f.instance.series.bodyPartExamined = ?4 AND f.instance.series.sourceAET = ?5 AND f.createdTime < ?6 LIMIT ?7]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompressWithCopyOnOtherFileSystemGroup</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(f) FROM File AS f, IN (f.instance.files) AS f2 WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f2.fileSystem.groupID = ?2 AND f.instance.sopCuid = ?3 AND f.instance.series.sourceAET = ?4 AND f.createdTime < ?5 LIMIT ?6]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findFilesToLossyCompressWithCopyOnOtherFileSystemGroup</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(f) FROM File AS f, IN (f.instance.files) AS f2 WHERE f.fileStatus = 0 AND f.fileTsuid NOT IN ('1.2.840.10008.1.2.4.50','1.2.840.10008.1.2.4.51','1.2.840.10008.1.2.4.81','1.2.840.10008.1.2.4.91') AND f.fileSystem.status IN (0,1) AND f.fileSystem.groupID = ?1 AND f2.fileSystem.groupID = ?2 AND f.instance.sopCuid = ?3 AND f.instance.series.bodyPartExamined = ?4 AND f.instance.series.sourceAET = ?5 AND f.createdTime < ?6 LIMIT ?7]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findToSyncArchived</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(f) FROM File AS f WHERE f.fileStatus = 2 AND f.instance.archived = false AND f.fileSystem.directoryPath = ?1 LIMIT ?2]]></jboss-ql>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGeneric</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+			<read-ahead>
+				<strategy>on-load</strategy>
+				  <page-size>20</page-size>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectGenericTime</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.Object[]</method-param>
+               </method-params>
+            </query-method>
+			<dynamic-ql/>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>SeriesRequest</ejb-name>
+         <table-name>series_req</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyIuid</field-name>
+            <column-name>study_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestedProcedureId</field-name>
+            <column-name>req_proc_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>spsId</field-name>
+            <column-name>sps_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingService</field-name>
+            <column-name>req_service</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingPhysician</field-name>
+            <column-name>req_physician</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingPhysicianFamilyNameSoundex</field-name>
+            <column-name>req_phys_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingPhysicianGivenNameSoundex</field-name>
+            <column-name>req_phys_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingPhysicianIdeographicName</field-name>
+            <column-name>req_phys_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestingPhysicianPhoneticName</field-name>
+            <column-name>req_phys_p_name</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>HPDefinition</ejb-name>
+         <table-name>hpdef</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>modality</field-name>
+            <column-name>modality</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>laterality</field-name>
+            <column-name>laterality</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>PublishedStudy</ejb-name>
+         <table-name>published_study</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>documentUID</field-name>
+            <column-name>doc_uid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>documentEntryUID</field-name>
+            <column-name>docentry_uid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>repositoryUID</field-name>
+            <column-name>repository_uid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>status</field-name>
+            <column-name>status</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>PrivateSeries</ejb-name>
+         <table-name>priv_series</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>privateType</field-name>
+            <column-name>priv_type</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>series_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>seriesIuid</field-name>
+            <column-name>series_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sourceAET</field-name>
+            <column-name>src_aet</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfSeriesRelatedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM PrivateInstance i WHERE i.series.pk = ?1]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>GPSPSRequest</ejb-name>
+         <table-name>gpsps_req</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>requestedProcedureId</field-name>
+            <column-name>req_proc_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>UPS</ejb-name>
+         <table-name>ups</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopInstanceUID</field-name>
+            <column-name>ups_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>transactionUID</field-name>
+            <column-name>ups_tuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>admissionID</field-name>
+            <column-name>adm_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfAdmissionIDLocalNamespaceEntityID</field-name>
+            <column-name>adm_id_issuer_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>issuerOfAdmissionIDUniversialEntityID</field-name>
+            <column-name>adm_id_issuer_uid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>procedureStepLabel</field-name>
+            <column-name>ups_label</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>worklistLabel</field-name>
+            <column-name>uwl_label</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>scheduledStartDateTime</field-name>
+            <column-name>ups_start_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>expectedCompletionDateTime</field-name>
+            <column-name>ups_compl_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>stateAsInt</field-name>
+            <column-name>ups_state</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>priorityAsInt</field-name>
+            <column-name>ups_prior</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>ups_attrs</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>GPSPS</ejb-name>
+         <table-name>gpsps</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>gpsps_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>transactionUid</field-name>
+            <column-name>gpsps_tuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>spsStartDateTime</field-name>
+            <column-name>start_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>expectedCompletionDateTime</field-name>
+            <column-name>end_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>gpspsStatusAsInt</field-name>
+            <column-name>gpsps_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>gpspsPriorityAsInt</field-name>
+            <column-name>gpsps_prior</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>inputAvailabilityFlagAsInt</field-name>
+            <column-name>in_availability</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>item_attrs</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>ContentItem</ejb-name>
+         <table-name>content_item</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>relationshipType</field-name>
+            <column-name>rel_type</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>textValue</field-name>
+            <column-name>text_value</column-name>
+
+        </cmp-field>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Study</ejb-name>
+         <table-name>study</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyIuid</field-name>
+            <column-name>study_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyId</field-name>
+            <column-name>study_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyDateTime</field-name>
+            <column-name>study_datetime</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>accessionNumber</field-name>
+            <column-name>accession_no</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>referringPhysicianName</field-name>
+            <column-name>ref_physician</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>referringPhysicianFamilyNameSoundex</field-name>
+            <column-name>ref_phys_fn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>referringPhysicianGivenNameSoundex</field-name>
+            <column-name>ref_phys_gn_sx</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>referringPhysicianIdeographicName</field-name>
+            <column-name>ref_phys_i_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>referringPhysicianPhoneticName</field-name>
+            <column-name>ref_phys_p_name</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyDescription</field-name>
+            <column-name>study_desc</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyCustomAttribute1</field-name>
+            <column-name>study_custom1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyCustomAttribute2</field-name>
+            <column-name>study_custom2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyCustomAttribute3</field-name>
+            <column-name>study_custom3</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyStatus</field-name>
+            <column-name>study_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>studyStatusId</field-name>
+            <column-name>study_status_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>numberOfStudyRelatedSeries</field-name>
+            <column-name>num_series</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>numberOfStudyRelatedInstances</field-name>
+            <column-name>num_instances</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>study_attrs</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetIuid</field-name>
+            <column-name>fileset_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>filesetId</field-name>
+            <column-name>fileset_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>externalRetrieveAET</field-name>
+            <column-name>ext_retr_aet</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>retrieveAETs</field-name>
+            <column-name>retrieve_aets</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>availability</field-name>
+            <column-name>availability</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>modalitiesInStudy</field-name>
+            <column-name>mods_in_study</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopClassesInStudy</field-name>
+            <column-name>cuids_in_study</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>timeOfLastConsistencyCheck</field-name>
+            <column-name>checked_time</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByStudyIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findStudyToCheck</method-name>
+               <method-params>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(s) FROM Study AS s WHERE (s.createdTime BETWEEN ?1 AND ?2) AND (s.timeOfLastConsistencyCheck IS NULL OR s.timeOfLastConsistencyCheck < ?3) LIMIT ?4]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findStudiesWithStatus</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.sql.Timestamp</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT OBJECT(s) FROM Study AS s WHERE (s.studyStatus = ?1) AND (s.createdTime < ?2) LIMIT ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findStudiesFromAE</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(st) FROM Study AS st, IN(st.series) s WHERE (s.sourceAET = ?1) LIMIT ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findStudiesWithStatusFromAE</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(st) FROM Study AS st, IN(st.series) s WHERE (st.studyStatus = ?1) AND (s.sourceAET = ?2) LIMIT ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findStudiesWithFilesOnFileSystem</method-name>
+               <method-params>
+                  <method-param>org.dcm4chex.archive.ejb.interfaces.FileSystemLocal</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT DISTINCT OBJECT(st) FROM Study AS st, IN(st.series) s, IN(s.instances) i, IN(i.files) f WHERE f.fileSystem = ?1 ORDER BY st.pk OFFSET ?2 LIMIT ?3]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedSeries</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series s WHERE s.study.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM Instance i WHERE i.series.study.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnMediaWithStatus</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM Instance i WHERE i.series.study.pk = ?1 AND i.media.mediaStatus = ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfCommitedInstances</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(i) FROM Instance i WHERE i.series.study.pk = ?1 AND i.commitment = TRUE]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesOnROFS</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study.pk = ?1 AND f.fileStatus = ?2 AND f.fileSystem.availability <> 3 AND f.fileSystem.status = 2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectAvailability</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT MAX(s.availability) FROM Series s WHERE s.study.pk = ?1]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectStudyFileSize</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT SUM(f.fileSize) FROM File f WHERE f.instance.series.study.pk = ?1 AND f.fileSystem.pk = ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfStudyRelatedInstancesForAvailability</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(DISTINCT i) FROM Instance i, IN(i.files) f WHERE i.series.study.pk = ?1 AND f.fileSystem.availability = ?2]]></jboss-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>ejbSelectNumberOfReceivingSeries</method-name>
+               <method-params>
+                  <method-param>java.lang.Long</method-param>
+               </method-params>
+            </query-method>
+            <jboss-ql><![CDATA[SELECT COUNT(s) FROM Series s WHERE s.study.pk = ?1 AND s.seriesStatus <> 0]]></jboss-ql>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>GPPPS</ejb-name>
+         <table-name>gppps</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>createdTime</field-name>
+            <column-name>created_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>updatedTime</field-name>
+            <column-name>updated_time</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>sopIuid</field-name>
+            <column-name>pps_iuid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsStartDateTime</field-name>
+            <column-name>pps_start</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>ppsStatusAsInt</field-name>
+            <column-name>pps_status</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>encodedAttributes</field-name>
+            <column-name>pps_attrs</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findBySopIuid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+        <audit>
+            <created-time>
+                <field-name>createdTime</field-name>
+            </created-time>
+            <updated-time>
+                <field-name>updatedTime</field-name>
+            </updated-time>
+        </audit>
+      </entity>
+
+      <entity>
+         <ejb-name>Issuer</ejb-name>
+         <table-name>issuer</table-name>
+
+         <cmp-field>
+            <field-name>pk</field-name>
+            <column-name>pk</column-name>
+
+			<auto-increment/>
+        </cmp-field>
+         <cmp-field>
+            <field-name>localNamespaceEntityID</field-name>
+            <column-name>entity_id</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>universalEntityID</field-name>
+            <column-name>entity_uid</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>universalEntityIDType</field-name>
+            <column-name>entity_uid_type</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByLocalNamespaceEntityID</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByUniversalEntityID</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<read-ahead>
+				<strategy>on-find</strategy>
+				  <eager-load-group>*</eager-load-group>
+			</read-ahead>
+         </query>
+
+	<entity-command name="mysql-get-generated-keys">
+	</entity-command>
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+   </enterprise-beans>
+
+  <relationships>
+    <ejb-relation>
+      <ejb-relation-name>ups-appcode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_ups_appcode</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-appcodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>appcode-for-upss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>appcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-request</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>request-for-gpsps</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-for-requests</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>hpdef-reasoncode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_hpdef_reason</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>hpdef-with-reasoncode</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>hpdef_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>reasoncode-of-hpdef</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>reason_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-request</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>request-for-ups</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-for-requests</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>series-instance</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>instance-of-series</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-has-instance</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>series_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>content-item-concept-code</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>content-item-with-concept-code</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>concept-code-of-content-item</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>code_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>series-request-issuer-of-accno</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-request-with-issuer-of-accno</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>issuer-of-series-request-accno</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>accno_issuer_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>next-filesystem</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>prev-filesystem</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>next-filesystem</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>next_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>study-issuer-of-accno</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-with-issuer-of-accno</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>issuer-of-study-accno</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>accno_issuer_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-devnamecode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_gpsps_devname</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-with-devnamecodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devnamecode-for-gpspss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devname_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-workitemcode</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-workitemcode</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>workitemcode-of-ups</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>code_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-ups</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-ups</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>study-series</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-of-study</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-has-series</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>study_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>merged-patients</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>dereferenced-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>dominant-patient</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>merge_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-devnamecode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_ups_devname</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-devnamecodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devnamecode-for-upss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devname_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>study-published</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>published-of-study</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-of-published</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>study_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-subscription</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>subscription-for-ups</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-subscriptions</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>instance-sr-content-item</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>instance-with-sr-content-items</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>instance_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>content-item-of-sr</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-gppps</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_gpsps_gppps</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-resulting-in-gppps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gppps-results-from-gpsps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gppps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>priv-series-instance</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-instance-of-series</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-series-has-instances</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>series_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-devloccode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_ups_devloc</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-devloccodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devloccode-for-upss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devloc_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-workitemcode</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-with-workitemcode</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>workitemcode-of-gpsps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>code_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-replaced-ps</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>replaced-ps-of-ups</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-replaced-ps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>instance-files</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>files-of-instance</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>instance-in-files</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>instance_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-appcode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_gpsps_appcode</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-with-appcodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>appcode-for-gpspss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>appcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>series-request-attributes</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>request-attributes-of-series</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-has-request-attributes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>series_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-human-performer</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>human-performer-for-gpsps</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-for-human-performers</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-devclasscode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_ups_devclass</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-devclasscodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devclasscode-for-upss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devclass_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-mpps</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>mpps-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-mpps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>human-performer-code</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>human-performer-with-code</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>code-of-human-performer</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>code_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>instance-verifying-observer</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>instance-with-verifying-observer</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>instance_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>verifying-observer-of-instance</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>instance-media</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>instance-on-media</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>media-with-instance</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>media_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>hpdef-regioncode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_hpdef_region</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>hpdef-with-regioncode</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>hpdef_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>regioncode-of-hpdef</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>region_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-related-ps</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>related-ps-of-ups</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-related-ps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>device-protocol-codes</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_dev_proto</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devices-for-protocol-code</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>device_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>protocol-codes-for-device</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>prcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>priv-patient-study</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-study-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-patient-has-studies</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-gppps</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gppps-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-gppps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>study-sof</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>sof-of-study</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-of-sof</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>study_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>hp-useridcode</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>hp-for-user</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>user-of-hp</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>user_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>ups-performercode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_ups_performer</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>ups-with-performercodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>ups_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>performercode-for-upss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>performer_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>mpps-drcode</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>mpps-with-drcode</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>drcode-of-mpps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>drcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-gpsps</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-gpsps</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>series-inst-code</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-with-inst-code</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>inst-code-of-series</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>inst_code_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>study-pcode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_study_pcode</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-with-pcode</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>study_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>pcode-for-study</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>pcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>mpps-series</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>series-of-mpps</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>mpps-has-series</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>mpps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>hp-definition</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>definition-for-hp</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>hp-with-definition</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>hp_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>filesystem-sof</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>sof-of-filesystem</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>filesystem-of-sof</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>filesystem_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>hpdef-proccode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_hpdef_proc</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>hpdef-with-proccode</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>hpdef_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>proccode-of-hpdef</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>proc_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-study</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>study-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-studies</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-other-pid</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_pat_other_pid</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-with other-pids</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>other-pid-of-patients</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>other_pid_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>priv-instance-file</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>file-of-priv-instance</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-instance-in-files</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>instance_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-devloccode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_gpsps_devloc</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-with-devloccodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devloccode-for-gpspss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devloc_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>gpsps-devclasscode</ejb-relation-name>
+      <relation-table-mapping>
+        <table-name>rel_gpsps_devclass</table-name>
+      </relation-table-mapping>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>gpsps-with-devclasscodes</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>gpsps_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>devclasscode-for-gpspss</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>devclass_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>priv-study-series</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-series-of-study</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-study-has-series</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>study_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>filesystem-files</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>files-of-filesystem</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>filesystem-of-file</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>filesystem_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>priv-filesystem-files</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-files-of-filesystem</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>priv-filesystem-of-file</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>filesystem_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>patient-mwlitems</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>mwlitem-of-patient</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>patient-has-mwlitems</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>patient_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>content-item-concept-name</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>content-item-with-concept-name</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>concept-name-of-content-item</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>name_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+    <ejb-relation>
+      <ejb-relation-name>instance-srcode</ejb-relation-name>
+
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>sr-with-title</ejb-relationship-role-name>
+		  <key-fields/>
+
+      </ejb-relationship-role>
+      <ejb-relationship-role>
+          <ejb-relationship-role-name>title-of-sr</ejb-relationship-role-name>
+          <key-fields>
+             <key-field>
+               <field-name>pk</field-name>
+               <column-name>srcode_fk</column-name>
+             </key-field>
+          </key-fields>
+
+      </ejb-relationship-role>
+    </ejb-relation>
+     <!-- 
+       To add jboss relationships for beans not managed by XDoclet, add
+       a file to your XDoclet merge directory called jbosscmp-jdbc-relationships.xml that contains
+       the <ejb-relation></ejb-relation> markups for those beans.
+     --> 
+  </relationships>
+
+</jbosscmp-jdbc>

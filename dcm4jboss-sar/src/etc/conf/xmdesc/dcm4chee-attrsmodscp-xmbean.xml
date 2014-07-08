@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>Attributes Modification SCP Service. Updates
+   Study/Series/Instance attributes of stored DICOM Composite Objects on
+   receive of Attribute Modification Notifications.
+   </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.modify.AttributesModificationScpService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>AttributesModificationScpService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getCalledAETs"
+      setMethod="setCalledAETs">
+      <description>List of accepted called AE titles, separated by \ (backslash). 
+      </description>
+      <name>CalledAETitles</name>
+      <type>java.lang.String</type> 
+      <descriptors>
+         <value value="DCM4CHEE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCallingAETs"
+      setMethod="setCallingAETs">
+      <description><![CDATA[
+      List of accepted calling AE titles, separated by \(backslash).<br/>
+      ANY = accept any. <br/>
+      CONFIGURED_AETS = accept any configured AE Title.
+      ]]>       
+      </description>
+      <name>CallingAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ANY"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAcceptedTransferSyntax"
+      setMethod="setAcceptedTransferSyntax">
+      <description><![CDATA[
+        List of accepted Transfer Syntaxes. Order defines selection preference.
+        Use either the  Transfer Syntaxes UID value or following defined
+        symbolic names: 
+        ImplicitVRLittleEndian,
+        ExplicitVRLittleEndian
+        ]]>
+      </description>
+      <name>AcceptedTransferSyntax</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+           ExplicitVRLittleEndian
+           ImplicitVRLittleEndian
+         "/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isUpdateOriginalAttributesSeq"
+      setMethod="setUpdateOriginalAttributesSeq">
+      <description><![CDATA[Controls, if original values of attributes which 
+        were replaced on processing of received Attribute Modification
+        Notifications shall be documented in items of the <i>Original
+        Attributes Sequence (0400,0561)</i> on instance level.]]>
+      </description>
+      <name>UpdateOriginalAttributesSeq</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+        getMethod="getEntityNotFoundErrorCodeAsString"
+        setMethod="setEntityNotFoundErrorCodeAsString">
+      <description><![CDATA[Defines Error Code returned if there is no entity
+stored in the archive to which the received Attributes Modification Notification
+applies. 0 => return Success Status in that case. See also attribute
+<i>NoRetryErrorCode</i> of the <i>Attributes Modification SCU Service</i>.]]>
+      </description>
+      <name>EntityNotFoundErrorCode</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="B006H"/>
+      </descriptors>
+   </attribute>   
+   <attribute access="read-write"
+      getMethod="isCreatePatientOnMoveStudy"
+      setMethod="setCreatePatientOnMoveStudy">
+      <description><![CDATA[Enable creation of patient if patient of received 'moveStudyToPatient' request
+       doesn't exist or the identifier are not unique on this system.<br />
+       In regular workflows the patient should already exists with unique identifier]]>
+      </description>
+      <name>CreatePatientOnMoveStudy</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientMatching"
+      setMethod="setPatientMatching">
+      <description><![CDATA[Defines which Patient Attributes in the 'moveStudyToPatient' request
+       shall be considered for the selection of the target Patient.
+<p>
+Format: 'pid'['?']',issuer'['?'][',' ['['] <i>demograhic-matches</i> [']'] ]
+<br/><i>demograhic-matches</i> ::= <i>demograhic-match</i>['|' ...]
+<br/><i>demograhic-match</i> ::= [<i>ignore</i>',']<i>demograhic-fields</i>
+<br/><i>ignore</i> ::= 'ignore("' <i>regular-expression</i> '")'
+<br/><i>demograhic-fields</i> ::= <i>demograhic-field</i>['?'][',' ...]
+<br/><i>demograhic-field</i> ::= 'familyname'['(1)'] | 'givenname'['(1)'] | 'middlename'['(1)'] | 'nameprefix'['(1)'] | 'namesuffix'['(1)'] | birthdate | sex
+<p>
+Multiple alternative <i>demograhic-matches</i> can be specified using '|' as
+delimiter.
+<p>
+Substrings specified by 'ignore("' <i>regular-expression</i> '")' will be ignored for matching patient name
+components.
+<p>
+A '(1)' suffix of the attribute name specifies that only the first character
+need to match.
+<p>
+A question mark('?') after a attribute name specifies that a missing value in
+received DICOM objects will match with any value for that attribute in
+existing Patient Records, as Patient Records with missing values for that
+attribute will match with any value for that attribute in received DICOM
+objects. Attribute names without question marks specifies, that DICOM objects
+without values for such attributes will not match any existing Patient Record,
+and Patient Records without values for such attributes will not get selected on
+receive of any DICOM Composite Object.
+<p>
+With 'pid<b>?</b>', you have to configure the Patient's family name complex 
+('familyname') as additional matching criterium.
+<p>
+Surrounding <i>demograhic-matches</i> by brackets('[]') defines, that
+demographic fields shall *not* be considered for the selection of an existing
+Patient record, if the Patient ID is qualified by an Issuer/Authority in the
+received DICOM Composite Object *and* in the matching Patient Record.
+<p><b>Warning:</b> Improper configuration may cause assignment of moved studies to wrong patient.<br/>
+<p>Default: <code>pid,issuer?[familyname,givenname,middlename?,birthdate]</code>
+]]>
+      </description>
+      <name>PatientMatching</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid,issuer?[familyname,givenname,middlename?,birthdate]" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAEServiceName"
+      setMethod="setAEServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>AEServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDcmServerName"
+      setMethod="setDcmServerName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>DcmServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+</mbean>
+

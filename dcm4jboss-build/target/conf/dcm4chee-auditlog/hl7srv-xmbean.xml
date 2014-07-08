@@ -1,0 +1,26 @@
+<mbean name="dcm4chee.archive:service=HL7Server">
+<attribute name="CharsetName"/>
+<attribute name="Port" type="Network"/>
+<attribute name="LocalAddress"/>
+<attribute name="ProtocolName" type="Security"/>
+<attribute name="SoTimeout"/>
+<attribute name="NoopMessageTypes"/>
+<attribute name="SuppressErrorResponse"/>
+<attribute name="SendNotification"/>
+<attribute name="FileReceivedHL7"/>
+<attribute name="FileReceivedHL7OnError"/>
+<attribute name="ErrorLogDirectory"/>
+<attribute name="FileReceivedHL7AsXML"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="MaxClients"/>
+<attribute name="MaxIdleThreads"/>
+<attribute name="AckStylesheet"/>
+<attribute name="LogStylesheet"/>
+<attribute name="PreprocessTemplateDir"/>
+<attribute name="UseHostSubdirs"/>
+<attribute name="TLSConfigName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

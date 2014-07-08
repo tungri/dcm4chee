@@ -1,0 +1,7 @@
+<mbean name="dcm4chee.archive:service=RouteOnPPS">
+<attribute name="RoutingRules"/>
+<attribute name="RoutingPriority"/>
+<attribute name="GpwlScpServiceName"/>
+<attribute name="MoveScuServiceName"/>
+<attribute name="State"/>
+</mbean>

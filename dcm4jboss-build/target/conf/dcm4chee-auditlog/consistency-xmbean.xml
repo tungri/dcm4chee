@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=ConsistencyService">
+<attribute name="AvailabilityOfExternalRetrieveable"/>
+<attribute name="TaskInterval"/>
+<attribute name="MinStudyAge"/>
+<attribute name="MaxStudyAge"/>
+<attribute name="MaxCheckedBefore"/>
+<attribute name="LimitNumberOfStudiesPerTask"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="TimerIDCheckStudyConsistency"/>
+<attribute name="State"/>
+</mbean>

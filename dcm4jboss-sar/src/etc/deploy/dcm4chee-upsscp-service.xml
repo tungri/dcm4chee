@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+<!-- $Id$ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar" />
+
+  <mbean code="org.jboss.jms.server.destination.QueueService"
+    name="dcm4chee.archive:service=Queue,name=UPSScp" xmbean-dd="xmdesc/Queue-xmbean.xml">
+	<attribute name="FullSize">500</attribute>
+	<attribute name="PageSize">100</attribute>
+	<attribute name="DownCacheSize">100</attribute>
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+  </mbean>
+
+  <mbean code="org.dcm4chex.archive.dcm.ups.UPSScpService" name="dcm4chee.archive:service=UPSScp"
+    xmbean-dd="xmdesc/dcm4chee-upsscp-xmbean.xml">
+    <attribute name="QueueName">UPSScp</attribute>
+    <depends optional-attribute-name="AEServiceName">dcm4chee.archive:service=AE</depends>
+    <depends optional-attribute-name="DcmServerName">dcm4chee.archive:service=DcmServer</depends>
+    <depends optional-attribute-name="TLSConfigName"
+      >dcm4chee.archive:service=TLSConfig</depends>
+    <depends optional-attribute-name="JMSServiceName"
+      >dcm4chee.archive:service=JMS</depends>
+    <depends>dcm4chee.archive:service=Queue,name=UPSScp</depends>
+    <depends>dcm4chee.archive:service=AuditLogger</depends>
+  </mbean>
+</server>

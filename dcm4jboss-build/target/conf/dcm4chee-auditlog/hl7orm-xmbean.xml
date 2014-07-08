@@ -1,0 +1,18 @@
+<mbean name="dcm4chee.archive:service=HL7Service,type=ORM">
+<attribute name="MessageTypes"/>
+<attribute name="OrderControlOperationMap"/>
+<attribute name="CreateMissingOrderOnStatusChange"/>
+<attribute name="UpdateRequestAttributesForXO"/>
+<attribute name="UpdateDifferentPatientOfExistingStudy"/>
+<attribute name="PatientMatching"/>
+<attribute name="DefaultStationName"/>
+<attribute name="DefaultStationAET"/>
+<attribute name="DefaultModality"/>
+<attribute name="TemplateDir"/>
+<attribute name="Stylesheet"/>
+<attribute name="MWL2StoreConfigDirectory"/>
+<attribute name="DeviceServiceName"/>
+<attribute name="HL7ServerName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

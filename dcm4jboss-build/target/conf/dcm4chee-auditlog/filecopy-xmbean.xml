@@ -1,0 +1,16 @@
+<mbean name="dcm4chee.archive:service=FileCopy">
+<attribute name="DestinationFileSystem"/>
+<attribute name="HSMModulServicename"/>
+<attribute name="FileStatus"/>
+<attribute name="VerifyCopy"/>
+<attribute name="RetryIntervals"/>
+<attribute name="NotReadyDelay"/>
+<attribute name="Concurrency"/>
+<attribute name="BufferSize"/>
+<attribute name="FetchSize"/>
+<attribute name="QueueName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="QueryRetrieveScpServiceName"/>
+<attribute name="State"/>
+</mbean>

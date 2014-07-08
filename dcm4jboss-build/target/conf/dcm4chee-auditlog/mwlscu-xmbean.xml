@@ -1,0 +1,20 @@
+<mbean name="dcm4chee.archive:service=MWLScu">
+<attribute name="AcceptTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="TLSConfigName"/>
+<attribute name="CallingAETitle"/>
+<attribute name="CalledAETitle"/>
+<attribute name="MaxResults"/>
+<attribute name="ForceMatchingKeyCheck"/>
+<attribute name="NoMatchForNoValue"/>
+<attribute name="Priority"/>
+<attribute name="AccessBlobAsLongVarBinary"/>
+<attribute name="TransactionIsolationLevel"/>
+<attribute name="FetchSize"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.ianscp.IANScpService"
+    name="dcm4chee.archive:service=IANScp"
+    xmbean-dd="xmdesc/dcm4chee-ianscp-xmbean.xml">
+    <depends optional-attribute-name="AEServiceName"
+      >dcm4chee.archive:service=AE</depends>
+    <depends optional-attribute-name="DcmServerName"
+      >dcm4chee.archive:service=DcmServer</depends>
+  </mbean>
+</server>

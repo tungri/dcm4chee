@@ -1,0 +1,21 @@
+<mbean name="dcm4chee.archive:service=HL7Service,type=ADT">
+<attribute name="MessageTypes"/>
+<attribute name="PatientArrivingMessageType"/>
+<attribute name="DeletePatientMessageType"/>
+<attribute name="PatientMergeMessageTypes"/>
+<attribute name="ChangePatientIdentifierListMessageType"/>
+<attribute name="PixUpdateNotificationMessageType"/>
+<attribute name="IssuersOfOnlyOtherPatientIDs"/>
+<attribute name="IgnoredIssuersOfPatientIDPattern"/>
+<attribute name="PatientMatching"/>
+<attribute name="TemplateDir"/>
+<attribute name="PidStylesheet"/>
+<attribute name="MrgStylesheet"/>
+<attribute name="IgnoreDeleteErrors"/>
+<attribute name="HandleEmptyMrgAsUpdate"/>
+<attribute name="KeepPriorPatientAfterMerge"/>
+<attribute name="ContentEditServiceName"/>
+<attribute name="HL7ServerName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

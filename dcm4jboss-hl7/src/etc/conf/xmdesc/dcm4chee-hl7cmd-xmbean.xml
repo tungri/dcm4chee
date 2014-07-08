@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[The <b>HL7 Cmd Service</b> Executes a command on receiving HL7 messages. <br/>
+                The cmd is generated via XSLT from HL7 message.]]>
+   </description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hl7.HL7CmdService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>HL7CmdService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getCmdStylesheet"
+      setMethod="setCmdStylesheet">
+      <description><![CDATA[Stylesheet for HL7 to command mapping.
+      A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.<br/>
+      Use NONE to disable this Service. <br/>
+      e.g. 'conf/dcm4chee-hl7/hl72cmd.xsl']]>
+      </description>
+      <name>Stylesheet</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getHL7ServerName"
+      setMethod="setHL7ServerName">
+      <description>Used internally - do NOT modify.
+      </description>
+      <name>HL7ServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+    
+</mbean>
+    

@@ -1,0 +1,407 @@
+ALTER TABLE ae DROP INDEX aet;
+ALTER TABLE ae DROP INDEX hostname;
+ALTER TABLE ae DROP INDEX ae_group;
+ALTER TABLE code DROP INDEX code_value;
+ALTER TABLE issuer DROP INDEX entity_id;
+ALTER TABLE issuer DROP INDEX entity_uid;
+ALTER TABLE patient
+   DROP FOREIGN KEY pat_merge_fk,
+   DROP INDEX pat_merge_fk;
+ALTER TABLE patient DROP INDEX pat_id;
+ALTER TABLE patient DROP INDEX pat_name;
+ALTER TABLE patient DROP INDEX pat_fn_sx;
+ALTER TABLE patient DROP INDEX pat_gn_sx;
+ALTER TABLE patient DROP INDEX pat_i_name;
+ALTER TABLE patient DROP INDEX pat_p_name;
+ALTER TABLE patient DROP INDEX pat_birthdate;
+ALTER TABLE patient DROP INDEX pat_sex;
+ALTER TABLE patient DROP INDEX pat_custom1;
+ALTER TABLE patient DROP INDEX pat_custom2;
+ALTER TABLE patient DROP INDEX pat_custom3;
+ALTER TABLE other_pid DROP INDEX other_pat_id;
+ALTER TABLE rel_pat_other_pid
+   DROP FOREIGN KEY other_pid_pat_fk,
+   DROP INDEX other_pid_pat_fk;
+ALTER TABLE rel_pat_other_pid
+   DROP FOREIGN KEY pat_other_pid_fk,
+   DROP INDEX pat_other_pid_fk;
+ALTER TABLE study
+   DROP FOREIGN KEY patient_fk,
+   DROP INDEX patient_fk;
+ALTER TABLE study
+   DROP FOREIGN KEY accno_issuer_fk,
+   DROP INDEX accno_issuer_fk;
+ALTER TABLE study DROP INDEX study_iuid;
+ALTER TABLE study DROP INDEX study_id;
+ALTER TABLE study DROP INDEX study_datetime;
+ALTER TABLE study DROP INDEX accession_no;
+ALTER TABLE study DROP INDEX ref_physician;
+ALTER TABLE study DROP INDEX ref_phys_fn_sx;
+ALTER TABLE study DROP INDEX ref_phys_gn_sx;
+ALTER TABLE study DROP INDEX ref_phys_i_name;
+ALTER TABLE study DROP INDEX ref_phys_p_name;
+ALTER TABLE study DROP INDEX study_desc;
+ALTER TABLE study DROP INDEX study_custom1;
+ALTER TABLE study DROP INDEX study_custom2;
+ALTER TABLE study DROP INDEX study_custom3;
+ALTER TABLE study DROP INDEX study_status_id;
+ALTER TABLE study DROP INDEX study_checked;
+ALTER TABLE study DROP INDEX study_created;
+ALTER TABLE study DROP INDEX study_updated;
+ALTER TABLE study DROP INDEX study_status;
+ALTER TABLE rel_study_pcode
+   DROP FOREIGN KEY pcode_study_fk,
+   DROP INDEX pcode_study_fk;
+ALTER TABLE rel_study_pcode
+   DROP FOREIGN KEY study_pcode_fk,
+   DROP INDEX study_pcode_fk;
+ALTER TABLE study_permission DROP INDEX study_perm_idx;
+ALTER TABLE mpps DROP INDEX mpps_iuid;
+ALTER TABLE mpps
+   DROP FOREIGN KEY mpps_patient_fk,
+   DROP INDEX mpps_patient_fk;
+ALTER TABLE mpps
+   DROP FOREIGN KEY mpps_drcode_fk,
+   DROP INDEX mpps_drcode_fk;
+ALTER TABLE mpps DROP INDEX mpps_pps_start;
+ALTER TABLE mpps DROP INDEX mpps_station_aet;
+ALTER TABLE mpps DROP INDEX mpps_modality;
+ALTER TABLE mpps DROP INDEX mpps_accession_no;
+ALTER TABLE series
+   DROP FOREIGN KEY study_fk,
+   DROP INDEX study_fk;
+ALTER TABLE series
+   DROP FOREIGN KEY series_mpps_fk,
+   DROP INDEX series_mpps_fk;
+ALTER TABLE series
+   DROP FOREIGN KEY series_inst_code_fk,
+   DROP INDEX series_inst_code_fk;
+ALTER TABLE series DROP INDEX series_iuid;
+ALTER TABLE series DROP INDEX series_no;
+ALTER TABLE series DROP INDEX modality;
+ALTER TABLE series DROP INDEX body_part;
+ALTER TABLE series DROP INDEX laterality;
+ALTER TABLE series DROP INDEX series_desc;
+ALTER TABLE series DROP INDEX institution;
+ALTER TABLE series DROP INDEX station_name;
+ALTER TABLE series DROP INDEX department;
+ALTER TABLE series DROP INDEX perf_physician;
+ALTER TABLE series DROP INDEX perf_phys_fn_sx;
+ALTER TABLE series DROP INDEX perf_phys_gn_sx;
+ALTER TABLE series DROP INDEX perf_phys_i_name;
+ALTER TABLE series DROP INDEX perf_phys_p_name;
+ALTER TABLE series DROP INDEX series_pps_start;
+ALTER TABLE series DROP INDEX series_pps_iuid;
+ALTER TABLE series DROP INDEX series_custom1;
+ALTER TABLE series DROP INDEX series_custom2;
+ALTER TABLE series DROP INDEX series_custom3;
+ALTER TABLE series DROP INDEX series_src_aet;
+ALTER TABLE series DROP INDEX series_status;
+ALTER TABLE series DROP INDEX series_created;
+ALTER TABLE series DROP INDEX series_updated;
+ALTER TABLE series_req
+   DROP FOREIGN KEY ser_req_series_fk,
+   DROP INDEX ser_req_series_fk;
+ALTER TABLE series_req
+   DROP FOREIGN KEY ser_req_accno_issuer_fk,
+   DROP INDEX ser_req_accno_issuer_fk;
+ALTER TABLE series_req DROP INDEX ser_req_accession_no;
+ALTER TABLE series_req DROP INDEX ser_req_study_iuid;
+ALTER TABLE series_req DROP INDEX ser_req_proc_id;
+ALTER TABLE series_req DROP INDEX ser_req_sps_id;
+ALTER TABLE series_req DROP INDEX ser_req_service;
+ALTER TABLE series_req DROP INDEX ser_req_phys;
+ALTER TABLE series_req DROP INDEX ser_req_phys_fn_sx;
+ALTER TABLE series_req DROP INDEX ser_req_phys_gn_sx;
+ALTER TABLE series_req DROP INDEX ser_req_phys_i;
+ALTER TABLE series_req DROP INDEX ser_req_phys_p;
+ALTER TABLE media DROP INDEX fileset_iuid;
+ALTER TABLE media DROP INDEX media_status;
+ALTER TABLE instance
+   DROP FOREIGN KEY series_fk,
+   DROP INDEX series_fk;
+ALTER TABLE instance
+   DROP FOREIGN KEY srcode_fk,
+   DROP INDEX srcode_fk;
+ALTER TABLE instance
+   DROP FOREIGN KEY media_fk,
+   DROP INDEX media_fk;
+ALTER TABLE instance DROP INDEX sop_iuid;
+ALTER TABLE instance DROP INDEX sop_cuid;
+ALTER TABLE instance DROP INDEX inst_no;
+ALTER TABLE instance DROP INDEX content_datetime;
+ALTER TABLE instance DROP INDEX sr_complete;
+ALTER TABLE instance DROP INDEX sr_verified;
+ALTER TABLE instance DROP INDEX inst_custom1;
+ALTER TABLE instance DROP INDEX inst_custom2;
+ALTER TABLE instance DROP INDEX inst_custom3;
+ALTER TABLE instance DROP INDEX ext_retr_aet;
+ALTER TABLE instance DROP INDEX commitment;
+ALTER TABLE instance DROP INDEX inst_status;
+ALTER TABLE instance DROP INDEX inst_created;
+ALTER TABLE verify_observer
+   DROP FOREIGN KEY observer_inst_fk,
+   DROP INDEX observer_inst_fk;
+ALTER TABLE verify_observer DROP INDEX verify_datetime;
+ALTER TABLE verify_observer DROP INDEX observer_name;
+ALTER TABLE verify_observer DROP INDEX observer_fn_sx;
+ALTER TABLE verify_observer DROP INDEX observer_gn_sx;
+ALTER TABLE verify_observer DROP INDEX observer_i_name;
+ALTER TABLE verify_observer DROP INDEX observer_p_name;
+ALTER TABLE content_item
+   DROP FOREIGN KEY content_item_inst_fk,
+   DROP INDEX content_item_inst_fk;
+ALTER TABLE content_item
+   DROP FOREIGN KEY content_item_name_fk,
+   DROP INDEX content_item_name_fk;
+ALTER TABLE content_item
+   DROP FOREIGN KEY content_item_code_fk,
+   DROP INDEX content_item_code_fk;
+ALTER TABLE content_item DROP INDEX content_item_rel_type;
+ALTER TABLE content_item DROP INDEX content_item_text_value;
+ALTER TABLE filesystem DROP INDEX fs_dirpath;
+ALTER TABLE filesystem
+   DROP FOREIGN KEY fs_next_fk,
+   DROP INDEX fs_next_fk;
+ALTER TABLE filesystem DROP INDEX fs_group_id;
+ALTER TABLE filesystem DROP INDEX fs_retrieve_aet;
+ALTER TABLE filesystem DROP INDEX fs_availability;
+ALTER TABLE filesystem DROP INDEX fs_status;
+ALTER TABLE files
+   DROP FOREIGN KEY instance_fk,
+   DROP INDEX instance_fk;
+ALTER TABLE files
+   DROP FOREIGN KEY filesystem_fk,
+   DROP INDEX filesystem_fk;
+ALTER TABLE files DROP INDEX file_tsuid;
+ALTER TABLE files DROP INDEX md5_check_time;
+ALTER TABLE files DROP INDEX file_created;
+ALTER TABLE files DROP INDEX file_status;
+ALTER TABLE files DROP INDEX filepath;
+ALTER TABLE study_on_fs
+   DROP FOREIGN KEY i_study_on_fs,
+   DROP INDEX i_study_on_fs;
+ALTER TABLE study_on_fs
+   DROP FOREIGN KEY fs_of_study,
+   DROP INDEX fs_of_study;
+ALTER TABLE study_on_fs DROP INDEX access_time;
+ALTER TABLE study_on_fs DROP INDEX mark_to_delete;
+ALTER TABLE mwl_item
+   DROP FOREIGN KEY mwl_patient_fk,
+   DROP INDEX mwl_patient_fk;
+ALTER TABLE mwl_item DROP INDEX sps_status;
+ALTER TABLE mwl_item DROP INDEX mwl_sps_id;
+ALTER TABLE mwl_item DROP INDEX mwl_start_time;
+ALTER TABLE mwl_item DROP INDEX mwl_station_aet;
+ALTER TABLE mwl_item DROP INDEX mwl_station_name;
+ALTER TABLE mwl_item DROP INDEX mwl_modality;
+ALTER TABLE mwl_item DROP INDEX mwl_perf_physician;
+ALTER TABLE mwl_item DROP INDEX mwl_perf_phys_fn_sx;
+ALTER TABLE mwl_item DROP INDEX mwl_perf_phys_gn_sx;
+ALTER TABLE mwl_item DROP INDEX mwl_perf_phys_i_nm;
+ALTER TABLE mwl_item DROP INDEX mwl_perf_phys_p_nm;
+ALTER TABLE mwl_item DROP INDEX mwl_req_proc_id;
+ALTER TABLE mwl_item DROP INDEX mwl_accession_no;
+ALTER TABLE mwl_item DROP INDEX mwl_study_iuid;
+ALTER TABLE gpsps
+   DROP FOREIGN KEY gpsps_patient_fk,
+   DROP INDEX gpsps_patient_fk;
+ALTER TABLE gpsps
+   DROP FOREIGN KEY gpsps_code_fk,
+   DROP INDEX gpsps_code_fk;
+ALTER TABLE gpsps DROP INDEX gpsps_iuid;
+ALTER TABLE gpsps DROP INDEX gpsps_tuid;
+ALTER TABLE gpsps DROP INDEX gpsps_start_time;
+ALTER TABLE gpsps DROP INDEX gpsps_end_time;
+ALTER TABLE gpsps DROP INDEX gpsps_status;
+ALTER TABLE gpsps DROP INDEX gpsps_prior;
+ALTER TABLE gpsps DROP INDEX in_availability;
+ALTER TABLE rel_gpsps_appcode
+   DROP FOREIGN KEY appcode_gpsps_fk,
+   DROP INDEX appcode_gpsps_fk;
+ALTER TABLE rel_gpsps_appcode
+   DROP FOREIGN KEY gpsps_appcode_fk,
+   DROP INDEX gpsps_appcode_fk;
+ALTER TABLE rel_gpsps_devname
+   DROP FOREIGN KEY devname_gpsps_fk,
+   DROP INDEX devname_gpsps_fk;
+ALTER TABLE rel_gpsps_devname
+   DROP FOREIGN KEY gpsps_devname_fk,
+   DROP INDEX gpsps_devname_fk;
+ALTER TABLE rel_gpsps_devclass
+   DROP FOREIGN KEY devclass_gpsps_fk,
+   DROP INDEX devclass_gpsps_fk;
+ALTER TABLE rel_gpsps_devclass
+   DROP FOREIGN KEY gpsps_devclass_fk,
+   DROP INDEX gpsps_devclass_fk;
+ALTER TABLE rel_gpsps_devloc
+   DROP FOREIGN KEY devloc_gpsps_fk,
+   DROP INDEX devloc_gpsps_fk;
+ALTER TABLE rel_gpsps_devloc
+   DROP FOREIGN KEY gpsps_devloc_fk,
+   DROP INDEX gpsps_devloc_fk;
+ALTER TABLE gpsps_perf
+   DROP FOREIGN KEY gpsps_perf_sps_fk,
+   DROP INDEX gpsps_perf_sps_fk;
+ALTER TABLE gpsps_perf
+   DROP FOREIGN KEY gpsps_perf_code_fk,
+   DROP INDEX gpsps_perf_code_fk;
+ALTER TABLE gpsps_perf DROP INDEX gpsps_perf_name;
+ALTER TABLE gpsps_perf DROP INDEX gpsps_perf_fn_sx;
+ALTER TABLE gpsps_perf DROP INDEX gpsps_perf_gn_sx;
+ALTER TABLE gpsps_perf DROP INDEX gpsps_perf_i_name;
+ALTER TABLE gpsps_perf DROP INDEX gpsps_perf_p_name;
+ALTER TABLE gpsps_req
+   DROP FOREIGN KEY gpsps_req_gpsps_fk,
+   DROP INDEX gpsps_req_gpsps_fk;
+ALTER TABLE gpsps_req DROP INDEX gpsps_req_proc_id;
+ALTER TABLE gpsps_req DROP INDEX gpsps_req_acc_no;
+ALTER TABLE gppps DROP INDEX gppps_iuid;
+ALTER TABLE gppps
+   DROP FOREIGN KEY gppps_patient_fk,
+   DROP INDEX gppps_patient_fk;
+ALTER TABLE gppps DROP INDEX gppps_pps_start;
+ALTER TABLE rel_gpsps_gppps
+   DROP FOREIGN KEY gppps_gpsps_fk,
+   DROP INDEX gppps_gpsps_fk;
+ALTER TABLE rel_gpsps_gppps
+   DROP FOREIGN KEY gpsps_gppps_fk,
+   DROP INDEX gpsps_gppps_fk;
+ALTER TABLE ups
+   DROP FOREIGN KEY ups_patient_fk,
+   DROP INDEX ups_patient_fk;
+ALTER TABLE ups
+   DROP FOREIGN KEY ups_code_fk,
+   DROP INDEX ups_code_fk;
+ALTER TABLE ups DROP INDEX ups_iuid;
+ALTER TABLE ups DROP INDEX ups_tuid;
+ALTER TABLE ups DROP INDEX ups_adm_id;
+ALTER TABLE ups DROP INDEX ups_adm_id_issuer_id;
+ALTER TABLE ups DROP INDEX ups_adm_id_issuer_uid;
+ALTER TABLE ups DROP INDEX ups_label;
+ALTER TABLE ups DROP INDEX uwl_label;
+ALTER TABLE ups DROP INDEX ups_start_time;
+ALTER TABLE ups DROP INDEX ups_compl_time;
+ALTER TABLE ups DROP INDEX ups_state;
+ALTER TABLE ups DROP INDEX ups_prior;
+ALTER TABLE ups DROP INDEX ups_updated_time;
+ALTER TABLE rel_ups_appcode
+   DROP FOREIGN KEY appcode_ups_fk,
+   DROP INDEX appcode_ups_fk;
+ALTER TABLE rel_ups_appcode
+   DROP FOREIGN KEY ups_appcode_fk,
+   DROP INDEX ups_appcode_fk;
+ALTER TABLE rel_ups_devname
+   DROP FOREIGN KEY devname_ups_fk,
+   DROP INDEX devname_ups_fk;
+ALTER TABLE rel_ups_devname
+   DROP FOREIGN KEY ups_devname_fk,
+   DROP INDEX ups_devname_fk;
+ALTER TABLE rel_ups_devclass
+   DROP FOREIGN KEY devclass_ups_fk,
+   DROP INDEX devclass_ups_fk;
+ALTER TABLE rel_ups_devclass
+   DROP FOREIGN KEY ups_devclass_fk,
+   DROP INDEX ups_devclass_fk;
+ALTER TABLE rel_ups_devloc
+   DROP FOREIGN KEY devloc_ups_fk,
+   DROP INDEX devloc_ups_fk;
+ALTER TABLE rel_ups_devloc
+   DROP FOREIGN KEY ups_devloc_fk,
+   DROP INDEX ups_devloc_fk;
+ALTER TABLE rel_ups_performer
+   DROP FOREIGN KEY performer_ups_fk,
+   DROP INDEX performer_ups_fk;
+ALTER TABLE rel_ups_performer
+   DROP FOREIGN KEY ups_performer_fk,
+   DROP INDEX ups_performer_fk;
+ALTER TABLE ups_req DROP INDEX ups_req_ups_fk;
+ALTER TABLE ups_req DROP INDEX ups_req_proc_id;
+ALTER TABLE ups_req DROP INDEX ups_req_acc_no;
+ALTER TABLE ups_req DROP INDEX ups_confidentiality;
+ALTER TABLE ups_req DROP INDEX ups_req_service;
+ALTER TABLE ups_rel_ps
+   DROP FOREIGN KEY ups_rel_ps_ups_fk,
+   DROP INDEX ups_rel_ps_ups_fk;
+ALTER TABLE ups_rel_ps DROP INDEX ups_rel_ps_iuid;
+ALTER TABLE ups_rel_ps DROP INDEX ups_rel_ps_cuid;
+ALTER TABLE ups_repl_ps
+   DROP FOREIGN KEY ups_repl_ps_ups_fk,
+   DROP INDEX ups_repl_ps_ups_fk;
+ALTER TABLE ups_repl_ps DROP INDEX ups_repl_ps_iuid;
+ALTER TABLE ups_repl_ps DROP INDEX ups_repl_ps_cuid;
+ALTER TABLE ups_subscr
+   DROP FOREIGN KEY ups_subscr_ups_fk,
+   DROP INDEX ups_subscr_ups_fk;
+ALTER TABLE ups_subscr DROP INDEX ups_deletion_lock;
+ALTER TABLE ups_subscr DROP INDEX ups_subscr_aet;
+ALTER TABLE ups_glob_subscr DROP INDEX ups_glob_subscr_aet;
+ALTER TABLE hp
+   DROP FOREIGN KEY hp_user_fk,
+   DROP INDEX hp_user_fk;
+ALTER TABLE hp DROP INDEX hp_iuid;
+ALTER TABLE hp DROP INDEX hp_cuid;
+ALTER TABLE hp DROP INDEX hp_name;
+ALTER TABLE hp DROP INDEX hp_level;
+ALTER TABLE hp DROP INDEX num_priors;
+ALTER TABLE hp DROP INDEX num_screens;
+ALTER TABLE hpdef
+   DROP FOREIGN KEY hp_fk,
+   DROP INDEX hp_fk;
+ALTER TABLE hpdef DROP INDEX hpdef_modality;
+ALTER TABLE hpdef DROP INDEX hpdef_laterality;
+ALTER TABLE rel_hpdef_region
+   DROP FOREIGN KEY region_hpdef_fk,
+   DROP INDEX region_hpdef_fk;
+ALTER TABLE rel_hpdef_region
+   DROP FOREIGN KEY hpdef_region_fk,
+   DROP INDEX hpdef_region_fk;
+ALTER TABLE rel_hpdef_proc
+   DROP FOREIGN KEY proc_hpdef_fk,
+   DROP INDEX proc_hpdef_fk;
+ALTER TABLE rel_hpdef_proc
+   DROP FOREIGN KEY hpdef_proc_fk,
+   DROP INDEX hpdef_proc_fk;
+ALTER TABLE rel_hpdef_reason
+   DROP FOREIGN KEY reason_hpdef_fk,
+   DROP INDEX reason_hpdef_fk;
+ALTER TABLE rel_hpdef_reason
+   DROP FOREIGN KEY hpdef_reason_fk,
+   DROP INDEX hpdef_reason_fk;
+ALTER TABLE priv_patient DROP INDEX priv_pat_id;
+ALTER TABLE priv_patient DROP INDEX priv_pat_name;
+ALTER TABLE priv_patient DROP INDEX priv_pat_type;
+ALTER TABLE priv_study
+   DROP FOREIGN KEY priv_patient_fk,
+   DROP INDEX priv_patient_fk;
+ALTER TABLE priv_study DROP INDEX priv_study_type;
+ALTER TABLE priv_study DROP INDEX priv_study_iuid;
+ALTER TABLE priv_study DROP INDEX priv_study_accs_no;
+ALTER TABLE priv_series
+   DROP FOREIGN KEY priv_study_fk,
+   DROP INDEX priv_study_fk;
+ALTER TABLE priv_series DROP INDEX priv_series_type;
+ALTER TABLE priv_series DROP INDEX priv_series_iuid;
+ALTER TABLE priv_series DROP INDEX priv_ser_src_aet;
+ALTER TABLE priv_instance
+   DROP FOREIGN KEY priv_series_fk,
+   DROP INDEX priv_series_fk;
+ALTER TABLE priv_instance DROP INDEX priv_inst_type;
+ALTER TABLE priv_instance DROP INDEX priv_sop_iuid;
+ALTER TABLE priv_instance DROP INDEX priv_inst_created;
+ALTER TABLE priv_file
+   DROP FOREIGN KEY priv_instance_fk,
+   DROP INDEX priv_instance_fk;
+ALTER TABLE priv_file
+   DROP FOREIGN KEY priv_fs_fk,
+   DROP INDEX priv_fs_fk;
+ALTER TABLE device DROP INDEX dev_station_name;
+ALTER TABLE rel_dev_proto
+   DROP FOREIGN KEY device_fk,
+   DROP INDEX device_fk;
+ALTER TABLE rel_dev_proto
+   DROP FOREIGN KEY prcode_fk,
+   DROP INDEX prcode_fk;
+ALTER TABLE roles
+   DROP FOREIGN KEY roles_user_id,
+   DROP INDEX roles_user_id;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-stymgtscp-service.xml 11388 2009-05-14 10:53:14Z gunterze $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.modify.AttributesModificationScpService"
+    name="dcm4chee.archive:service=AttributesModificationScp"
+    xmbean-dd="xmdesc/dcm4chee-attrsmodscp-xmbean.xml">
+    <depends optional-attribute-name="AEServiceName"
+      >dcm4chee.archive:service=AE</depends>
+    <depends optional-attribute-name="DcmServerName"
+      >dcm4chee.archive:service=DcmServer</depends>
+  </mbean>
+</server>

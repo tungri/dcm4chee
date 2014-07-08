@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<!-- $Id: dcm4chee-hsmcmdmodule-service.xml 12644 2010-01-22 12:41:29Z gunterze $ -->
+
+<server>
+
+  <mbean code="org.dcm4chex.archive.hsm.module.HSMCommandModule"
+    name="dcm4chee.archive:service=FileCopyHSMModule,type=Command"
+    xmbean-dd="xmdesc/dcm4chee-hsm-cmd-module-xmbean.xml">
+    <depends optional-attribute-name="FileCopyServiceName"
+      >dcm4chee.archive:service=FileCopy</depends>
+  </mbean>
+</server>

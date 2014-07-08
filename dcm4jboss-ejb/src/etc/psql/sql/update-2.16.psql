@@ -1,0 +1,100 @@
+-- Update DB from dcm4chee-2.15.x to dcm4chee-2.16.x
+
+CREATE INDEX inst_created ON instance(created_time);
+CREATE INDEX hostname ON ae(hostname);
+
+ALTER TABLE study_on_fs ADD mark_to_delete BOOLEAN;
+
+UPDATE study_on_fs SET mark_to_delete=false;
+ALTER TABLE study_on_fs ALTER mark_to_delete SET NOT NULL;
+
+CREATE INDEX mark_to_delete ON study_on_fs(mark_to_delete);
+
+ALTER TABLE ae ADD acc_no_issuer TEXT;
+
+CREATE TABLE issuer (
+    pk                SERIAL8 NOT NULL CONSTRAINT issuer_pk PRIMARY KEY,
+    entity_id         TEXT,
+    entity_uid        TEXT,
+    entity_uid_type   TEXT
+);
+CREATE UNIQUE INDEX entity_id ON issuer(entity_id);
+CREATE UNIQUE INDEX entity_uid ON issuer(entity_uid,entity_uid_type);
+
+ALTER TABLE patient
+   ADD pat_fn_sx TEXT,
+   ADD pat_gn_sx TEXT;
+CREATE INDEX pat_fn_sx ON patient(pat_fn_sx);
+CREATE INDEX pat_gn_sx ON patient(pat_gn_sx);
+
+ALTER TABLE study
+   ADD accno_issuer_fk INT8,
+   ADD ref_phys_fn_sx TEXT,
+   ADD ref_phys_gn_sx TEXT;
+ALTER TABLE study ADD FOREIGN KEY (accno_issuer_fk) REFERENCES issuer(pk);
+CREATE INDEX accno_issuer_fk ON study(accno_issuer_fk);
+CREATE INDEX ref_phys_fn_sx ON study(ref_phys_fn_sx);
+CREATE INDEX ref_phys_gn_sx ON study(ref_phys_gn_sx);
+
+ALTER TABLE series
+   ADD inst_code_fk INT8,
+   ADD perf_phys_fn_sx TEXT,
+   ADD perf_phys_gn_sx TEXT;
+ALTER TABLE series ADD FOREIGN KEY (inst_code_fk) REFERENCES code(pk);
+CREATE INDEX series_inst_code_fk ON series(inst_code_fk);
+CREATE INDEX perf_phys_fn_sx ON series(perf_phys_fn_sx);
+CREATE INDEX perf_phys_gn_sx ON series(perf_phys_gn_sx);
+
+ALTER TABLE instance 
+   ADD archived BOOLEAN;
+UPDATE instance SET archived=false;
+ALTER TABLE instance ALTER archived SET NOT NULL;
+CREATE INDEX inst_archived ON instance(archived);
+UPDATE instance SET archived=true WHERE EXISTS (SELECT 1 FROM files 
+   WHERE instance.pk = files.instance_fk AND files.file_status = 2);
+
+ALTER TABLE series_req
+   ADD accno_issuer_fk INT8,
+   ADD accession_no TEXT,
+   ADD req_phys_fn_sx TEXT,
+   ADD req_phys_gn_sx TEXT;
+ALTER TABLE series_req ADD FOREIGN KEY (accno_issuer_fk) REFERENCES issuer(pk);
+CREATE INDEX ser_req_accno_issuer_fk ON series_req(accno_issuer_fk);
+CREATE INDEX ser_req_accession_no ON series_req(accession_no);
+CREATE INDEX ser_req_phys_fn_sx ON series_req(req_phys_fn_sx);
+CREATE INDEX ser_req_phys_gn_sx ON series_req(req_phys_gn_sx);
+
+ALTER TABLE verify_observer
+   ADD observer_fn_sx TEXT,
+   ADD observer_gn_sx TEXT;
+CREATE INDEX observer_fn_sx ON verify_observer(observer_fn_sx);
+CREATE INDEX observer_gn_sx ON verify_observer(observer_gn_sx);
+
+ALTER TABLE mwl_item
+   ADD perf_phys_fn_sx TEXT,
+   ADD perf_phys_gn_sx TEXT;
+CREATE INDEX mwl_perf_phys_fn_sx ON mwl_item(perf_phys_fn_sx);
+CREATE INDEX mwl_perf_phys_gn_sx ON mwl_item(perf_phys_gn_sx);
+
+ALTER TABLE gpsps_perf
+   ADD hum_perf_fn_sx TEXT,
+   ADD hum_perf_gn_sx TEXT;
+CREATE INDEX gpsps_perf_fn_sx ON gpsps_perf(hum_perf_fn_sx);
+CREATE INDEX gpsps_perf_gn_sx ON gpsps_perf(hum_perf_gn_sx);
+
+CREATE TABLE content_item (
+    pk                SERIAL8 NOT NULL CONSTRAINT content_item_pk PRIMARY KEY,
+    instance_fk       INT8,
+    name_fk           INT8,
+    code_fk           INT8,
+    rel_type          TEXT,
+    text_value        TEXT,
+FOREIGN KEY (instance_fk) REFERENCES instance(pk),
+FOREIGN KEY (name_fk) REFERENCES code(pk),
+FOREIGN KEY (code_fk) REFERENCES code(pk)
+);
+CREATE INDEX content_item_inst_fk ON content_item(instance_fk);
+CREATE INDEX content_item_name_fk ON content_item(name_fk);
+CREATE INDEX content_item_code_fk ON content_item(code_fk);
+CREATE INDEX content_item_rel_type ON content_item(rel_type);
+CREATE INDEX content_item_text_value ON content_item(text_value);

@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+
+<jboss>
+
+   <unauthenticated-principal>nobody</unauthenticated-principal>
+
+   <enterprise-beans>
+
+     <!--
+       To add beans that you have deployment descriptor info for, add
+       a file to your XDoclet merge directory called jboss-beans.xml that contains
+       the <session></session>, <entity></entity> and <message-driven></message-driven>
+       markup for those beans.
+     -->
+
+      <entity>
+         <ejb-name>PrivateInstance</ejb-name>
+         <local-jndi-name>ejb/PrivateInstance</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>MWLItem</ejb-name>
+         <local-jndi-name>ejb/MWLItem</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>VerifyingObserver</ejb-name>
+         <local-jndi-name>ejb/VerifyingObserver</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Device</ejb-name>
+         <local-jndi-name>ejb/Device</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPSRelatedPS</ejb-name>
+         <local-jndi-name>ejb/UPSRelatedPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>PrivateFile</ejb-name>
+         <local-jndi-name>ejb/PrivateFile</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Media</ejb-name>
+         <local-jndi-name>ejb/Media</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>PrivateStudy</ejb-name>
+         <local-jndi-name>ejb/PrivateStudy</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>PrivatePatient</ejb-name>
+         <local-jndi-name>ejb/PrivatePatient</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Code</ejb-name>
+         <local-jndi-name>ejb/Code</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>HP</ejb-name>
+         <local-jndi-name>ejb/HP</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>MPPS</ejb-name>
+         <local-jndi-name>ejb/MPPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Patient</ejb-name>
+         <local-jndi-name>ejb/Patient</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Instance</ejb-name>
+         <local-jndi-name>ejb/Instance</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>StudyPermission</ejb-name>
+         <local-jndi-name>ejb/StudyPermission</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>AE</ejb-name>
+         <local-jndi-name>ejb/AE</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPSSubscription</ejb-name>
+         <local-jndi-name>ejb/UPSSubscription</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>FileSystem</ejb-name>
+         <local-jndi-name>ejb/FileSystem</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPSGlobalSubscription</ejb-name>
+         <local-jndi-name>ejb/UPSGlobalSubscription</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>GPSPSPerformer</ejb-name>
+         <local-jndi-name>ejb/GPSPSPerformer</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>OtherPatientID</ejb-name>
+         <local-jndi-name>ejb/OtherPatientID</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Series</ejb-name>
+         <local-jndi-name>ejb/Series</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>StudyOnFileSystem</ejb-name>
+         <local-jndi-name>ejb/StudyOnFileSystem</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPSRequest</ejb-name>
+         <local-jndi-name>ejb/UPSRequest</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPSReplacedPS</ejb-name>
+         <local-jndi-name>ejb/UPSReplacedPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>File</ejb-name>
+         <local-jndi-name>ejb/File</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>SeriesRequest</ejb-name>
+         <local-jndi-name>ejb/SeriesRequest</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>HPDefinition</ejb-name>
+         <local-jndi-name>ejb/HPDefinition</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>PublishedStudy</ejb-name>
+         <local-jndi-name>ejb/PublishedStudy</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>PrivateSeries</ejb-name>
+         <local-jndi-name>ejb/PrivateSeries</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>GPSPSRequest</ejb-name>
+         <local-jndi-name>ejb/GPSPSRequest</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>UPS</ejb-name>
+         <local-jndi-name>ejb/UPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>GPSPS</ejb-name>
+         <local-jndi-name>ejb/GPSPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>ContentItem</ejb-name>
+         <local-jndi-name>ejb/ContentItem</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Study</ejb-name>
+         <local-jndi-name>ejb/Study</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>GPPPS</ejb-name>
+         <local-jndi-name>ejb/GPPPS</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Issuer</ejb-name>
+         <local-jndi-name>ejb/Issuer</local-jndi-name>
+         <configuration-name>Instance Per Transaction CMP 2.x EntityBean</configuration-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+
+      <session>
+         <ejb-name>GPPPSManager</ejb-name>
+         <jndi-name>ejb/GPPPSManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>GPWLManager</ejb-name>
+         <jndi-name>ejb/GPWLManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>StudyMgt</ejb-name>
+         <jndi-name>ejb/StudyMgt</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>PIXQuery</ejb-name>
+         <jndi-name>ejb/PIXQuery</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>UpdateAttributes</ejb-name>
+         <jndi-name>ejb/UpdateAttributes</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>HPStorage</ejb-name>
+         <jndi-name>ejb/HPStorage</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>MWLManager</ejb-name>
+         <jndi-name>ejb/MWLManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>UPSManager</ejb-name>
+         <jndi-name>ejb/UPSManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>AvailabilityUpdate</ejb-name>
+         <jndi-name>ejb/AvailabilityUpdate</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>ConsistencyCheck</ejb-name>
+         <jndi-name>ejb/ConsistencyCheck</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>StudyPermissionManager</ejb-name>
+         <jndi-name>ejb/StudyPermissionManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>UserManager</ejb-name>
+         <jndi-name>ejb/UserManager</jndi-name>
+
+         <resource-ref>
+            <res-ref-name>jdbc/DS</res-ref-name>
+            <jndi-name>java:/pacsDS</jndi-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>MPPSManager</ejb-name>
+         <jndi-name>ejb/MPPSManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>MediaComposer</ejb-name>
+         <jndi-name>ejb/MediaComposer</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>ContentEdit</ejb-name>
+         <jndi-name>ejb/ContentEdit</jndi-name>
+         <local-jndi-name>ContentEditLocal</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>ContentManager</ejb-name>
+         <jndi-name>ejb/ContentManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>SoundexUpdate</ejb-name>
+         <jndi-name>ejb/SoundexUpdate</jndi-name>
+         <local-jndi-name>SoundexUpdateLocal</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>PrivateManager</ejb-name>
+         <jndi-name>ejb/PrivateManager</jndi-name>
+         <local-jndi-name>PrivateManagerLocal</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>StudyReconciliation</ejb-name>
+         <jndi-name>ejb/StudyReconciliation</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>CodeToDeviceMapping</ejb-name>
+         <jndi-name>ejb/CodeToDeviceMapping</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>MPPSEmulator</ejb-name>
+         <jndi-name>ejb/MPPSEmulator</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>AttributesModification</ejb-name>
+         <jndi-name>ejb/AttributesModification</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>PatientUpdate</ejb-name>
+         <jndi-name>ejb/PatientUpdate</jndi-name>
+         <local-jndi-name>PatientUpdateLocal</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>FixPatientAttributes</ejb-name>
+         <jndi-name>ejb/FixPatientAttributes</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>FileSystemMgt2</ejb-name>
+         <jndi-name>ejb/FileSystemMgt2</jndi-name>
+         <local-jndi-name>FileSystemMgt2Local</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>Storage</ejb-name>
+         <jndi-name>ejb/Storage</jndi-name>
+         <local-jndi-name>StorageLocal</local-jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+      <session>
+         <ejb-name>AEManager</ejb-name>
+         <jndi-name>ejb/AEManager</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+      </session>
+
+    <!--
+      write a merge file jboss-webservices.ent for webservice-description 
+    -->
+
+   </enterprise-beans>
+
+     <!--
+       To specify your own assembly descriptor info here, add a file to your
+       XDoclet merge directory called jboss-assembly-descriptor.xml that contains
+       the <assembly-descriptor></assembly-descriptor> markup.
+     -->
+   <assembly-descriptor>
+    <!-- message destinations -->
+     <!--
+       To specify additional message-destination elements, add a file in the merge
+       directory called jboss-message-destinations.ent that contains them.
+     -->
+   </assembly-descriptor>
+
+   <resource-managers>
+   </resource-managers>
+
+  <!--
+    | for container settings, you can merge in jboss-container.xml
+    | this can contain <invoker-proxy-bindings/> and <container-configurations/>
+  -->
+
+</jboss>

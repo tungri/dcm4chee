@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>TAR Retriever Service.</description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.hsm.TarRetrieverService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>TarRetrieverService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getHSMModulServicename"
+      setMethod="setHSMModulServicename">
+      <description><![CDATA[HSM Module to retrieve files/tarballs from HSM systems.<br /> 
+      			Use NONE if filesystem has no HSM support.<br />
+            	Module 'dcm4chee.archive:service=FileCopyHSMModule,type=Mapped' can be used if more than one HSM modules are active.
+      ]]></description>
+      <name>HSMModulServicename</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" 
+      getMethod="getCacheRoot"
+      setMethod="setCacheRoot">
+      <description><![CDATA[Root directory in which retrieved tars are extracted.
+      A relative path name is resolved relative to 
+      <i>archive-install-directory</i>/server/default/.
+      <b>Attention</b>: For reliable function of the deletion of least recent
+      accessed objects, a separate file system should be used for the cache.
+      You also have to take care for moving existing files in the cache to the
+      new location yourself!]]>
+      </description>
+      <name>CacheRoot</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-extracted"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCacheJournalRootDir"
+      setMethod="setCacheJournalRootDir">
+      <description><![CDATA[Root directory for cache journal files. A relative
+      path name is resolved relative to
+      <i>&lt;archive-install-directory&gt;</i>/server/default/.
+      <b>Attention:</b> You have to take care for moving existing journal files
+      to the new location yourself!]]>
+      </description>
+      <name>CacheJournalRootDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-extracted-journal" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCacheJournalFilePathFormat"
+      setMethod="setCacheJournalFilePathFormat">
+      <description><![CDATA[Defines journal file path, with 'yyyy' will be
+      replaced by the current year, 'MM' by the current month, 'dd' by the
+      current date, 'HH' by the current hour and 'mm' by the current minute.
+      <b>Attention:</b> Can only be modified if the cache is empty!]]>
+      </description>
+      <name>CacheJournalFilePathFormat</name>
+      <type>java.lang.String</type>
+      <descriptors>
+        <value value="yyyy/MM/dd/HH/mm" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getMinFreeDiskSpace"
+      setMethod="setMinFreeDiskSpace">
+      <description><![CDATA[Minimum free disk space on Cache Directory. If the
+      free available disk space on the cache directory falls below this value,
+      least recent accessed sub-directories are deleted, BEFORE further TARs
+      are retrieved and extracted. 1MB = 1000000 bytes, 1GB = 1000MB.]]>   
+      </description>
+      <name>MinimumFreeDiskSpace</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="50MB"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getPreferredFreeDiskSpace"
+      setMethod="setPreferredFreeDiskSpace">
+      <description><![CDATA[Preferred free disk space on Cache Directory. If the
+      free available disk space on the cache directory falls below this value,
+      least recent accessed sub-directories are deleted, WITHOUT blocking
+      retrieve and extraction of further TARs. 1MB = 1000000 bytes, 1GB = 1000MB.]]>
+      </description>
+      <name>PreferredFreeDiskSpace</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="100MB"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only" 
+      getMethod="getFreeDiskSpace">
+      <description><![CDATA[Current free disk space on Cache Directory.
+      1MB = 1000000 bytes, 1GB = 1000MB.]]>
+      </description>
+      <name>FreeDiskSpace</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write" getMethod="isCheckMD5"
+    setMethod="setCheckMD5">
+    <description><![CDATA[
+     Defines if the MD5 sum of TAR file entries shall be checked against
+     values in first entry <code>MD5SUM</code> file during retrieval. If
+     the check fails, the retrieval will fail. If activated, but the first
+     TAR entry is not the <code>MD5SUM</code> file, a WARN messages will be
+     logged in <code>server.log</code>.]]>
+    </description>
+    <name>CheckMD5</name>
+    <type>boolean</type>
+    <descriptors>
+     <value value="true" />
+    </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getBufferSize"
+      setMethod="setBufferSize">
+      <description>Size of write byte buffer.
+      </description>
+      <name>BufferSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="8192"/>
+      </descriptors>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   <operation impact="ACTION">
+      <description>Retrieve file from TAR specified by File System ID and File ID. 
+      </description>
+      <name>retrieveFile</name>
+      <parameter>
+        <description>File System ID</description>
+        <name>fsID</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <parameter>
+        <description>File ID</description>
+        <name>fileID</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description><![CDATA[Fetch TAR file by File System ID and TAR path. 
+      ]]></description>
+      <name>fetchTarFile</name>
+      <parameter>
+        <description>File System ID</description>
+        <name>fsID</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <parameter>
+        <description><![CDATA[TAR Path (File ID without file reference (!&ltFilePath in tar file&gt;))]]></description>
+        <name>tarPath</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Delete oldest directories to free specified amount of disk space. 
+      </description>
+      <name>free</name>
+      <parameter>
+        <description>minimal amount of disk space to be released</description>
+        <name>amount</name>
+        <type>long</type>
+      </parameter>
+      <return-type>long</return-type>
+   </operation>
+</mbean>
+

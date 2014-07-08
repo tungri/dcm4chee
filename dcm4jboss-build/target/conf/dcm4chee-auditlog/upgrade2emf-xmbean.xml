@@ -1,0 +1,15 @@
+<mbean name="dcm4chee.archive:service=UpgradeToEMF">
+<attribute name="ConfigDirectory"/>
+<attribute name="FileSystemGroupID"/>
+<attribute name="MergePatientStudySeriesAttributesFromDB"/>
+<attribute name="NoPixelData"/>
+<attribute name="Deflate"/>
+<attribute name="DeleteOriginalStoredSeries"/>
+<attribute name="BufferSize"/>
+<attribute name="Concurrency"/>
+<attribute name="QueueName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="QueryRetrieveScpServiceName"/>
+<attribute name="State"/>
+</mbean>

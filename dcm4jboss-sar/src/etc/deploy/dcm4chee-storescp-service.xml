@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-storescp-service.xml 12275 2009-10-12 07:07:31Z javawilli $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.storescp.StoreScpService"
+    name="dcm4chee.archive:service=StoreScp"
+    xmbean-dd="xmdesc/dcm4chee-storescp-xmbean.xml">
+    <attribute name="FileSystemMgtServiceNamePrefix"
+      >dcm4chee.archive:service=FileSystemMgt,group=</attribute>
+    <attribute name="TimerIDCheckPendingSeriesStored"
+      >CheckPendingSeriesStored</attribute>
+    <depends optional-attribute-name="AEServiceName"
+      >dcm4chee.archive:service=AE</depends>
+    <depends>dcm4chee.archive:service=AuditLogger</depends>
+    <depends optional-attribute-name="DcmServerName"
+      >dcm4chee.archive:service=DcmServer</depends>
+    <depends optional-attribute-name="MwlScuServiceName"
+      >dcm4chee.archive:service=MWLScu</depends>
+    <depends optional-attribute-name="SchedulerServiceName"
+      >dcm4chee.archive:service=Scheduler</depends>
+    <depends optional-attribute-name="TemplatesServiceName"
+      >dcm4chee.archive:service=Templates</depends>
+  </mbean>
+</server>

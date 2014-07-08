@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[DICOM Storage Commitment SCU requesting storage
+   		commitment for objects received from specific AETs.<br/>
+   		Use case: Request Storage Commit (and set external retrieve AET in consequence) 
+   		for objects received from central archive without need to forward the objects 
+   		back to central archive. (Migration, Prefetching, ..)
+   ]]></description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.stgcmt.StgCmtScuBySeriesStoredService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>StgCmtScuBySeriesStoredService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getRqStgCmtOnReceiveFromAETs"
+      setMethod="setRqStgCmtOnReceiveFromAETs">
+      <description><![CDATA[
+        List of AET's for which a Storage Commit should be requested when objects are received from there.<br/>
+        Use NONE to disable this service.
+        Format: 
+        &lt;AET&gt;[=[&lt;callingAET&gt;:]&lt;calledAET&gt;<br/>
+        AET        : The callingAET of C-STORE that should trigger a StgCmt request.<br/>
+        callingAET : Calling AET of StgCmt request (default: first entry of CalledAETs attribute in StgCmtScuScp service) <br/>
+        calledAET  : Called AET of StgCmt request (default: &lt;AET&gt;)
+        ]]>
+      </description>
+      <name>RequestStgCmtOnReceiveFromAETs</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getNoStgCmtIfExternalRetrieveAET"
+      setMethod="setNoStgCmtIfExternalRetrieveAET">
+      <description><![CDATA[
+        Dont request a Storage Commit if objects are external retrievable.<br/>
+        Possible Values:<br />
+        NONE : Do always request a StgCmt.<br />
+        ANY  : Only request a StgCmt if a object is not external retrievable.<br />
+        &lt;AET&gt;: Only request a StgCmt if a object is not external retrievable from this AET.<br/>
+        ]]>
+      </description>
+      <name>NoStgCmtIfExternalRetrieveAET</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDelay"
+      setMethod="setDelay">
+      <description>Delay of sending StgCmt request in ms. This can be used to avoid DB deadlocks (SeriesStored.commit and StgCmt update)
+      </description>
+      <name>Delay</name>
+      <type>int</type>
+      <descriptors>
+         <value value="0"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getStgCmtServiceName"
+      setMethod="setStgCmtServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>StgCmtServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getStoreScpServiceName"
+      setMethod="setStoreScpServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>StoreScpServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+
+</mbean>
+

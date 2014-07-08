@@ -1,0 +1,12 @@
+<mbean name="dcm4chee.archive:service=HL7Service,type=ORU">
+<attribute name="MessageTypes"/>
+<attribute name="TemplateDir"/>
+<attribute name="Stylesheet"/>
+<attribute name="ObxIgnoreStati"/>
+<attribute name="StorePriority"/>
+<attribute name="FetchSize"/>
+<attribute name="ExportManagerName"/>
+<attribute name="HL7ServerName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

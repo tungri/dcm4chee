@@ -1,0 +1,5 @@
+<mbean name="dcm4chee.archive:service=GPWLFeed">
+<attribute name="TemplatePath"/>
+<attribute name="HumanPerformerList"/>
+<attribute name="State"/>
+</mbean>

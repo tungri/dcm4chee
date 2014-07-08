@@ -1,0 +1,5 @@
+<mbean name="dcm4chee.archive:service=OnSwitchStorageFileSystem">
+<attribute name="OnSwitchStorageFilesystemInvoke"/>
+<attribute name="FileSystemMgtName"/>
+<attribute name="State"/>
+</mbean>

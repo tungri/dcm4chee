@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=Sendmail">
+<attribute name="SmtpHost" type="Network"/>
+<attribute name="SmtpPort" type="Network"/>
+<attribute name="SmtpAuthentication"/>
+<attribute name="SmtpUser"/>
+<attribute name="SmtpPassword"/>
+<attribute name="RetryIntervals"/>
+<attribute name="QueueName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="State"/>
+</mbean>

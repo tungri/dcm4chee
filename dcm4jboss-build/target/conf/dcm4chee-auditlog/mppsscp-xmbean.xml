@@ -1,0 +1,24 @@
+<mbean name="dcm4chee.archive:service=MPPSScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="GeneratePatientID"/>
+<attribute name="IssuerOfPatientIDGeneratedPatientID"/>
+<attribute name="SupplementIssuerOfPatientID"/>
+<attribute name="SupplementIssuerOfAccessionNumber"/>
+<attribute name="SupplementByHostName"/>
+<attribute name="SupplementByHostAddress"/>
+<attribute name="GeneratePatientIDForUnscheduledFromAETitles"/>
+<attribute name="PatientMatching"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="CoerceConfigDirectory"/>
+<attribute name="AddMwlAttrsToMppsXsl"/>
+<attribute name="WriteCoercionXmlLog"/>
+<attribute name="LogAETitles"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="MaximumOperationsInvoked"/>
+<attribute name="MaximumOperationsPerformed"/>
+<attribute name="DcmServerName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="AEServiceName"/>
+<attribute name="State"/>
+</mbean>

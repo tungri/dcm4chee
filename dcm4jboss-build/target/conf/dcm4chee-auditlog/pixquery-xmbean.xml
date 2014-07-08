@@ -1,0 +1,9 @@
+<mbean name="dcm4chee.archive:service=PIXQuery">
+<attribute name="PIXManager"/>
+<attribute name="PIXQueryName"/>
+<attribute name="IssuersOfOnlyOtherPatientIDs"/>
+<attribute name="IssuersOfOnlyPrimaryPatientIDs"/>
+<attribute name="MockResponse"/>
+<attribute name="HL7SendServiceName"/>
+<attribute name="State"/>
+</mbean>

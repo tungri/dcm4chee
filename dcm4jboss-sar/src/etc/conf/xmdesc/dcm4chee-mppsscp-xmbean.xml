@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>DICOM Modality Performed Procedure Step SCP. Used to the calling and called AE titles for receiving MPPS messages.</description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.mppsscp.MPPSScpService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>MPPSScpService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" 
+      getMethod="getCalledAETs"
+      setMethod="setCalledAETs">
+      <description>List of accepted called AE titles, separated by \(backslash). 
+      For example, DCM4CHEE\DCM4CHEE2.
+      </description>
+      <name>CalledAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCallingAETs"
+      setMethod="setCallingAETs">
+      <description><![CDATA[
+      	List of accepted calling AE titles, separated by \(backslash).<br/>
+      	ANY = accept any. <br/>
+      	CONFIGURED_AETS = accept any configured AE Title.
+      	]]>       
+      </description>
+      <name>CallingAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ANY"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getGeneratePatientID"
+      setMethod="setGeneratePatientID">
+      <description><![CDATA[Generate a patient ID from a hash of the patient
+name and birth date and/or study instance uid, if the received MPPS N-CREATE
+message contains no patient ID.
+<br>Use ### and/or $$$ as a placeholder for the decimal hash value of patient
+name and/or study instance uid. For example, PACS-##########.
+<br>NONE = do not generate patient IDs.
+<br><i>Issuer of Patient ID</i> for generated <i>Patient IDs</i> will be set to
+the <i>Issuer of Patient ID</i> associated to the MPPS SCP (=Called) AE by
+its AE configuration entry. If no <i>Issuer of Patient ID</i> is configured for
+the MPPS SCP, <i>Issuer of Patient ID</i> is set to the value configured by
+attribute <b>IssuerOfPatientIDGeneratedPatientID</b>.]]>
+      </description>
+      <name>GeneratePatientID</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="PACS-##########"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getIssuerOfGeneratedPatientID"
+      setMethod="setIssuerOfGeneratedPatientID">
+      <description><![CDATA[<i>Issuer of Patient ID</i> for generated
+<i>Patient ID's</i>, if no <i>Issuer of Patient ID</i> is associated with the
+MPPS SCP (=Called) AE by its AE Configuration entry.]]>
+      </description>
+      <name>IssuerOfPatientIDGeneratedPatientID</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementIssuerOfPatientID"
+      setMethod="setSupplementIssuerOfPatientID">
+      <description><![CDATA[Supplement received MPPS N-CREATE message containing
+          a <i>Patient ID</i>, but no <i>Issuer of Patient ID</i>, with a value
+          for <i>Issuer of Patient ID</i>, if such is associated with the
+          MPPS SCU AE by its AE Configuration entry.]]>
+      </description>
+      <name>SupplementIssuerOfPatientID</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementIssuerOfAccessionNumber"
+      setMethod="setSupplementIssuerOfAccessionNumber">
+      <description><![CDATA[Supplement received MPPS N-CREATE message containing
+<i>Scheduled Step Attributes Sequence</i> items with a non-empty <i>Accession
+Number</i>, but no <i>Issuer of Accession Number Sequence</i>, with such
+Sequence containing one item with <i>Local Namespace Enitity ID</i>,
+<i>Universial Enitity ID</i> and <i>Universial Enitity ID Type</i>, if such is
+associated with the MPPS SCU AE by its AE Configuration entry.]]>
+      </description>
+      <name>SupplementIssuerOfAccessionNumber</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementByHostName"
+      setMethod="setSupplementByHostName">
+      <description><![CDATA[If there is no <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i> associated to the MPPS SCU AE by an AE
+configuration entry with matching AE Title, AE configuration entries which host
+name is equals to the host name of the MPPS SCU AE will be considered to
+determine the associated <i>Issuer of Patient ID</i> or <i>Issuer of Accession
+Number</i>. If there are several AE configuration entries with matching host
+name with different non-zero values for <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i>, no <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i> will be supplemented.]]>
+      </description>
+      <name>SupplementByHostName</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementByHostAddress"
+      setMethod="setSupplementByHostAddress">
+      <description><![CDATA[If there is no <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i> associated to the MPPS SCU AE by an AE
+configuration entry with matching AE Title, AE configuration entries which host
+name is equals to the IP address of the MPPS SCU AE will be considered to
+determine the associated <i>Issuer of Patient ID</i> or <i>Issuer of Accession
+Number</i>. If there are several AE configuration entries with matching host
+name with different non-zero values for <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i>, no <i>Issuer of Patient ID</i> or
+<i>Issuer of Accession Number</i> will be supplemented.]]>
+      </description>
+      <name>SupplementByHostAddress</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getGeneratePatientIDForUnscheduledFromAETs"
+      setMethod="setGeneratePatientIDForUnscheduledFromAETs">
+      <description><![CDATA[List of AE titles of MPPS SCUs for which the
+      Patient ID in received MPPS N-CREATE request without Scheduled Procedure
+      Step reference shall be replaced by a new generated Patient ID.
+      Separate multiple values by "\"(backslash).
+      <br/>If the list is prefixed by "!\", the Patient ID in MPPS N-CREATE
+      requests without Scheduled Procedure Step reference received from
+      <b>any</b> MPPS SCUs, <b>except</b> which AE title is specified in the
+      list, will be replaced by a new generated Patient ID.
+      <br/>"NONE" = do not replace Patient IDs in MPPS N-CREATE request from
+      any MPPS SCU.
+      ]]>
+      </description>
+      <name>GeneratePatientIDForUnscheduledFromAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientMatching"
+      setMethod="setPatientMatching">
+      <description><![CDATA[Defines which Patient Attributes in received 
+MPPS N-CREATE requests shall be considered for the selection of an existing
+Patient record in the archive.
+<p>
+Format: 'pid'['?']',issuer'['?'][',' ['['] <i>demograhic-matches</i> [']'] ]
+<br/><i>demograhic-matches</i> ::= <i>demograhic-match</i>['|' ...]
+<br/><i>demograhic-match</i> ::= [<i>ignore</i>',']<i>demograhic-fields</i>
+<br/><i>ignore</i> ::= 'ignore("' <i>regular-expression</i> '")'
+<br/><i>demograhic-fields</i> ::= <i>demograhic-field</i>['?'][',' ...]
+<br/><i>demograhic-field</i> ::= 'familyname'['(1)'] | 'givenname'['(1)'] | 'middlename'['(1)'] | 'nameprefix'['(1)'] | 'namesuffix'['(1)'] | birthdate | sex
+<p>
+Multiple alternative <i>demograhic-matches</i> can be specified using '|' as
+delimiter.
+<p>
+Substrings specified by 'ignore("' <i>regular-expression</i> '")' will be ignored for matching patient name
+components.
+<p>
+A '(1)' suffix of the attribute name specifies that only the first character
+need to match.
+<p>
+A question mark('?') after a attribute name specifies that a missing value in
+received DICOM N-CREATE requests will match with any value for that attribute
+in existing Patient Records, as Patient Records with missing values for that
+attribute will match with any value for that attribute in received DICOM MPPS
+N-CREATE request. Attribute names without question marks specifies, that DICOM
+MPPS N-CREATE requests without values for such attributes will not match any
+existing Patient Record, and Patient Records without values for such attributes
+will not get selected on receive of any DICOM MPPS N-CREATE request.
+<p>
+With 'pid<b>?</b>', you have to configure the Patient's family name complex 
+('familyname') as additional matching criterium.
+<p>
+Surrounding <i>demograhic-match</i> by brackets('[]') defines, that
+demographic fields shall *not* be considered for the selection of an existing
+Patient record, if the Patient ID is qualified by an Issuer/Authority in the
+received MPPS N-CREATE request *and* in the matching Patient Record.
+<p><b>Warning:</b>Improper configuration may cause MPPS assignments to wrong patient.<br/>
+<p>Default: <code>pid,issuer?[familyname,givenname,middlename?,birthdate]</code>
+]]>
+      </description>
+      <name>PatientMatching</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid,issuer?[familyname,givenname,middlename?,birthdate]" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAcceptedTransferSyntax"
+      setMethod="setAcceptedTransferSyntax">
+      <description><![CDATA[
+        List of accepted Transfer Syntaxes. Order defines selection preference.
+        Use either the  Transfer Syntaxes UID value or following defined
+        symbolic names: 
+        ImplicitVRLittleEndian,
+        ExplicitVRLittleEndian,
+        DeflatedExplicitVRLittleEndian,
+        ExplicitVRBigEndian
+        ]]>
+      </description>
+      <name>AcceptedTransferSyntax</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+           ExplicitVRLittleEndian
+           ImplicitVRLittleEndian
+         "/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCoerceConfigDir"
+      setMethod="setCoerceConfigDir">
+      <description><![CDATA[Directory where configuration files for attribute
+      coercion are located: if XSL stylesheet "mpps-ncreaterq.xsl" or 
+      "mpps-nsetrq.xsl" exists in this directory or in a sub-directory equal
+      to the AE Title of a MPPS SCU, attributes of MPPS N-CREATE or MPPS N-SET
+      requests from this SCU will be coerced according these stylesheets.
+      A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>  
+      </description>
+      <name>CoerceConfigDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-ae"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAddMwlAttrsToMppsXsl"
+      setMethod="setAddMwlAttrsToMppsXsl">
+      <description><![CDATA[ Stylesheet to add MWL Attributes to MPPS Dataset for 'MPPS Linked' notification.<br/>
+                This allow the use of additional MWL attributes to create ORM message in MPPS2ORM service. 
+                A relative path name is resolved relative to <i>archive-install-directory</i>/server/default/.<br/>
+                NONE..use MPPS Attributes.
+        ]]>
+      </description>
+      <name>AddMwlAttrsToMppsXsl</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isWriteCoercionXmlLog"
+      setMethod="setWriteCoercionXmlLog">
+      <description><![CDATA[Enable logging of coercions in separate log files.<br/>
+      	FileName: &lt;LOG_DIR&gt;/coercion/&lt;timestamp&gt;.&lt;xsl file&gt;.[in]|[out]<br/>
+      	Coercion logs are only written for Calling AETs specified in LogAETitles!]]>
+      </description>
+      <name>WriteCoercionXmlLog</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getLogCallingAETs"
+      setMethod="setLogCallingAETs">
+      <description><![CDATA[List of the AE titles for the MPPS SCUs for which XMLized
+      N-CREATE and N-SET request attributes are logged into files 
+      <i>AET</i>/<i>timestamp</i>-mpps-ncreaterq.xml and 
+      <i>AET</i>/<i>timestamp</i>-mpps-nsetrq.xml in the log directory.
+      Useful for creation of XSL stylesheets for attribute coercion.
+      Separate multiple values by \ (backslash).
+      NONE = no calling AE titles.]]>  
+      </description>
+      <name>LogAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+  
+   <attribute access="read-write"
+      getMethod="getMaxPDULength"
+      setMethod="setMaxPDULength">
+      <description>Maximum protocol data unit (PDU) package length for receiving PDUs.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumPDULength</name>
+      <type>int</type>
+      <descriptors>
+         <value value="16352"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxOpsInvoked"
+      setMethod="setMaxOpsInvoked">
+      <description>The maximum number of outstanding operations and/or
+      sub-operations it allows the Association-requester to invoke asynchronously.
+      A value of zero indicates an unlimited number of outstanding operations.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumOperationsInvoked</name>
+      <type>int</type>
+      <descriptors>
+         <value value="1"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxOpsPerformed"
+      setMethod="setMaxOpsPerformed">
+      <description>The maximum number of outstanding operations and/or
+      sub-operations it allows the Association-requester to perform asynchronously.
+      A value of zero indicates an unlimited number of outstanding operations.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumOperationsPerformed</name>
+      <type>int</type>
+      <descriptors>
+         <value value="0"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDcmServerName"
+      setMethod="setDcmServerName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>DcmServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAEServiceName"
+      setMethod="setAEServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>AEServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   <operation impact="ACTION">
+      <description>Link MPPS to MWL entries (LOCAL Modality Worklist).</description>
+      <name>linkMppsToMwl</name>
+      <parameter>
+        <description>List of Scheduled Procedure Step IDs</description>
+        <name>spsIDs</name>
+        <type>[Ljava.lang.String;</type>
+      </parameter>
+      <parameter>
+        <description>List of MPPS SOP Instance UIDs</description>
+        <name>mppsIUIDs</name>
+        <type>[Ljava.lang.String;</type>
+      </parameter>
+      <return-type>java.util.Map</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Link MPPS to MWL entries of external Modality worklist.</description>
+      <name>linkMppsToMwl</name>
+      <parameter>
+        <description>List of Scheduled Procedure Step Attributes</description>
+        <name>spsAttrs</name>
+        <type>[Lorg.dcm4che.data.Dataset;</type>
+      </parameter>
+      <parameter>
+        <description>List of MPPS SOP Instance UIDs</description>
+        <name>mppsIUIDs</name>
+        <type>[Ljava.lang.String;</type>
+      </parameter>
+      <return-type>java.util.Map</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Unlink MPPS to MWL entries.</description>
+      <name>unlinkMpps</name>
+       <parameter>
+        <description>MPPS SOP Instance UID</description>
+        <name>mppsIUID</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>void</return-type>
+   </operation>   
+   <operation impact="ACTION">
+      <description>Deletes a list of MPPS entries.</description>
+      <name>deleteMPPSEntries</name>
+      <parameter>
+        <description>List of MPPS Instance UIDs</description>
+        <name>iuids</name>
+        <type>[Ljava.lang.String;</type>
+      </parameter>
+      <return-type>boolean</return-type>
+   </operation>   
+   
+</mbean>
+

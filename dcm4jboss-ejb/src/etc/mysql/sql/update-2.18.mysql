@@ -1,0 +1,16 @@
+-- Update DB from dcm4chee-2.17.x to dcm4chee-2.18.x
+
+CREATE TABLE published_study (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    study_fk          BIGINT,
+    created_time      DATETIME,
+    updated_time      DATETIME,
+    doc_uid           VARCHAR(250) BINARY,
+    docentry_uid      VARCHAR(250) BINARY,
+    repository_uid    VARCHAR(250) BINARY,
+    status		      INT NOT NULL,
+FOREIGN KEY (study_fk) REFERENCES study(pk)
+);
+CREATE INDEX published_study ON published_study(study_fk);
+CREATE INDEX published_study_status ON published_study(status);
+CREATE INDEX repository_uid ON published_study(repository_uid);

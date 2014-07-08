@@ -1,0 +1,20 @@
+<mbean name="dcm4chee.archive:service=AttributesModificationScu">
+<attribute name="AcceptTimeout"/>
+<attribute name="DIMSETimeout"/>
+<attribute name="SocketCloseDelay"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="TcpNoDelay"/>
+<attribute name="SendBufferSize"/>
+<attribute name="ReceiveBufferSize"/>
+<attribute name="TLSConfigName"/>
+<attribute name="ForwardingRules"/>
+<attribute name="CallingAETitle"/>
+<attribute name="Concurrency"/>
+<attribute name="Priority"/>
+<attribute name="RetryIntervals"/>
+<attribute name="NoRetryErrorCode"/>
+<attribute name="QueueName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="AttributesModificationScpServiceName"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC 
+    "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" 
+    "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+<mbean>
+  <description><![CDATA[ File Move Service
+    Move files from one file system group (RW) to another RW file system group if usable disk space 
+    of <i>SourceFileSystemGroup</i> falls below <i>MoveThresholds</i> and configured.
+    accessed studies.]]>
+  </description>
+  <descriptors>
+    <persistence persistPolicy="OnUpdate" />
+    <persistence-manager
+      value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+  </descriptors>
+  <class>org.dcm4chex.archive.hsm.FileMoveService</class>
+  <constructor>
+    <description>The default constructor</description>
+    <name>FileMoveService</name>
+  </constructor>
+
+  <!-- Attributes -->
+  <attribute access="read-write" getMethod="getSrcFsGroup" setMethod="setSrcFsGroup">
+    <description><![CDATA[Source file system group ID or NONE to disable this service.]]>
+    </description>
+    <name>SourceFileSystemGroupID</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NONE" />
+    </descriptors>
+  </attribute>
+  <attribute access="read-write" getMethod="getDestFsGroup" setMethod="setDestFsGroup">
+    <description><![CDATA[Destination file system group ID.<br/>
+    	One filesystem of the configured group must be RW (selected via selectStorageFileSystem)<br/>
+    	Use &lt;file system path&gt;@&lt;file system group&gt; to specify a concrete file system of a FS group.
+    	In this case the file system can be also RO.]]>
+    </description>
+    <name>DestinationFileSystemGroupID</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NONE" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getMinFreeDiskSpace" >
+    <description><![CDATA[Minimum free disk space on source filesystem group. Used to calculate usable disk space of the file system group.
+      1MB = 1000000 bytes, 1GB = 1000MB. Configured in corresponding FilesystemGroup service]]>
+    </description>
+    <name>MinimumFreeDiskSpaceOnSource</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getUsableDiskSpace">
+    <description><![CDATA[Usable free disk space on source file
+      system group, considering the configured value for <i>MinimumFreeDiskSpace</i>, in bytes.]]>
+    </description>
+    <name>UsableDiskSpaceOnSource</name>
+    <type>long</type>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getUsableDiskSpaceString">
+    <description><![CDATA[Usable free disk space on source file
+      systems group, considering the configured value for <i>MinimumFreeDiskSpace</i>, as string.]]>
+    </description>
+    <name>UsableDiskSpaceOnSourceString</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getUsableDiskSpaceStringOnDest">
+    <description><![CDATA[Usable free disk space on destination file systems group.]]>
+    </description>
+    <name>UsableDiskSpaceOnDestinationString</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getDeleterThresholds"
+    setMethod="setDeleterThresholds">
+    <description><![CDATA[Defines 'disc free' thresholds dependent on hour of day, for
+      moving the most infrequently accessed studies which satisfy the
+      configured set of constraints.
+      <p>Format: HOUR:##MB or HOUR:##GB or HOUR:##h, multiple thresholds with
+      different (start) hour separated by ';'. NONE = disable move of
+      studies on file systems of the configured source file system group.
+      <p>E.g.: 7:1h;19:24h => free space for expected data volume received in
+      24 hours between  7pm and 7am. Between 7am and 7pm only move studies if
+      the usable free space falls below the expected data volume received in
+      one hour.]]>
+    </description>
+    <name>MoveThresholdsOnSource</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="7:1h;19:24h" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getExpectedDataVolumePerDay" >
+    <description><![CDATA[Expected data volume per day on source file system group. Used to transform
+      time based move thresholds (s. MoveThresholds) into disk space size
+      to free.]]>
+    </description>
+    <name>ExpectedDataVolumePerDayOnSource</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getExpectedDataVolumePerDayBytes">
+    <description><![CDATA[Get expected data volume per day on source filesystem group
+      in bytes, returned as a long.]]>
+    </description>
+    <name>ExpectedDataVolumePerDayBytesOnSource</name>
+    <type>long</type>
+  </attribute>
+
+  <attribute access="read-only" getMethod="getCurrentDeleterThreshold">
+    <description><![CDATA[Get current effective move threshold in bytes
+      according configured <i>MoveThreshold</i> and
+      <i>ExpectedDataVolumePerDay</i>. If <i>UsableDiskSpaceOnSource</i> falls below
+      this value, most infrequently accessed studies which satisfy the
+      configured set of constraints will be moved on next invocation of
+      operation <i>scheduleStudiesForMove</i>.]]>
+    </description>
+    <name>CurrentMoveThresholdOnSource</name>
+    <type>long</type>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getDeleteStudyIfNotAccessedFor"
+    setMethod="setDeleteStudyIfNotAccessedFor">
+    <description><![CDATA[Defines when a study not accessed for the specified
+      time can be moved from file systems of configured source file system group 
+      to a file system of destination file system group, if it satisfies the configured set of constraints.
+      <p>Format: 
+      <br>##h (in hours) | ##d (in days) | ##w (in weeks) | NEVER
+      <br>NEVER = move of studies is only triggered by running out of disk
+      space.
+      <br>Example:
+      <br>52w = any studies that have not been accessed for 52 weeks or more
+      can be moved if they satisfies the configured set of constraints.]]>
+    </description>
+    <name>MoveStudyIfNotAccessedFor</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NEVER" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getDeleteStudyOnlyIfNotAccessedFor"
+    setMethod="setDeleteStudyOnlyIfNotAccessedFor">
+    <description><![CDATA[Defines minimal time a study must not be accessed
+      before it becomes a candidate for move.
+      <p>Format: 
+      <br>##h (in hours) | ##d (in days) | ##w (in weeks)]]>
+    </description>
+    <name>MoveStudyOnlyIfNotAccessedFor</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="1d" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="isDeleteStudyOnlyIfStorageNotCommited"
+    setMethod="setDeleteStudyOnlyIfStorageNotCommited">
+    <description><![CDATA[Defines if no Storage Commitment request must have
+      been accepted for any instances of a study to become a candidate for
+      move triggered by running out of disk space or being not accessed
+      longer than configured <i>MoveStudiesNotAccessedFor</i>. Typically only
+      activated if no other constraint for study move is configured.]]>
+    </description>
+    <name>MoveStudyOnlyIfStorageNotCommited</name>
+    <type>boolean</type>
+    <descriptors>
+      <value value="false" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="isDeleteStudyOnlyIfCopyExternalRetrievable"
+    setMethod="setDeleteStudyOnlyIfCopyExternalRetrievable">
+    <description><![CDATA[Defines if all instances of a study must be
+      retrievable from an external Application Entity to become a candidate
+      for move triggered by running out of disk space or being not accessed
+      longer than configured <i>MoveStudiesNotAccessedFor</i>.]]>
+    </description>
+    <name>MoveStudyOnlyIfExternalRetrievable</name>
+    <type>boolean</type>
+    <descriptors>
+      <value value="true" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="getInstanceAvailabilityOfExternalRetrievable"
+    setMethod="setInstanceAvailabilityOfExternalRetrievable">
+    <description><![CDATA[Defines assumed Instance Availability of only
+      external retrievable Studies. Enumerated values: ONLINE, NEARLINE, AUTO.
+      AUTO - query Instance Availability from external Retrieve AE.]]>
+    </description>
+    <name>InstanceAvailabilityOfExternalRetrievable</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="AUTO" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="isDeleteStudyOnlyIfCopyOnMedia"
+    setMethod="setDeleteStudyOnlyIfCopyOnMedia">
+    <description><![CDATA[Defines if all instances of a study must be
+      stored on Media to become a candidate for move triggered by running out of
+      disk space or being not accessed longer than configured
+      <i>MoveStudiesNotAccessedFor</i>.]]>
+    </description>
+    <name>MoveStudyOnlyIfCopyOnMedia</name>
+    <type>boolean</type>
+    <descriptors>
+      <value value="true" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="getDeleteStudyOnlyIfCopyOnFileSystemOfFileSystemGroup"
+    setMethod="setDeleteStudyOnlyIfCopyOnFileSystemOfFileSystemGroup">
+    <description><![CDATA[Defines if all instances of a study must be
+      stored on a file system of the specified different file system group to
+      become a candidate for move triggered by running out of disk space or
+      being not accessed longer than configured <i>MoveStudiesNotAccessedFor</i>.
+      "NONE" = no such constraint.]]>
+    </description>
+    <name>MoveStudyOnlyIfCopyOnFileSystemOfFileSystemGroup</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NEARLINE_STORAGE" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="isDeleteStudyOnlyIfCopyArchived"
+    setMethod="setDeleteStudyOnlyIfCopyArchived">
+    <description><![CDATA[Defines if all instances of a study must be stored
+      on a file system of a different file system group with file status:
+      ARCHIVED to become a candidate for move triggered by running out of disk
+      space or being not accessed longer than configured
+      <i>MoveStudiesNotAccessedFor</i>. Typically the file system group of
+      the file system holding the archived copy is specified by
+      <i>MoveStudyIfCopyOnFileSystemOfFileSystemGroup</i>.]]>
+    </description>
+    <name>MoveStudyOnlyIfCopyArchived</name>
+    <type>boolean</type>
+    <descriptors>
+      <value value="true" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="isDeleteStudyOnlyIfCopyOnReadOnlyFileSystem"
+    setMethod="setDeleteStudyOnlyIfCopyOnReadOnlyFileSystem">
+    <description><![CDATA[Defines if all instances of a study must be stored
+      on a read-only file system of a different file system group to become a
+      candidate for move triggered by running out of disk space or being not
+      accessed longer than configured <i>MoveStudiesNotAccessedFor</i>.
+      Typically the file system group of the read-only file systems is
+      specified by <i>MoveStudyIfCopyOnFileSystemOfFileSystemGroup</i>.]]> 
+    </description>
+    <name>MoveStudyOnlyIfCopyOnReadOnlyFileSystem</name>
+    <type>boolean</type>
+    <descriptors>
+      <value value="true" />
+    </descriptors>
+  </attribute>
+
+  <attribute access="read-write"
+    getMethod="getScheduleStudiesForDeletionInterval"
+    setMethod="setScheduleStudiesForDeletionInterval">
+    <description><![CDATA[Interval in which operation
+      <i>scheduleStudiesForMove</i> is invoked to schedule move of most
+      infrequently accessed studies which satisfies the configured set of
+      constraints from file systems of the source file system group, 
+      if they were not accessed longer than configured
+      <i>MoveStudiesNotAccessedFor</i> or if <i>UsableDiskSpaceOnSource</i>
+      falls below <i>CurrentMoveThreshold</i>.
+      <p>Format: ##s (in seconds), ##m (in minutes), ##h (in hours).
+      <br>NEVER = do not invoke operation <i>scheduleStudiesForMove</i>
+      by timer thread automatically. ]]>
+    </description>
+    <name>ScheduleStudiesForMoveInterval</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="NEVER" />
+    </descriptors>
+  </attribute>
+   <attribute access="read-only"
+      getMethod="isRunningScheduleStudiesForDeletion">
+      <description>Current state if ScheduleStudiesForMove task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunningScheduleStudiesForMove</name>
+      <type>boolean</type>
+   </attribute>
+ 
+  <attribute access="read-write"
+    getMethod="getScheduleStudiesForDeletionBatchSize"
+    setMethod="setScheduleStudiesForDeletionBatchSize">
+    <description><![CDATA[Defines maximal number of studies scheduled for
+      move in one transaction.]]> 
+    </description>
+    <name>ScheduleStudiesForMoveBatchSize</name>
+    <type>int</type>
+    <descriptors>
+      <value value="100" />
+    </descriptors>
+  </attribute>
+ 
+    <attribute access="read-write"
+      getMethod="getRetryIntervalls"
+      setMethod="setRetryIntervalls">
+      <description><![CDATA[Number and interval of retries made for
+      failed Move Requests.
+      <br>Format:
+      <br>Comma separated list of <i>number</i>x<i>interval</i> pairs.
+      <br>The interval can be specified in seconds (##s),
+      minutes (##m), hours (##h) or days (##d).
+      <br>Example: 
+      <br>5x1m,10x10m means retry a total of 5 times, one minute
+      apart for each retry; then retry a total of 10 times, 10 minutes 
+      apart for each retry.]]>
+      </description>
+      <name>RetryIntervals</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="5x1m,12x5m,24x1h,7x1d" />
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write" getMethod="isKeepSrcFiles" setMethod="setKeepSrcFiles">
+      <description>Keep source file (copy instead of move).
+      </description>
+      <name>KeepSrcFiles</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="isVerifyCopy" setMethod="setVerifyCopy">
+      <description>Verify MD5 sum of copied file.
+      </description>
+      <name>VerifyCopy</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+ 
+   <attribute access="read-write" getMethod="isKeepMovedFilesOnError" setMethod="setKeepMovedFilesOnError">
+      <description>Keep successfully moved files if one or more files failed. (not supported on tar file systems!). 
+	      If disabled the whole Move order is rolled back if one file failed!
+      </description>
+      <name>KeepMovedFilesOnError</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getDestFileStatus" setMethod="setDestFileStatus">
+    <description><![CDATA[File status of destination files after move.<br/>
+    	Suitable stati: DEFAULT, TO_ARCHIVE, ARCHIVED <br/>
+    	Use '-' to leave file status unchanged.]]>
+    </description>
+    <name>DestinationFileStatus</name>
+    <type>java.lang.String</type>
+    <descriptors>
+      <value value="-" />
+    </descriptors>
+  </attribute>
+ 
+   <attribute access="read-write"
+      getMethod="getBufferSize"
+      setMethod="setBufferSize">
+      <description>Size of write byte buffer.
+      </description>
+      <name>BufferSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="8192"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getHSMModulServicename"
+      setMethod="setHSMModulServicename">
+      <description><![CDATA[HSM Module to store tarballs to HSM systems.<br/> 
+	      Use NONE to store files on local filesystem without additional HSM support.<br/>
+	      Only effective if destination is a tar filesystem!<br/>
+	      Please ensure with dependencies in deployment descriptor that this service starts after configured HSMModule!<br/>
+      ]]></description>
+      <name>HSMModulServicename</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+
+  <attribute access="read-write"
+    getMethod="getTimerIDScheduleStudiesForDeletion"
+    setMethod="setTimerIDScheduleStudiesForDeletion">
+    <description>Used internally. Do NOT modify. </description>
+    <name>TimerIDScheduleStudiesForMove</name>
+    <type>java.lang.String</type>
+  </attribute>
+
+   <attribute access="read-write"
+      getMethod="getQueueName"
+      setMethod="setQueueName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>QueueName</name>
+      <type>java.lang.String</type>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getFileSystemMgtServiceNamePrefix"
+      setMethod="setFileSystemMgtServiceNamePrefix">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>FileSystemMgtServiceNamePrefix</name>
+      <type>java.lang.String</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getJmsServiceName"
+      setMethod="setJmsServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>JMSServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>   
+  <attribute access="read-write" getMethod="getSchedulerServiceName"
+    setMethod="setSchedulerServiceName">
+    <description>Used internally. Do NOT modify. </description>
+    <name>SchedulerServiceName</name>
+    <type>javax.management.ObjectName</type>
+  </attribute>
+
+  <attribute access="read-write" getMethod="getFindScuServiceName"
+    setMethod="setFindScuServiceName">
+    <description>Used internally. Do NOT modify. </description>
+    <name>FindScuServiceName</name>
+    <type>javax.management.ObjectName</type>
+  </attribute>
+
+  &defaultAttributes;
+
+  <!-- Operations -->
+  &defaultOperations;
+
+  <operation impact="ACTION">
+    <description><![CDATA[Schedules move of most infrequently accessed
+      studies which satisfies the configured set of constraints from writeable
+      file systems of the source file system group, if they
+      were not accessed longer than configured
+      <i>MoveStudiesNotAccessedFor</i> or if  <i>UsableDiskSpaceOnSource</i> falls
+      below <i>CurrentMoveThreshold</i>.
+      Returns the number of studies scheduled for move.]]>
+    </description>
+    <name>scheduleStudiesForMove</name>
+    <return-type>int</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description><![CDATA[Schedule move of study with specified Study
+      Instance UID <b>without</b> consideration of the configured set of
+      constraints. Returns size of study in bytes scheduled for deletion.]]>
+    </description>
+    <name>scheduleStudyForMove</name>
+    <parameter>
+      <description>Study Instance UID.
+      </description>
+      <name>suid</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>long</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description>Show current Move criteria.</description>
+    <name>showMoveCriteria</name>
+    <return-type>java.lang.String</return-type>
+  </operation>
+  <!-- Notifications -->
+</mbean>

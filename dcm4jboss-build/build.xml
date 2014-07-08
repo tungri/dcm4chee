@@ -1,0 +1,321 @@
+<project name="dcm4jboss-build" default="dist">
+<!--  apples and bananas -->
+  <!-- Allow override from local properties file -->
+  <property file="build.properties"/>
+  <property file="../build.properties"/>
+
+  <property name="version" value="2.18.0-SNAPSHOT"/>
+  <property name="audit-version" value="2.17.3"/>
+  <property name="docstore-version" value="1.0.3"/>
+  <property name="dcm4che2-version" value="2.0.28"/>
+  <property name="web3-version" value="3.0.4-SNAPSHOT"/>
+  <property name="target.dir" value="${basedir}/target"/>
+  <property name="external.dir" value="${basedir}/external"/>
+
+  <!-- Override with your dcm4che-1.4.x source dist location -->
+  <property name="dcm4che14.home"
+    value="C:\dcm4chee\SRC\dcm4che-svn-18306-dcm4che14-trunk\build\dcm4che-1.4.34"/>
+
+  <!-- Override with your local Maven2 repository location -->
+  <property name="m2.repos" value="${user.home}/.m2/repository"/>
+  <property name="dcm4chee-audit-login.lib" 
+    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-audit-login/${audit-version}"/>
+  <property name="dcm4chee-audit-logger.lib" 
+    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-audit-logger/${audit-version}"/>
+  <property name="dcm4chee-audit-tomcat.lib" 
+    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-audit-tomcat/${audit-version}"/>
+  <property name="dcm4chee-docstore.lib" 
+    value="${m2.repos}/dcm4che/dcm4chee-docstore-store/${docstore-version}"/>
+  <property name="dcm4che-core.lib" 
+	    value="${m2.repos}/dcm4che/dcm4che-core/${dcm4che2-version}" />
+  <property name="dcm4che-net.lib" 
+	    value="${m2.repos}/dcm4che/dcm4che-net/${dcm4che2-version}" />
+  <property name="dcm4che-base64.lib" 
+	    value="${m2.repos}/dcm4che/dcm4che-base64/${dcm4che2-version}" />
+  <property name="dcm4chee-web3.ear" 
+	    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-web-ear/${web3-version}" />
+  <property name="dcm4chee-web3.lic.spi" 
+	    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-web-licenseprovider/${web3-version}" />
+  <property name="dcm4chee-web3.urlprovider.spi" 
+	    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-web-urlprovider/${web3-version}" />
+  <property name="dcm4chee-web3.auditlog.dashboard" 
+	    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-dashboard-sar-auditlog/${web3-version}" />
+  <property name="dcm4chee-web3.auditlog" 
+	    value="${m2.repos}/dcm4che/dcm4chee/dcm4chee-web-sar-auditlog/${web3-version}" />
+	
+  <!-- Override with your JBoss server bundle dist location -->
+  <property name="jboss.home" value="C:/dcm4chee/jboss-4.2.3.GA"/>
+  <property name="jboss.dtd" value="${jboss.home}/docs/dtd"/>
+
+  <!-- Override with your FOP dist location -->
+  <property name="fop.home" value="C:/dcm4chee/fop-0_95"/>
+	
+  <property name="jsch.home" value="${user.home}/jsch-0.1.49"/>
+  <property name="jcifs.home" value="${user.home}/jcifs-1.3.17"/>
+  <property name="castor.home" value="${user.home}/castor-1.3.1"/>
+	
+	
+  <target name="clean">
+    <delete dir="${target.dir}"/>
+    <ant inheritAll="false" dir="../dcm4jboss-ejb" target="clean"/>
+    <ant inheritAll="false" dir="../dcm4jboss-sar" target="clean"/>
+    <ant inheritAll="false" dir="../dcm4jboss-hl7" target="clean"/>
+    <ant inheritAll="false" dir="../dcm4jboss-wado" target="clean"/>
+    <ant inheritAll="false" dir="../dcm4jboss-rid" target="clean"/>
+    <ant inheritAll="false" dir="../dcm4jboss-web" target="clean"/>
+  </target>
+  <target name="jar">
+    <ant inheritAll="false" dir="../dcm4jboss-ejb" target="jar"/>
+    <ant inheritAll="false" dir="../dcm4jboss-sar" target="jar"/>
+  	<ant inheritAll="false" dir="../dcm4jboss-hl7" target="jar"/>
+    <ant inheritAll="false" dir="../dcm4jboss-wado" target="jar"/>
+    <ant inheritAll="false" dir="../dcm4jboss-rid" target="jar"/>
+    <ant inheritAll="false" dir="../dcm4jboss-wado" target="war"/>
+    <ant inheritAll="false" dir="../dcm4jboss-rid" target="war"/>
+    <ant inheritAll="false" dir="../dcm4jboss-web" target="war">
+      <property name="version" value="${version}" />
+    </ant>
+  </target>
+
+  <target name="fixcrlf">
+    <mkdir dir="${target.dir}/bin"/>
+    <fixcrlf srcdir="../dcm4jboss-sar/src/etc/bin" includes="*.sh,*.conf"
+  		destdir="${target.dir}/bin" eol="lf"/>
+    <fixcrlf srcdir="../dcm4jboss-sar/src/etc/bin" includes="*.bat"
+  		destdir="${target.dir}/bin" eol="crlf"/>
+    <fixcrlf srcdir="bin" includes="*.sh"
+  		destdir="${target.dir}/bin" eol="lf"/>
+    <fixcrlf srcdir="bin" includes="*.bat"
+  		destdir="${target.dir}/bin" eol="crlf"/>
+    <mkdir dir="${target.dir}/doc"/>
+    <fixcrlf srcdir="../dcm4jboss-sar/doc" includes="INSTALL, PWD2HASH"
+  		destdir="${target.dir}/doc" eol="crlf" />
+  </target>
+
+  <target name="dist"
+    depends="hsql-dist,psql-dist,mysql-dist,mssql-dist,oracle-dist,db2-dist,firebird-dist"/>
+
+  <target name="hsql-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="hsql"/>
+    </antcall>
+  </target>
+  <target name="psql-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="psql"/>
+    </antcall>
+  </target>
+  <target name="mysql-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="mysql"/>
+    </antcall>
+  </target>
+  <target name="oracle-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="oracle"/>
+    </antcall>
+  </target>
+  <target name="db2-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="db2"/>
+    </antcall>
+  </target>
+  <target name="mssql-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="mssql"/>
+    </antcall>
+  </target>
+  <target name="firebird-dist" depends="jar,fixcrlf,auditlog-conf">
+    <antcall target="db-dist">
+      <param name="db.name" value="firebird"/>
+    </antcall>
+  </target>
+
+  <target name="db-dist">
+    <property name="dist.db" value="dcm4chee-${version}-${db.name}"/>
+    <property name="dist.db.config" value="${dist.db}/server/default"/>
+    <zip destfile="${target.dir}/${dist.db}.zip">
+      <zipfileset dir="${dcm4che14.home}" prefix="${dist.db.config}">
+        <include name="lib/dcm4che.jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che14.home}" prefix="${dist.db.config}">
+        <include name="lib/dcm4che-imageio-rle-2.0.25.jar"/>
+        <include name="lib/slf4j-api-1.6.1.jar"/>
+        <include name="lib/slf4j-log4j12-1.6.1.jar"/>
+        <include name="lib/jai_imageio.jar"/>
+        <include name="lib/clibwrapper_jiio.jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che14.home}/bin" prefix="${dist.db}/bin/native">
+        <include name="libclib_jiio.so"/>
+        <include name="clib_jiio*.dll"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che14.home}/bin" prefix="${dist.db.config}/conf">
+        <include name="certificates/*"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che14.home}" prefix="${dist.db}/doc">
+        <include name="licenses/*"/>
+      </zipfileset>
+        <zipfileset dir="src/etc" prefix="${dist.db}/doc">
+          <include name="licenses/*"/>
+        </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/target/common"
+        prefix="${dist.db.config}">
+        <include name="lib/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/target/common" prefix="${dist.db}">
+        <include name="bin/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/test/data" prefix="${dist.db}/bin"/>
+      <zipfileset dir="../dcm4jboss-ejb/target/${db.name}"
+        prefix="${dist.db.config}">
+        <include name="lib/*"/>
+        <include name="deploy/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/src/etc/common"
+        prefix="${dist.db.config}">
+        <include name="conf/**"/>
+        <include name="lib/*"/>
+        <include name="deploy/**"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/src/etc/${db.name}"
+        prefix="${dist.db.config}">
+        <include name="conf/*"/>
+        <include name="deploy/**"/>
+        <include name="data/**"/>
+        <include name="lib/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-ejb/src/etc/${db.name}" prefix="${dist.db}">
+        <include name="sql/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar/target" prefix="${dist.db.config}">
+        <include name="lib/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar/target" prefix="${dist.db}">
+        <include name="bin/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar" prefix="${dist.db}">
+        <include name="bin/JavaService.exe"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar" prefix="${dist.db}">
+        <include name="doc/dcm4chee-auditlog-service.xml"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar" prefix="${dist.db.config}">
+        <include name="lib/commons-compress-20050911.jar"/>
+        <include name="lib/dcm4che-audit-2.0.25.jar"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-sar/src/etc" prefix="${dist.db.config}">
+        <include name="conf/**"/>
+        <include name="deploy/**"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-audit-logger.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-audit-login.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-audit-tomcat.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-docstore.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che-core.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che-net.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4che-base64.lib}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${target.dir}" prefix="${dist.db}">
+        <include name="bin/*"/>
+        <exclude name="bin/*.sh"/>
+        <include name="doc/**"/>
+      </zipfileset>
+      <zipfileset dir="${target.dir}" prefix="${dist.db}" filemode="755">
+        <include name="bin/*.sh"/>
+      </zipfileset>
+      <zipfileset dir="${target.dir}" prefix="${dist.db.config}">
+        <include name="conf/**"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-hl7" prefix="${dist.db.config}">
+        <include name="lib/xhl7.jar"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-hl7/target" prefix="${dist.db.config}">
+        <include name="lib/*"/>
+      </zipfileset>
+      <zipfileset dir="../dcm4jboss-hl7/src/etc" prefix="${dist.db.config}">
+        <include name="conf/**"/>
+        <include name="deploy/**"/>
+      </zipfileset>
+        <zipfileset dir="../dcm4jboss-wado/target" prefix="${dist.db.config}">
+          <include name="lib/*"/>
+          <include name="deploy/*"/>
+        </zipfileset>
+        <zipfileset dir="../dcm4jboss-rid/target" prefix="${dist.db.config}">
+          <include name="lib/*"/>
+          <include name="deploy/*"/>
+        </zipfileset>
+        <zipfileset dir="../dcm4jboss-wado/src/etc" prefix="${dist.db.config}">
+           <include name="conf/**"/>
+           <include name="deploy/**"/>
+         </zipfileset>
+        <zipfileset dir="../dcm4jboss-rid/src/etc" prefix="${dist.db.config}">
+           <include name="conf/**"/>
+           <include name="deploy/**"/>
+         </zipfileset>
+      <zipfileset dir="${fop.home}/build" prefix="${dist.db.config}/lib">
+        <include name="fop.jar"/>
+      </zipfileset>
+      <zipfileset dir="${fop.home}" prefix="${dist.db.config}">
+        <include name="lib/avalon-framework-4.2.0.jar"/>
+        <include name="lib/batik-all-1.7.jar"/>
+        <include name="lib/xml-apis-ext-1.3.04.jar"/>
+        <include name="lib/commons-io-1.3.1.jar"/>
+        <include name="lib/xmlgraphics-commons-1.3.1.jar"/>
+      </zipfileset>
+        <zipfileset dir="${jsch.home}" prefix="${dist.db.config}/lib">
+          <include name="*.jar"/>
+        </zipfileset>
+        <zipfileset dir="${jcifs.home}" prefix="${dist.db.config}/lib">
+          <include name="*.jar"/>
+        </zipfileset>
+        <zipfileset dir="${castor.home}" prefix="${dist.db.config}/lib">
+          <include name="*.jar"/>
+        </zipfileset>
+      <zipfileset dir="${dcm4chee-web3.ear}"
+        prefix="${dist.db.config}/deploy">
+        <include name="dcm4chee-web-ear-${web3-version}-${db.name}.ear"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-web3.lic.spi}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-web3.urlprovider.spi}"
+        prefix="${dist.db.config}/lib">
+        <include name="*jar"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-web3.auditlog}"
+        prefix="${dist.db.config}/conf/dcm4chee-auditlog">
+        <include name="*xmbean.xml"/>
+      </zipfileset>
+      <zipfileset dir="${dcm4chee-web3.auditlog.dashboard}"
+        prefix="${dist.db.config}/conf/dcm4chee-auditlog">
+        <include name="*xmbean.xml"/>
+      </zipfileset>
+    </zip>
+  </target>
+
+  <target name="auditlog-conf">
+  	<ant antfile="build_auditlog_conf.xml" target="auditlog-conf"/>
+  </target>
+
+</project>
