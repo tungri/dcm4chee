@@ -1,0 +1,10 @@
+-- Update DB from dcm4chee-2.16.x to dcm4chee-2.17.x
+
+ALTER TABLE priv_instance ADD created_time TIMESTAMP;
+UPDATE priv_instance SET created_time = CURRENT_TIMESTAMP;
+CREATE INDEX priv_inst_created ON priv_instance(created_time);
+
+ALTER TABLE ae ADD ae_group VARCHAR(255);
+CREATE INDEX ae_group ON ae(ae_group);
+
+CREATE INDEX filepath ON files(filepath);

@@ -1,0 +1,19 @@
+<mbean name="dcm4chee.archive:service=LossyCompressionService">
+<attribute name="SourceFileSystemGroupID"/>
+<attribute name="DestinationFileSystemGroupID"/>
+<attribute name="TaskInterval"/>
+<attribute name="LimitNumberOfFilesPerTask"/>
+<attribute name="CompressionRules"/>
+<attribute name="ExternalRetrieveAETitle"/>
+<attribute name="CopyOnOtherFileSystemGroupID"/>
+<attribute name="SourceAETitle"/>
+<attribute name="SeriesDescription"/>
+<attribute name="BufferSize"/>
+<attribute name="TempDirectory"/>
+<attribute name="FetchSize"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="FileSystemMgtServiceNamePrefix"/>
+<attribute name="TimerIDCheckFilesToCompress"/>
+<attribute name="State"/>
+</mbean>

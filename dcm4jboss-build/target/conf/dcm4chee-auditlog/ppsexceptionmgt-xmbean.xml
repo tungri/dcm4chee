@@ -1,0 +1,7 @@
+<mbean name="dcm4chee.archive:service=PPSExceptionMgtService">
+<attribute name="Delay"/>
+<attribute name="QueueName"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="State"/>
+</mbean>

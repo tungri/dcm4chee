@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[CAStor-Based HSM Module Service.<br/>
+   	    This module uses CAStor as a storage for study tarballs.<br/>
+   	    It stores each study tarball as an unnamed object on the CAStor cluster. That object is identified
+   	    by a UUID, and can later be retrieved at <br/>
+        http://<i>cluster-address</i>:80/<i>uuid</i>
+   ]]></description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.module.castor.CAStorHSMModule</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>CAStorHSMModule</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getHostname"
+      setMethod="setHostname">
+      <description><![CDATA[The hostname of the CAStor server (Primary Access Node).
+      ]]></description>
+      <name>Hostname</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="castor"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPort"
+      setMethod="setPort">
+      <description><![CDATA[The port of the CAStor server for SCSP communications.
+      ]]></description>
+      <name>Port</name>
+      <type>int</type>
+      <descriptors>
+         <value value="80"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxConnectionPoolSize"
+      setMethod="setMaxConnectionPoolSize">
+      <description><![CDATA[The maximum connection pool size used by the SCSP client. The recommended value is
+       the number of threads multiplied by the number of CAStor cluster nodes.
+      ]]></description>
+      <name>MaxConnectionPoolSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="5"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxRetries"
+      setMethod="setMaxRetries">
+      <description><![CDATA[The maximum number of retries that the SCSP client is allowed.
+      ]]></description>
+      <name>MaxRetries</name>
+      <type>int</type>
+      <descriptors>
+         <value value="4"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getConnectionTimeout"
+      setMethod="setConnectionTimeout">
+      <description><![CDATA[The connection timeout (in seconds) used by the SCSP client.
+      ]]></description>
+      <name>ConnectionTimeout</name>
+      <type>int</type>
+      <descriptors>
+         <value value="120"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPoolTimeout"
+      setMethod="setPoolTimeout">
+      <description><![CDATA[The pool timeout (in seconds) used by the SCSP client.
+      ]]></description>
+      <name>PoolTimeout</name>
+      <type>int</type>
+      <descriptors>
+         <value value="300"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getLocatorRetryTimeout"
+      setMethod="setLocatorRetryTimeout">
+      <description><![CDATA[The locator retry timeout (in seconds) used by the SCSP client.
+      ]]></description>
+      <name>LocatorRetryTimeout</name>
+      <type>int</type>
+      <descriptors>
+         <value value="300"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getIncomingDir"
+      setMethod="setIncomingDir">
+      <description><![CDATA[The directory where study tarballs are temporarily saved after they are retrieved
+       from CAStor by the <b>TarRetriever</b> service. A relative path name is resolved relative to
+       <i>archive-install-directory</i>/server/default/.
+      ]]></description>
+      <name>IncomingDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-incoming"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getOutgoingDir"
+      setMethod="setOutgoingDir">
+      <description><![CDATA[The directory where study tarballs are temporarily saved before they are sent to
+       CAStor by the <b>FileCopy</b> service. A relative path name is resolved relative to
+       <i>archive-install-directory</i>/server/default/.
+      ]]></description>
+      <name>OutgoingDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-ougoing"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getRetentionPeriod"
+      setMethod="setRetentionPeriod">
+      <description><![CDATA[The period of time for which a study must remain in nearline storage before being
+       deleted, e.g. "52w" or "365d".
+      ]]></description>
+      <name>RetentionPeriod</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1827d"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getFileCopyServiceName"
+    setMethod="setFileCopyServiceName">
+    <description>Used internally. Do NOT modify.
+      </description>
+    <name>FileCopyServiceName</name>
+    <type>javax.management.ObjectName</type>
+  </attribute>
+   
+   &defaultAttributes;
+
+   <!-- Operations -->
+  &defaultOperations;
+
+  <operation impact="ACTION">
+    <description><![CDATA[Prepare File for storage to HSM. Return File Object that is used in FileCopy Service.<br/>
+      ]]></description>
+    <name>prepareHSMFile</name>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>java.io.File</return-type>
+  </operation>
+  <operation impact="ACTION">
+    <description>Store given File to HSM. Return filename (fileID)</description>
+    <name>storeHSMFile</name>
+    <parameter>
+      <description>File to store in HSM</description>
+      <name>file</name>
+      <type>java.io.File</type>
+    </parameter>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>java.lang.String</return-type>
+  </operation>
+  <operation impact="ACTION">
+    <description>Called if FileCopy failed.</description>
+    <name>failedHSMFile</name>
+    <parameter>
+      <description>File to store in HSM</description>
+      <name>file</name>
+      <type>java.io.File</type>
+    </parameter>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>void</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description>Fetch a File from HSM.</description>
+    <name>fetchHSMFile</name>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>java.io.File</return-type>
+  </operation>
+  <operation impact="ACTION">
+    <description>Called from TarRetriever to finish Fetch of a File from HSM.
+      (Cleanup temporary resources)</description>
+    <name>fetchHSMFileFinished</name>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File object (returned from fetchHSMFile)</description>
+      <name>file</name>
+      <type>java.io.File</type>
+    </parameter>
+    <return-type>void</return-type>
+  </operation>
+
+  <operation impact="ACTION">
+    <description>Query status of file in HSM.</description>
+    <name>queryStatus</name>
+    <parameter>
+      <description>File system ID</description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>File path relative to file system (fsID)</description>
+      <name>filePath</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description>User info associated with the file system</description>
+      <name>userInfo</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>java.lang.Integer</return-type>
+  </operation>
+</mbean>

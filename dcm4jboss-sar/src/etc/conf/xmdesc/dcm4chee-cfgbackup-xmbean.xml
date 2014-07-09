@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC 
+    "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" 
+    "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+<mbean>
+   <description><![CDATA[<b>JMX Config Backup Service</b><br/>
+		Provides a Service to save and load JMX MBean Configurations.<br/>
+		It use the XMLAttributePersistenceManager to store the attributes in xml files.
+		To separate the files from normal JMX Persistance we use the Version feature.
+		Therefore all files for a saved configuration are placed in a directory:
+		&lt;VersionPrefix&gt;&lt;configName&gt;
+		]]> </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.mbean.ConfigBackupService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>ConfigBackupService</name>
+   </constructor>
+
+   <attribute access="read-write" getMethod="getAttributesToStore" setMethod="setAttributesToStore">
+      <description><![CDATA[ List of services and their attributes to store as configuration.<p/>
+      				Format: &lt;MBean&gt;:&lt;attributeList&gt;<br/>
+      				MBean: Either the full ObjectName or the service name when <code>serviceDomainPrefix</code> can be applied.<br/>
+      				attributeList: attribute names separated by ',', or '*' for all attributes of the MBean.
+      			]]> </description>
+      <name>AttributesToStore</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+			FileSystemMgt,group=NEARLINE_STORAGE:*
+			FileSystemMgt,group=ONLINE_STORAGE:*
+			AE:*
+			AttributesModificationScp:*
+			AttributesModificationScu:*
+			AuditLogger:*
+			CompressionService:*
+			ConsistencyService:*
+			ContentEditService:*
+			DcmServer:*
+			DeleteStudy:*
+			DeviceService:*
+			DicomSecurity:*
+			ECHOService:*
+			ExportManager:*
+			FileCopy:*
+			FileCopyByQuery:*
+			FileCopyHSMModule,type=Command:*
+			FileCopyHSMModule,type=DiceyFileBased:*
+			FileCopyHSMModule,type=FileBased:*
+			FileCopyHSMModule,type=Mapped:*
+			FileMove:*
+			FindScu:*
+			FixPatientAttributesService:*
+			Forward:*
+			Forward2:*
+			ForwardByQuery:*
+			GPWLFeed:*
+			GPWLFeed2:*
+			GPWLScp:*
+			GPWLScu:*
+			HL7Cmd:*
+			HL7Send:*
+			HL7Server:*
+			HL7Service,type=ADT:*
+			HL7Service,type=MDM:*
+			HL7Service,type=ORM:*
+			HL7Service,type=ORU:*
+			HPScp:*
+			HSMMigrate:*
+			IANScp:*
+			IANScu:*
+			JMS:*
+			KeyObjectService:*
+			MCMScu:*
+			MD5CheckService:*
+			MPPS2ORM:*
+			MPPSEmulator:*
+			MPPSScp:*
+			MPPSScu:*
+			MWLFindScp:*
+			MWLReplica:*
+			MWLScu:*
+			MoveScu:*
+			MoveScu_Prefetch:*
+			OnSwitchStorageFileSystem:*
+			PIXQuery:*
+			PPSExceptionMgtService:*
+			PPSScu:*
+			Prefetch:*
+			QueryRetrieveScp:*
+			RIDService:*
+			RejectionNoteStored:*
+			RouteOnPPS:*
+			Scheduler:*
+			Sendmail:*
+			Soundex:*
+			StgCmtScuBySeriesStored:*
+			StgCmtScuScp:*
+			StoreScp:*
+			StudyMgtScp:*
+			StudyMgtScu:*
+			StudyPermission:*
+			StudyReconciliation:*
+			StudyStatus:*
+			SyncFileStatus:*
+			TLSConfig:*
+			TarRetriever:*
+			Templates:*
+			UPSFeed:*
+			UPSScp:*
+			UpdateAttributesService:*
+			WADOPrefetch:*
+			WADOService:*
+			XDS-I:*
+			dfcmd:*
+			dcm4chee.web:service=AttributesModificationSCU:*
+			dcm4chee.web:service=ContentEditService:*
+			dcm4chee.web:service=DashboardService:*
+			dcm4chee.web:service=EchoService:*
+			dcm4chee.web:service=HL7SendV2:*
+			dcm4chee.web:service=IANSCU:*
+			dcm4chee.web:service=MoveScu:*
+			dcm4chee.web:service=RejectionNoteSCU:*
+			dcm4chee.web:service=StoreBridge:*
+			dcm4chee.web:service=TCStoreScu:*
+			dcm4chee.web:service=TlsConfig:*
+			dcm4chee.web:service=Web3MwlSCU:*
+			dcm4chee.web:service=WebConfig:*
+         "/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getVersionPrefix" setMethod="setVersionPrefix">
+      <description><![CDATA[ Version prefix to build version for Persistance manager.<br/>
+      				The version used to store a configuration:&lt;VersionPrefix&gt;&lt;configName&gt;
+      			]]> </description>
+      <name>VersionPrefix</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE_"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getServiceDomainPrefix" setMethod="setServiceDomainPrefix">
+      <description><![CDATA[ Default ServiceDomainPrefix for the AttributesToStore List.<br/>
+      				With this prefix you can use the service name (e.g. StoreScp) in 
+      				the AttributesToStore list instead of the full qualified ObjectName String
+      				(e.g. dcm4chee.archive:service=StoreScp)
+      			]]> </description>
+      <name>ServiceDomainPrefix</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="dcm4chee.archive:service="/>
+      </descriptors>
+   </attribute>
+
+   <!-- Operations -->
+
+   <operation impact="ACTION">
+      <description><![CDATA[ Save current JMX configuration with given name.
+       		]]> </description>
+      <name>save</name>
+      <parameter>
+        <description>Configuration Name</description>
+        <name>configName</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>java.lang.String</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description><![CDATA[ Load a JMX configuration for given name.
+       		]]> </description>
+      <name>load</name>
+      <parameter>
+        <description>Configuration Name</description>
+        <name>configName</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>java.lang.String</return-type>
+   </operation>
+
+</mbean>

@@ -1,0 +1,12 @@
+<mbean name="dcm4chee.archive:service=AttributesModificationScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="UpdateOriginalAttributesSeq"/>
+<attribute name="EntityNotFoundErrorCode"/>
+<attribute name="CreatePatientOnMoveStudy"/>
+<attribute name="PatientMatching"/>
+<attribute name="AEServiceName"/>
+<attribute name="DcmServerName"/>
+<attribute name="State"/>
+</mbean>

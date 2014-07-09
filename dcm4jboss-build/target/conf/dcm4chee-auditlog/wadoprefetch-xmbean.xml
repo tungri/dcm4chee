@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=WADOPrefetch">
+<attribute name="WadoBaseUrl"/>
+<attribute name="ExportBasePath"/>
+<attribute name="CoerceConfigDirectory"/>
+<attribute name="RetryIntervals"/>
+<attribute name="QueueName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="JMSServiceName"/>
+<attribute name="State"/>
+</mbean>

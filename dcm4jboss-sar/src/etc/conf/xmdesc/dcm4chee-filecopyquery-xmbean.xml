@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Query based FileCopy Service.<br />
+		Provides automatic trigger of FileCopy service 
+		that fulfills criteria defined by an SQL Query.
+		<p>The SQL statement must be defined with following rules:</p>
+		1) Series.pk must be the first column of the select statement.<br />
+		2) The where clause should contain a Series.updated_time. ]]>
+   </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.FileCopyByQueryService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>FileCopyByQueryService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" getMethod="getPollInterval" setMethod="setPollInterval">
+      <description><![CDATA[Interval for polling for series to trigger FileCopy.
+          The interval can be specified in seconds (##s) or minutes (##m). 
+          NEVER = disable this FileCopyByQuery service.]]>
+      </description>
+      <name>PollInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getQuery"
+      setMethod="setQuery">
+      <description><![CDATA[SQL statement to filter series for FileCopy.<p />
+      	Default Query to find series that are stored (series_status=0) and has no copy in NEARLINE filesystem (pk=2):<br />
+      	SELECT DISTINCT series.pk FROM series, instance, files 
+         	WHERE series.series_status = 0 AND series.pk = instance.series_fk AND instance.pk = files.instance_fk
+         	    AND series.updated_time < ?
+         		AND NOT EXISTS (SELECT pk FROM files WHERE files.instance_fk=instance.pk AND files.filesystem_fk=2) <br />
+        <b>Note:</b> The first column in the SELECT statement must be: series.pk!<br />
+        If limit > 0 the SQL statement is extended with: <br />
+        1) a database specific LIMIT <br /> 
+        2) a 'series.pk > ?' as first criteria in WHERE clause (if sql hasn't already a 'pk > ?')<br />
+        3) an 'ORDER BY series.pk' (if sql hasn't already a 'ORDER BY')]]>  
+      </description>
+      <name>Query</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="SELECT DISTINCT series.pk FROM series, instance, files 
+         	WHERE series.series_status = 0 AND series.pk = instance.series_fk AND instance.pk = files.instance_fk 
+         		AND series.updated_time &lt; ?
+         		AND NOT EXISTS (SELECT pk FROM files WHERE files.instance_fk=instance.pk AND files.filesystem_fk=2)"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only" getMethod="getLastQueryCheckResult">
+      <description><![CDATA[Result of last check of Query statement.<br />
+      	If there is an error no automatic forward will be perfromed until the Query is corrected. <br /> ]]>
+      </description>
+      <name>LastQueryCheckResult</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write" getMethod="getDelay" setMethod="setDelay">
+      <description><![CDATA[Delay in seconds (##s), minutes (##m) or hours (##h) for which a series must be unchanged before forward is triggered.
+      			Use NONE to disable parameter setting of Prepared Statement! (This would be necessary if your SQL statement doesn't contain a '?')]]>
+      </description>
+      <name>Delay</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1h"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getLimit"
+      setMethod="setLimit">
+      <description><![CDATA[Limit number of series for forwarding in one step. <br />
+            This will add database specfic limit statements to the Query!
+      		Set this to 0 if the query already contains a limitation.]]>  
+      </description>
+      <name>Limit</name>
+      <type>int</type>
+      <descriptors>
+         <value value="2000"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getFetchSize"
+      setMethod="setFetchSize">
+      <description>JDBC Fetch size. (-1 means: use Limit)
+      </description>
+      <name>FetchSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="50"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if a FileCopy task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+   <attribute access="read-only"
+      getMethod="getLastSeriesPk">
+      <description>Last used Series.pk. Used as additional query parameter (SERIES.pk > lastPk) if a Limit > 0 is specified!
+      </description>
+      <name>LastSeriesPk</name>
+      <type>long</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getTimerIDFilecopyByQuery"
+      setMethod="setTimerIDFilecopyByQuery">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDFilecopyByQuery</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TimerIDFilecopyByQuery"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" 
+      getMethod="getFilecopyServiceName"
+      setMethod="setFilecopyServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>FilecopyServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSchedulerServiceName"
+      setMethod="setSchedulerServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>SchedulerServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   <operation impact="ACTION">
+      <description><![CDATA[Check for series and schedule FileCopy requests for these.<br />
+      	Return number of FileCopyOrders that are scheduled.]]>
+      </description>
+      <name>checkFilecopy</name>
+      <return-type>int</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description><![CDATA[Show actual SQL statement as it will be used to find series.]]>
+      </description>
+      <name>showSQL</name>
+      <return-type>java.lang.String</return-type>
+   </operation>
+   
+</mbean>
+

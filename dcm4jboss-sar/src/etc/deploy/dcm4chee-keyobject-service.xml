@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-keyobject-service.xml 12636 2010-01-18 22:32:13Z laura_peters $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.mbean.KeyObjectService" 
+         name="dcm4chee.archive:service=KeyObjectService"
+         xmbean-dd="xmdesc/dcm4chee-keyobject-xmbean.xml">
+    <depends optional-attribute-name="StoreScpServiceName"
+      >dcm4chee.archive:service=StoreScp</depends>
+  </mbean>
+</server>

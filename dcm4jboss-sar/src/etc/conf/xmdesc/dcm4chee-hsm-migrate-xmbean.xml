@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Migrate a HSM Filesystem to another HSM Filesystem.<br />
+   		Mapped HSMModule (<i>service=FileCopyHSMModule,type=Mapped</i>) must be configured for 
+   		the file system specific HSM modules.<br/>
+   		This service copies all tar files with file status DEFAULT, TO_ARCHIVE and ARCHIVED from 
+   		<i>SourceFileSystem</i> to <i>TargetFileSystem</i>.<br/> 
+   		Migrated source files are marked with file status MIGRATED or MIGRATION_FAILED.<br/>
+   		If <i>VerifyTar</i> is enabled, both source and target tar files are verified.<br/>
+   		Note: the source files get file status MD5_CHECK_FAILED if verification of source tar file failed!<br/>
+   		The source file entities (not the real files) can be removed by specifying <i>RemoveSrcOnTargetFileStatus</i>
+   		and  <i>RemoveTaskInterval</i>.
+   ]]></description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.HSMMigrateService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>HSMMigrateService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getSourceFileSystem"
+      setMethod="setSourceFileSystem">
+      <description><![CDATA[Directory/Mount Point of the source File System. <br />
+        NONE = disable this service.]]>
+      </description>
+      <name>SourceFileSystem</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="getSourceFileSystemPk">
+      <description>Primary of the source File System.</description>
+      <name>SourceFileSystemPk</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTargetFileSystem"
+      setMethod="setTargetFileSystem">
+      <description><![CDATA[Directory/Mount Point of the target File System. <br />
+        NONE = disable this service.]]>
+      </description>
+      <name>TargetFileSystem</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="getTargetFileSystemPk">
+      <description>Primary of the target File System.</description>
+      <name>TargetFileSystemPk</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTargetFileStatus"
+      setMethod="setTargetFileStatus">
+      <description>File status of created files in target file system.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>TargetFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TO_ARCHIVE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isVerifyTar"
+      setMethod="setVerifyTar">
+      <description><![CDATA[Enables verification of tar files.<br />
+         If enabled the tar file is verified by <br />
+         1) checking MD5 sums of the tar content.<br />
+         2) check if tar file contains the file.<br />
+         Only applicable if filesystem is a tar filesystem!
+      ]]></description>
+      <name>VerifyTar</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getRemoveSrcOnTargetFileStatus"
+      setMethod="setRemoveSrcOnTargetFileStatus">
+      <description><![CDATA[File status of files in target file system to allow remove of source file entities.<br />
+      NONE: Disable remove of source files.<br />
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED
+      ]]></description>
+      <name>RemoveSrcOnTargetFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getQueryStatusMode"
+      setMethod="setQueryStatusMode">
+      <description><![CDATA[Mode how file status of target tar files are queried for 'remove source files' task.<br/>
+      Enumerated values: <br/>
+      NEVER.....Don't query file status of tar file. (status must be updated via SyncFileStatus service)<br />
+      ALWAYS....Always query status. (recheck if status is already <i>RemoveSrcOnTargetFileStatus</i> or an error stati)<br/>
+      ON_WRONG..Only query status if current status is not <i>RemoveSrcOnTargetFileStatus</i>
+      ]]></description>
+      <name>QueryStatusMode</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ON_WRONG"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getTaskIntervalMigrate"
+      setMethod="setTaskIntervalMigrate">
+      <description><![CDATA[Interval in which migration task is performed.
+         <br>Format: 
+		 <br><i>interval</i>!<i>from</i>-<i>to</i> or NEVER
+         <br><i>interval</i> = ##m (in minutes), ##h (in hours).
+         <br><i>from</i> = start hour (0-23) when no migration should be performed
+         <br><i>to</i> = end hour (0-23) when no migration should be performed
+         <br>NEVER = disable migration of HSM file systems
+         <br>Example:<br>1h!9-17 means every hour,
+         migrate tar files, except between the hours of 9:00am and 5:00pm.
+         By setting this type of TaskInterval, you can perform HSM migration outside of peak hours.
+         ]]>
+      </description>
+      <name>MigrationTaskInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTaskIntervalRetry"
+      setMethod="setTaskIntervalRetry">
+      <description><![CDATA[Interval in which 'retry migration' task is performed.
+         <br>Format: 
+		 <br><i>interval</i>!<i>from</i>-<i>to</i> or NEVER
+         <br><i>interval</i> = ##m (in minutes), ##h (in hours).
+         <br><i>from</i> = start hour (0-23) when no retry should be performed
+         <br><i>to</i> = end hour (0-23) when no retry should be performed
+         <br>NEVER = disable retry
+         ]]>
+      </description>
+      <name>RetryTaskInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTaskIntervalRemove"
+      setMethod="setTaskIntervalRemove">
+      <description><![CDATA[Interval in which 'remove source files' task is performed.
+         <br>Format: 
+		 <br><i>interval</i>!<i>from</i>-<i>to</i> or NEVER
+         <br><i>interval</i> = ##m (in minutes), ##h (in hours).
+         <br><i>from</i> = start hour (0-23) when no 'remove source files' should be performed
+         <br><i>to</i> = end hour (0-23) when no 'remove source files' should be performed
+         <br>NEVER = disable remove of source files
+         ]]>
+      </description>
+      <name>RemoveTaskInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="isLastPksFirst"
+      setMethod="setLastPksFirst">
+      <description>Migrate newer files first.
+      </description>
+      <name>LastFilesFirst</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isCreateNewTargetFilename"
+      setMethod="setCreateNewTargetFilename">
+      <description><![CDATA[Create new target filename. <br />
+          Should be used if source filename is only a UID (e.g. Centera) and target filesystem is file based.
+          ]]></description>
+      <name>CreateNewTargetFilename</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="getOffsetForRemove">
+      <description>Current DB offset for checking tar files for removal.
+      </description>
+      <name>OffsetForRemove</name>
+      <type>int</type>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="getOffsetForRetry">
+      <description>Current DB offset for retry MIGRATION_FAILED source files.
+      </description>
+      <name>OffsetForRetry</name>
+      <type>int</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getLimitNumberOfFilesPerMigrateTask"
+      setMethod="setLimitNumberOfFilesPerMigrateTask">
+      <description>Maximum number of tar files which are migrated in one run.
+      </description>
+      <name>NumberOfFilesPerMigrateTask</name>
+      <type>int</type>
+      <descriptors>
+         <value value="100"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getLimitNumberOfFilesPerRemoveTask"
+      setMethod="setLimitNumberOfFilesPerRemoveTask">
+      <description>Maximum number of tar files for which file entities are removed from source filesystem in one run.
+      </description>
+      <name>NumberOfFilesPerRemoveTask</name>
+      <type>int</type>
+      <descriptors>
+         <value value="100"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getConcurrency"
+      setMethod="setConcurrency">
+      <description>Maximum number of parallel migration tasks.
+      </description>
+      <name>Concurrency</name>
+      <type>int</type>
+      <descriptors>
+         <value value="1"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-only"
+      getMethod="isQueryRunning">
+      <description>Current state if query to get migration tasks is running. Used to avoid concurrency!
+      </description>
+      <name>isQueryRunning</name>
+      <type>boolean</type>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if migration task is running. Used to avoid concurrency!
+      </description>
+      <name>isMigrationRunning</name>
+      <type>boolean</type>
+   </attribute>
+   <attribute access="read-only"
+      getMethod="isRemoveSourceRunning">
+      <description>Current state if remove source files task is running. Used to avoid concurrency!
+      </description>
+      <name>isRemoveRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getTimerIDHSMMigrate"
+      setMethod="setTimerIDHSMMigrate">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDHSMMigrate</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTimerIDHSMRetry"
+      setMethod="setTimerIDHSMRetry">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDHSMRetry</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTimerIDHSMRemove"
+      setMethod="setTimerIDHSMRemove">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDHSMRemove</name>
+      <type>java.lang.String</type>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getHSMModuleServicename"
+      setMethod="setHSMModuleServicename">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>HSMModuleServicename</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSchedulerServiceName"
+      setMethod="setSchedulerServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>SchedulerServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+
+   <operation impact="ACTION">
+      <description><![CDATA[Start a migration task.<br />
+      	Return number of migrated files or <br />
+      	-1 if migration is already running (Timer)<br />
+      ]]></description>
+      <name>migrate</name>
+      <return-type>int</return-type>
+   </operation>
+   
+   <operation impact="ACTION">
+      <description><![CDATA[Start a retry (retry source files with status MIGRATION_FAILED) task.<br />
+      	Return number of migrated files or <br />
+      	-1 if migration is already running (Timer)<br />
+      ]]></description>
+      <name>retry</name>
+      <return-type>int</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description><![CDATA[Start Removing source file entities.<br />
+      	Return number of removed files or <br />
+      	-1 if it is already running <br />
+      ]]></description>
+      <name>removeSourceFiles</name>
+      <return-type>int</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Show current status of migration.</description>
+      <name>showMigrationStatus</name>
+      <return-type>java.lang.String</return-type>
+   </operation>
+
+</mbean>
+    

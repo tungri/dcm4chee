@@ -1,0 +1,3 @@
+-- Update DB from dcm4chee-2.18.x to dcm4chee-2.19.x
+
+ALTER TABLE files ADD orig_md5 VARCHAR(255);

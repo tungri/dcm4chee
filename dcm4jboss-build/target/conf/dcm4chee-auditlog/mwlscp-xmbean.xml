@@ -1,0 +1,19 @@
+<mbean name="dcm4chee.archive:service=MWLFindScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="UseProxy"/>
+<attribute name="CheckMatchingKeySupported"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="MaximumOperationsInvoked"/>
+<attribute name="MaximumOperationsPerformed"/>
+<attribute name="LogAETitles"/>
+<attribute name="CoerceConfigDirectory"/>
+<attribute name="WriteCoercionXmlLog"/>
+<attribute name="DcmServerName"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="MwlScuServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="AEServiceName"/>
+<attribute name="State"/>
+</mbean>

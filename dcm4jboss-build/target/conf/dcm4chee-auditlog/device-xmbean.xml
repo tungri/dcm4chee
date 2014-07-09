@@ -1,0 +1,3 @@
+<mbean name="dcm4chee.archive:service=DeviceService">
+<attribute name="State"/>
+</mbean>

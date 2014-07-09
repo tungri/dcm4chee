@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: pacs-db2-ds.xml 13116 2010-04-09 10:06:49Z gunterze $ -->
+
+
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>pacsDS</jndi-name>
+    <connection-url>jdbc:db2://localhost:50000/pacsdb:currentSchema=PACSDB;</connection-url>
+    <driver-class>com.ibm.db2.jcc.DB2Driver</driver-class>
+    <!--driver-class>COM.ibm.db2.jdbc.app.DB2Driver</driver-class -->
+    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+    <user-name>pacs</user-name>
+    <password>pacs</password>
+    <min-pool-size>0</min-pool-size>
+        <!-- sql to call when connection is created
+        <new-connection-sql>some arbitrary sql</new-connection-sql>
+        -->
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool 
+        <check-valid-connection-sql>some arbitrary sql</check-valid-connection-sql>
+        -->
+        
+      <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+      <metadata>
+         <type-mapping>DB2</type-mapping>
+      </metadata>
+      
+  </local-tx-datasource>
+
+</datasources>

@@ -1,0 +1,9 @@
+<mbean name="dcm4chee.archive:service=MD5CheckService">
+<attribute name="TaskInterval"/>
+<attribute name="MaxCheckedBefore"/>
+<attribute name="NumberOfFilesPerCheck"/>
+<attribute name="BufferSize"/>
+<attribute name="TimerIDCheckMD5"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="State"/>
+</mbean>

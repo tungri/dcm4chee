@@ -1,0 +1,5 @@
+<mbean name="dcm4chee.archive:service=StudyStatus">
+<attribute name="StatusUpdateRules"/>
+<attribute name="GpwlScpServiceName"/>
+<attribute name="State"/>
+</mbean>

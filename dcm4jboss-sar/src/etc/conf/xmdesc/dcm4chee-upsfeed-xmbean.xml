@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC 
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+<!-- $Id$ -->
+<mbean>
+   <description>UPS Feed Service. Used to add entries to the Unified Worklist,
+   triggered by received MPPS N-Set messages.</description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.ups.UPSFeedService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>UPSFeedService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   &defaultAttributes;
+   <attribute access="read-write"
+      getMethod="getWorkItemConfigDir"
+      setMethod="setWorkItemConfigDir">
+      <description><![CDATA[Directory where configuration files for
+      creation of work items on receive of final MPPS messages are located:
+      if XSL stylesheet "mpps2ups.xsl" exists in this directory or in a
+      sub-directory equal to the AE Title of the modality, a work item will be
+      created on receive of the last object refered in the final MPPS,
+      according these stylesheet. A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>  
+      </description>
+      <name>WorkItemConfigDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-ae"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+       getMethod="getUPSScpServiceName"
+       setMethod="setUPSScpServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>UPSScpServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+       getMethod="getIANScuServiceName"
+       setMethod="setIANScuServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>IANScuServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <!-- Operations -->
+   &defaultOperations;
+
+   <!-- Notifications -->
+
+</mbean>
+

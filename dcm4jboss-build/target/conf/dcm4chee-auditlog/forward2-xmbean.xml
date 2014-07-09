@@ -1,0 +1,10 @@
+<mbean name="dcm4chee.archive:service=Forward2">
+<attribute name="ConfigDirectory"/>
+<attribute name="ForwardOnInstanceLevelFromAETitles"/>
+<attribute name="IgnoreNotLocalRetrievable"/>
+<attribute name="LogForwardPriorXML"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="MoveScuServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

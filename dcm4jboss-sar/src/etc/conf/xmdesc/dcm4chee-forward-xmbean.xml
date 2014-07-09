@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Forward Service.<br>
+		Provides auto-routing of DICOM objects that are received by the DICOM Storage Service 
+		to remote DICOM applications. <br>
+		This is done by queuing corresponding retrieve requests to the <b>Move SCU</b> service.
+		<p>
+		This Forward Service supports two additional Notifications <tt>PatientUpdated</tt> and <tt>SeriesUpdated</tt>
+		from <b>ContentEditService</b> to allow forwarding DICOM objects to serve the purpose of update.<br>
+		(Works only if the received objects are used for updating!) 
+		</p>]]>
+   </description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.movescu.ForwardService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>ForwardService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" getMethod="getForwardingRules" setMethod="setForwardingRules">
+      <description><![CDATA[List of forwarding rules, dependent upon which 
+application - identified by the Calling AE title - sent the objects.
+<p>
+The comma separated list of AE titles after the (optional) condition defines
+the forwarding destination (the other Storage SCP) by its Called AE Title.
+<p>
+Each AE title can be suffixed by !&lt;from>-&lt;to> to defer forwarding to that
+destination outside a particular time interval , and by {&lt;priority>} to
+overwrite the forwarding priority specified by attribute <b>ForwardPriority</b>
+for this destination .
+<p>
+<b>Syntax:</b>
+<br>&lt;forwarding rules> := (&lt;forwarding rule> &lt;EOL>)+ | 'NONE'
+<br>&lt;forwarding rule> := ['['&lt;condition>[,&lt;condition>..]']'] &lt;aeTitleTo> ['!'&lt;from>'-'&lt;to>] ['{'&lt;priority>'}']
+<br>&lt;condition> := calling ['!'] '=' &lt;aeTitleFrom> or 
+       extRetrieveAET ['!'] '=' &lt;extRetrieveAET> or 
+       archived ['!'] '=' 'true' | 'false'
+<br>&lt;priority> := 'MEDIUM' | 'HIGH' | 'LOW'
+<br>where
+<br>&lt;aeTitleFrom> = calling AE titles separated by pipes ('|')
+<br>&lt;extRetrieveAET> = external Retrieve AET (of all instances of SeriesStored) separated by pipes ('|') or '*'
+<br>&lt;archived> = If all instances of SeriesStored are marked as archived
+<br>&lt;aeTitleTo> = comma separated list of AE titles that objects are forwarded to
+<br>'!'&lt;from>'-'&lt;to> = start and end hour (0-23) when no forwarding should be
+performed to that destination
+<p>
+<b>Example:</b> [calling=SCU1|SCU2]SCP3 {HIGH} ,SCP4!8-16 {LOW}
+Forwards objects received from AE Title SCU1 or SCU2 to Storage SCPs, SCP3 with
+high priority and to SCP4 with low priority. Forwarding of objects received
+between 8am and 4pm to SCP4 is delayed until 4 pm.
+<b>Example with central archive:</b> [calling!=CENTRAL,extRetrieveAET!=*]CENTRAL
+Forwards all objects to CENTRAL with following exceptions:<br/>
+1) If sourceAET of received object is CENTRAL<br/>
+2) If a local object already exists with an extenal RetrieveAET]]>
+      </description>
+      <name>ForwardingRules</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="[calling=SCU1|SCU2]SCP3,SCP4!8-16;NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getForwardOnInstanceLevelFromAETs"
+      setMethod="setForwardOnInstanceLevelFromAETs">
+      <description><![CDATA[Comma separated list of AE titles of Storage SCUs
+      from which objects are forwarded by an Instance level retrieve request.
+      Objects received from other Storage SCUs are forwarded on Series level,
+      which may cause to multiple forwarding of objects, if the Storage SCU
+      sends instances of a single series in multiple associations in succession.
+      <br>ALL = Forward objects on Instance level received from any Storage SCUs.
+      <br>NONE = Forward objects on Series level received from any Storage SCUs.
+      <br>Exception: if only one object is received in the association,
+      the object will be forwarded by an Instance level retrieve request, even
+      if the AE title of the sending Storage SCU is not listed.
+      ]]>
+      </description>
+      <name>ForwardOnInstanceLevelFromAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="isEnablePatientUpdated" setMethod="setEnablePatientUpdated">
+      <description><![CDATA[Enable/Disable PatientUpdated notification support.<br> 
+      		If enabled a <tt>PatientUpdated</tt> notification will forward all instances of 
+      		the related patient to each AET listed in <tt>ForwardModifiedToAETs</tt>.<p>
+      		You should enable this feature only if you have to update a system that doesnt support
+      		<b>HL7 ADT</b> update messages]]>
+      </description>
+      <name>EnablePatientUpdated</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+  <attribute access="read-write" getMethod="isEnableSeriesUpdated" setMethod="setEnableSeriesUpdated">
+      <description><![CDATA[Enable/Disable <tt>SeriesUpdated</tt> notification support. 
+      		If enabled a SeriesUpdated notification will forward all instances of 
+      		the series to each AET listed in <tt>ForwardModifiedToAETs</tt>.<p>
+      		You should enable this feature only if you have to update a system that doesnt support
+      		<b>StudyMgtScu</b> service.]]>
+      </description>
+      <name>EnableSeriesUpdated</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+  <attribute access="read-write" getMethod="isIgnoreNotLocalRetrievable" setMethod="setIgnoreNotLocalRetrievable">
+      <description><![CDATA[Disable forward of Series that are not local retrievable.<br />
+      		i.e.:<tt>SeriesStored</tt> notification with no RetrieveAET will be ignored by this service. <br />
+      		Such a SeriesStored notification is sent if instances are received with private TransferSyntax 
+      		'Dcm4che URI Referenced' (1.2.40.0.13.1.1.2.4.94) and a (external) RetrieveAET instead of RetrieveURI is given.<br />
+		]]>
+      </description>
+      <name>IgnoreNotLocalRetrievable</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getForwardModifiedToAETs" setMethod="setForwardModifiedToAETs">
+      <description><![CDATA[Comma separated list of AE titles to which objects modified
+          by using the web application are re-forwarded.<br> <tt>NONE</tt> = do not forward
+          modified objects.<p>
+          see also <tt>EnablePatientUpdated</tt> and <tt>EnableSeriesUpdated</tt>.]]>
+      </description>
+      <name>ForwardModifiedToAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getForwardPriority" setMethod="setForwardPriority">
+      <description>Forwarding priority. Enumerated Values: LOW, MEDIUM, HIGH.
+      </description>
+      <name>ForwardPriority</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="MEDIUM"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getStoreScpServiceName"
+      setMethod="setStoreScpServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>StoreScpServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getMoveScuServiceName"
+      setMethod="setMoveScuServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>MoveScuServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getEditContentServiceName"
+      setMethod="setEditContentServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>EditContentServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+</mbean>
+

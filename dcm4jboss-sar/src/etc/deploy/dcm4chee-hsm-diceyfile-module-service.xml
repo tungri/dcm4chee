@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<server>
+  <mbean code="org.dcm4chex.archive.hsm.module.dicey.DiceyFSModule"
+    name="dcm4chee.archive:service=FileCopyHSMModule,type=DiceyFileBased"
+    xmbean-dd="xmdesc/dcm4chee-hsm-diceyfile-module-xmbean.xml">
+    <depends optional-attribute-name="FileCopyServiceName"
+      >dcm4chee.archive:service=FileCopy</depends>
+  </mbean>
+</server>

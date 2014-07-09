@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.findscu.FindScuService"
+    name="dcm4chee.archive:service=FindScu"
+    xmbean-dd="xmdesc/dcm4chee-findscu-xmbean.xml">
+    <depends optional-attribute-name="TLSConfigName"
+      >dcm4chee.archive:service=TLSConfig</depends>
+  </mbean>
+</server>

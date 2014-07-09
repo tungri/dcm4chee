@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<!-- $Id: dcm4chee-ianscu-service.xml 16152 2011-10-25 10:44:24Z javawilli $ -->
+
+<server>
+
+  <mbean code="org.jboss.jms.server.destination.QueueService"
+    name="dcm4chee.archive:service=Queue,name=IANScu" xmbean-dd="xmdesc/Queue-xmbean.xml">
+	<attribute name="FullSize">500</attribute>
+	<attribute name="PageSize">100</attribute>
+	<attribute name="DownCacheSize">100</attribute>
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+  </mbean>
+
+  <mbean code="org.dcm4chex.archive.dcm.ianscu.IANScuService"
+    name="dcm4chee.archive:service=IANScu"
+    xmbean-dd="xmdesc/dcm4chee-ianscu-xmbean.xml">
+    <attribute name="QueueName">IANScu</attribute>
+    <depends optional-attribute-name="ContentEditServiceName"
+      >dcm4chee.archive:service=ContentEditService</depends>
+    <depends optional-attribute-name="DeleteStudyServiceName"
+      >dcm4chee.archive:service=DeleteStudy</depends>
+    <depends optional-attribute-name="StoreScpServiceName"
+      >dcm4chee.archive:service=StoreScp</depends>
+    <depends optional-attribute-name="MppsScpServiceName"
+      >dcm4chee.archive:service=MPPSScp</depends>
+    <depends optional-attribute-name="TLSConfigName"
+      >dcm4chee.archive:service=TLSConfig</depends>
+    <depends optional-attribute-name="JMSServiceName"
+      >dcm4chee.archive:service=JMS</depends>
+    <depends optional-attribute-name="TemplatesServiceName"
+      >dcm4chee.archive:service=Templates</depends>
+    <depends>dcm4chee.archive:service=Queue,name=IANScu</depends>
+  </mbean>
+</server>

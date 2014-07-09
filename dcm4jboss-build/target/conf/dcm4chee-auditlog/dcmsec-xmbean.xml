@@ -1,0 +1,7 @@
+<mbean name="dcm4chee.archive:service=DicomSecurity">
+<attribute name="SecurityDomain"/>
+<attribute name="RejectIfNoUserIdentity"/>
+<attribute name="DefaultUserID"/>
+<attribute name="DefaultPassword"/>
+<attribute name="State"/>
+</mbean>

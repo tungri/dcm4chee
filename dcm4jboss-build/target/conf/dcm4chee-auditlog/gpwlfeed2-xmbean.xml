@@ -1,0 +1,9 @@
+<mbean name="dcm4chee.archive:service=GPWLFeed2">
+<attribute name="LogStationAETitles"/>
+<attribute name="PGPStationAETitles"/>
+<attribute name="AppendCaseStationAETitles"/>
+<attribute name="WorkItemConfigDirectory"/>
+<attribute name="IANScuServiceName"/>
+<attribute name="TemplatesServiceName"/>
+<attribute name="State"/>
+</mbean>

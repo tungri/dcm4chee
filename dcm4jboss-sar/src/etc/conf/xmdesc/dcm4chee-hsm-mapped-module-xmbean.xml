@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[HSM Module to map HSM Modules to Filesystem ID's.<br/>
+   				This service can be used to handle different HSM storage systems
+   ]]></description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.module.MappedHSMModule</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>MappedHSMModule</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getModuleMapping"
+      setMethod="setModuleMapping">
+      <description><![CDATA[Define mapping between FilesystemID and HSMModule.<br/>
+      	Format:&lt;fsID&gt;=&lt;HSMModule Service Name&gt;[&lt;newline&gt;&lt;fsID&gt;=&lt;...&gt;[..]]<br/>
+      	Use 'NONE' to disable mapping.<br/>
+      	Example: <br/>
+      	tar:/store1=dcm4chee.archive:service=FileCopyHSMModule,type=Command<br/>
+      	tar:/store2=dcm4chee.archive:service=FileCopyHSMModule,type=FileBased
+       ]]>
+      </description>
+      <name>ModuleMapping</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getFileCopyServiceName"
+      setMethod="setFileCopyServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>FileCopyServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>   
+   
+   
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   
+   <operation impact="ACTION">
+      <description><![CDATA[Prepare File for storage to HSM. Return File Object that is used in FileCopy Service.<br/>
+      ]]></description>
+      <name>prepareHSMFile</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Store given File to HSM. Return filename (fileID)</description>
+      <name>storeHSMFile</name>
+     <parameter>
+       <description>File to store in HSM</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.lang.String</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Called if FileCopy failed.</description>
+      <name>failedHSMFile</name>
+     <parameter>
+       <description>File to store in HSM</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>void</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Fetch a File from HSM.</description>
+      <name>fetchHSMFile</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Called from TarRetriever to finish Fetch of a File from HSM. (Cleanup temporary resources)</description>
+      <name>fetchHSMFileFinished</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File object (returned from fetchHSMFile)</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+      <return-type>void</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Query status of file in HSM.</description>
+      <name>queryStatus</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>User info associated with the file system</description>
+       <name>userInfo</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.lang.Integer</return-type>
+   </operation>
+
+</mbean>
+

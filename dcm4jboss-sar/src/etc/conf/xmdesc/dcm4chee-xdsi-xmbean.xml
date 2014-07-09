@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>XDS-I Service. Cross-enterprise Document Sharing for Imaging. (Imaging Document Source actor)</description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.xdsi.XDSIService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>XDSIService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" getMethod="getSourceID" setMethod="setSourceID">
+      <description>Source ID - unique identifier of this Document Source.
+      </description>
+      <name>SourceID</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1.3.6.1.4.1.21367.2009.1.2.134.54.1.30.1"/> <!-- 2008-2009 OID Base: 1.3.6.1.4.1.21367.2009.1.2. -->
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+     getMethod="getAutoPublishAETs" 
+     setMethod="setAutoPublishAETs">
+      <description>List of Source (Modality) AE titles separated by \(backslash), 
+      from which studies shall be automatically published to the configured
+      XDS-I Repository. NONE = do not publish studies received from any source
+      automatically.
+      </description>
+      <name>AutoPublishSourceAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getDocRepositoryURI" setMethod="setDocRepositoryURI">
+      <description>Document Repository URI.
+      </description>
+      <name>DocRepositoryURI</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="http://localhost:8080/dcm4chee-xds/XDSRepository"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getDocRepositoryAET" setMethod="setDocRepositoryAET">
+      <description>AET of Document Repository (for Audit Log only).
+      </description>
+      <name>DocRepositoryAET</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getPropertyFile" setMethod="setPropertyFile">
+      <description>Metadata Property File. 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>MetadataPropertyFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/metadata.conf"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAutoPublishPropertyFile" setMethod="setAutoPublishPropertyFile">
+      <description>Metadata Property File for AutoPublish. 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>AutoPublishPropertyFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/nist/metadata.conf"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAutoPublishXSLFile" setMethod="setAutoPublishXSLFile">
+      <description>XSL File for AutoPublish to get metadata from manifest info (Dataset with patient, study and series attributes).
+            Use NONE to disable this XSLT processing. 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>AutoPublishXSLFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAutoPublishStudyDeletedPDFFile" setMethod="setAutoPublishStudyDeletedPDFFile">
+      <description><![CDATA[PDF or text (.txt) File or 'TEXT' to mark a published study as deleted.<br />
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.<br />
+      		With TEXT a simple text/plain document will be registered for a deleted study. <br />
+      		Content: Study has been removed from Source PACS System! 
+      	]]>
+      </description>
+      <name>AutoPublishStudyDeletedPDFFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/study_deleted.pdf" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAutoPublishInterval"
+      setMethod="setAutoPublishInterval">
+      <description><![CDATA[Interval in hours (#h), minutes (#m) or
+		seconds (#s) in which the data base is polled for Studies that are not published to XDS.<br/>
+		Use NEVER to disable this feature.<br />
+		Note: This feature requires XdsQueryServiceName]]>
+      </description>
+      <name>AutoPublishInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if a AutoPublish task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getAutoPublishSQL"
+      setMethod="setAutoPublishSQL">
+      <description><![CDATA[SQL Statements to select studies for XDS auto publish. <br />
+      Format: Each line can contain a complete SQL Statement or a comment (Line starts with '*')<br />
+      The statement must return only one column with study.pk!<br />
+      <dl><dt>Following named parameter can be used:</dt>
+        <dd>:AfterDate</dd>
+        <dd>:BeforeDate</dd>
+        <dd>:OlderThan</dd>
+        <dd>:NotOlderThan</dd>
+      </dl>
+      <dl><dt>Example:</dt>
+	  <dd>*</dd>
+	  <dd>* All studies with updated_time between configured AfterDate and BeforeDate:</dd>
+	  <dd>SELECT pk FROM study WHERE updated_time > :AfterDate AND updated_time < :BeforeDate</dd>
+	  <dd>*</dd>
+	  <dd>* All studies that are created before n days:</dd>
+	  <dd>SELECT pk FROM study WHERE created_time < :OlderThan</dd>
+	  </dl>
+      Note: the configured queries are used as subquery of a query which exclude studies that are already published (via table published_study) <br />
+      This behaviour can be disabled by using '@' as first character in SQL statement. In this case 
+      the first culumns must be study.pk, published_study.pk and published_study.docentry_uid!<br /><br />
+      If the SQL statement starts with '[&lt;startHour&gt;-&lt;endHour&gt;]' this query will be only performed between start and end hour (0-23).<br />
+      e.g.: '[23-4]SELECT pk from study' check all (unpublished) studies between 23:00:00 and 4:59:59.
+      ]]>
+      </description>
+      <name>AutoPublishSQL</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="isDisableStudyDeleteSQL" setMethod="setDisableStudyDeleteSQL">
+      <description><![CDATA[Disable Query for deleted published studies.<br />
+      		Should be only disabled if a similar query is defined in AutoPublishSQL!<br />
+      		(@SELECT study_fk, pk, docentry_uid from published_study where study_fk IS NULL)  
+      	]]>
+      </description>
+      <name>DisableStudyDeleteSQL</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAfterDate" setMethod="setAfterDate">
+      <description><![CDATA[AfterDate SQL parameter for auto publish migration. <br />
+        Usage: ':AfterDate' in WHERE clause. e.g WHERE study.updated_time > :AfterDate <br />
+      	Format:yyyy[-MM[-dd[ HH[:mm[:ss]]]]] or NONE<br />
+      	Note: Missing parts are set to corresponding minimum. eg. '2013-03' -> '2013-03-01 00:00:00'
+      	 ]]>
+      </description>
+      <name>AfterDate</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getBeforeDate" setMethod="setBeforeDate">
+      <description><![CDATA[BeforeDate SQL parameter for auto publish. <br />
+        Usage: ':BeforeDate' in WHERE clause. e.g WHERE study.updated_time < :BeforeDate <br />
+        Format:yyyy[-MM[-dd[ HH[:mm[:ss]]]]] or NONE<br />
+      	Note: Missing parts are set to corresponding maximun. eg. '2012-02' -> '2012-02-29 23:55:55' (and 999 milliseconds)
+      	]]>
+      </description>
+      <name>BeforeDate</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getOlderThan"
+      setMethod="setOlderThan">
+      <description><![CDATA[OlderThan SQL parameter for auto publish. <br /> 
+        Usage: ':OlderThan' in WHERE clause. e.g WHERE study.updated_time < :OlderThan <br />
+		Format: days(#d), weeks (#w), hours (#h), minutes (#m) or seconds (#s)<br/>
+		Note: the SQL parameter value is a timestamp calculated as currentDate - olderThan.]]>
+      </description>
+      <name>OlderThan</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1d"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getNotOlderThan"
+      setMethod="setNotOlderThan">
+      <description><![CDATA[NotOlderThan SQL parameter for auto publish. <br /> 
+        Usage: ':NotOlderThan' in WHERE clause. e.g WHERE study.updated_time > :NotOlderThan <br />
+		Format: days(#d), weeks (#w), hours (#h), minutes (#m) or seconds (#s)<br/>
+		Note: the SQL parameter value is a timestamp calculated as currentDate - NotOlderThan.]]>
+      </description>
+      <name>NotOlderThan</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="10w"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getMaxNumberOfStudiesByOneTask" setMethod="setMaxNumberOfStudiesByOneTask">
+      <description><![CDATA[Maximum number of Migrated MPPS by one task. <br /> 
+      	]]>
+      </description>
+      <name>MaxNumberOfStudiesByOneTask</name>
+      <type>int</type>
+      <descriptors>
+         <value value="100"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="isAddStudyInstanceUIDSlot" setMethod="setAddStudyInstanceUIDSlot">
+      <description><![CDATA[Add Study Instance UID as extra metadata (Slot with name 'studyInstanceUID') to published studies. <br /> 
+      	]]>
+      </description>
+      <name>AddStudyInstanceUIDSlot</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getFetchSize"
+      setMethod="setFetchSize">
+      <description>JDBC Fetch size. (-1 means: use Limit)
+      </description>
+      <name>FetchSize</name>
+      <type>int</type>
+      <descriptors>
+         <value value="50"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" getMethod="getAutoPublishDocTitle" setMethod="setAutoPublishDocTitle">
+      <description><![CDATA[Document title for auto published metainfo KOS. <br> 
+      	Format:&lt;CodeValue&gt;^&lt;CodeMeaning&gt;[^&lt;CodeDesignator&gt;] ]]>
+      </description>
+      <name>AutoPublishDocTitle</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="AutoPublish^Automatic XDS-I export of received images"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" getMethod="getRidURL" setMethod="setRidURL">
+      <description>RID URL to get PDF Document for exportPDF.
+      </description>
+      <name>RidURL</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="http://localhost:8080/rid/IHERetrieveDocument?requestType=DOCUMENT&amp;preferredContentType=application/pdf&amp;documentUID="/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" getMethod="getLocalDomain" setMethod="setLocalDomain">
+      <description><![CDATA[Local Affinity Domain (Authority)<br/>
+      		Name of the patient ID authorithy of this Document Source.<br/>
+      		This is normally the 'Issuer of patient ID' (issuer) DICOM attribute.<br/>
+      		We can overwrite this default behaviour with:<br/>
+      		'&lt;Domain&gt;' : use &lt;Domain&gt; if issuer is missing.<br/>
+      		'=&lt;Domain&gt;' : use always &lt;Domain&gt; as local authority. <br/>
+      		'NONE' : default behaviour: use always issuer as local authority. 
+      ]]></description>
+      <name>LocalDomain</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAffinityDomain" setMethod="setAffinityDomain">
+      <description><![CDATA[XDS Affinity Domain (Authority)<br/>
+      		This name is used in PIX Query Service to get patient id of affinity domain.<br/>
+      		You can disable PIX Query by setting this value with '=' as first character.<br/>
+      		'=' : use the source patient ID and issuer.<br/>
+      		'=?&lt;Domain&gt;' : use patientID from source and &lt;Domain&gt; as issuer. <br/>
+      		'=?[&lt;issuer&gt;]&lt;Domain&gt;' : Dedicated issuer replacement: Only patientID's with given 
+      		&lt;issuer&gt; will be exported as &lt;patId&gt;&#94;&#94;&#94&lt;domain&gt;. <br/>
+      		'=&lt;patient&gt;' : use &lt;patient&gt; for patientID and issuer (patid&#94;&#94;&#94;issuer). 
+      ]]></description>
+      <name>AffinityDomain</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="=?AffinityDomain"/>
+      </descriptors>
+   </attribute>
+      <attribute access="read-write"
+      getMethod="isRemoveNamespaceID"
+      setMethod="setRemoveNamespaceID">
+      <description><![CDATA[Remove Namespace ID subcomponent from assigning authority.<br/>
+      	Patient ID's are in HL7 CX format but since revision 7 this is restricted by:<br/>
+      	<i>...this specification restricts them to the use of two components, the ID Number, and the Assigning Authority (AA).<br/>
+      	No other values/modifications in other components or subcomponents are allowed. 
+      	Specifically, components 2 and 3 shall be empty as listed above.</i><br/>
+      	see <code>Table 4.1-3 Data Types</code> in 
+      	<code>IT Infrastructure Technical Framework Volume 3 (ITI TF-3) revision 7.0</code>
+      ]]></description>
+      <name>RemoveNamespaceID</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false" />
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="isLogSOAPMessage"
+      setMethod="setLogSOAPMessage">
+      <description>Enable logging of SOAP message.
+      </description>
+      <name>LogSOAPMessage</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isIndentSOAPLog"
+      setMethod="setIndentSOAPLog">
+      <description>Enable/disable indention of logged SOAP message.
+      </description>
+      <name>IndentSOAPLog</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true" />
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="isLogITI15"
+      setMethod="setLogITI15">
+      <description><![CDATA[ Enable/disable audit logging of ITI-15 export message (XDS audit log).<br/>
+           If enabled an XDS audit message will be sent in addition to the Dicom export audit log message.<br/>
+           Note: ITI-15 logging requires XdsbSourceServiceName!
+           ]]>
+      </description>
+      <name>LogITI15</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true" />
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getPixQueryServiceName"
+      setMethod="setPixQueryServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>PixQueryServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <attribute access="read-write" 
+     getMethod="getIANScuServiceName"
+     setMethod="setIANScuServiceName">
+      <description>Used internally. Do not modify.
+      </description>
+      <name>IANScuServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   
+   <attribute access="read-write"
+     getMethod="getKeyObjectServiceName"
+     setMethod="setKeyObjectServiceName">
+      <description>Used internally. Do not modify.
+      </description>
+      <name>KeyObjectServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+     getMethod="getXdsHttpCfgServiceName"
+     setMethod="setXdsHttpCfgServiceName">
+      <description><![CDATA[ internally. Do not modify. (dcm4chee.xds:service=XdsHttpCfgService)<br/>
+                   This service is part of dcm4chee-xds and you have to set proxy and ssl configuration in 
+                   start script when it is not installed! 
+      ]]></description>
+      <name>XdsHttpCfgServiceName</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isUseXDSb"
+      setMethod="setUseXDSb">
+      <description><![CDATA[Use XDS.b rather than XDS.a to export documents.<br />
+      	Note: XDS.b requires XdsbSourceServiceName]]>
+      </description>
+      <name>UseXDSb</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+     getMethod="getXdsbSourceServiceName"
+     setMethod="setXdsbSourceServiceName">
+      <description><![CDATA[Used internally. Do not modify (dcm4chee.xds:service=XDSbSourceService).<br />
+      	Note: Requires installed dcm4chee.xds services!]]>
+      </description>
+      <name>XdsbSourceServiceName</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+     getMethod="getXdsQueryServiceName"
+     setMethod="setXdsQueryServiceName">
+      <description>Used internally. Used if AutoPublishSQL is configured! Do not modify (dcm4chee.xds:service=XDSQueryService).
+      </description>
+      <name>XdsQueryServiceName</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE" />
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getTimerIDAutoPublish"
+      setMethod="setTimerIDAutoPublish">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDAutoPublish</name>
+      <type>java.lang.String</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSchedulerServiceName"
+      setMethod="setSchedulerServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>SchedulerServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   <attribute access="read-write" getMethod="getDocTitleCodeListFile" setMethod="setDocTitleCodeListFile">
+      <description>File containing Codes for Document Title for web2 XDS-I export(for KOS object and therefore xds metadata 'title').
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>DocTitleCodeListFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/web2/docTitleCodes.txt"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getEventCodeListFile" setMethod="setEventCodeListFile">
+      <description>File containing Codes for eventCodeList for web2 XDS-I export.
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>EventCodeListFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/web2/eventCodes.txt"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getClassCodeListFile" setMethod="setClassCodeListFile">
+      <description>File containing Codes for ClassCode for web2 XDS-I export.
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>ClassCodeListFile</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/web2/classCodes.txt"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getContentTypeCodeListFile" setMethod="setContentTypeCodeListFile">
+      <description>File containing codes for Content Type Codes for web2 XDS-I export.
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>ContentTypeCodes</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/web2/contentTypeCodes.txt"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getHealthCareFacilityCodeListFile" setMethod="setHealthCareFacilityCodeListFile">
+      <description>File containing codes for Healthcare Facility Type Codes for web2 XDS-I export.
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		A relative path name is resolved relative to dcm4chee_home/server/default/.
+      </description>
+      <name>HealthCareFacilityTypeCode</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-xdsi/web2/healthCareFacilityTypeCodes.txt"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getConfidentialityCodes" setMethod="setConfidentialityCodes">
+      <description>Code list for confidentialityCode for web2 XDS-I export.
+      		Format: [designator&#94;]codevalue&#94;meaning 
+      		Use either newline or semicolon to seperate codes
+      </description>
+      <name>ConfidentialityCodes</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="cc1&#94;confidentialityCode"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write" getMethod="getAuthorPersonMapping" setMethod="setAuthorPersonMapping">
+      <description><![CDATA[Set either a fix authorPerson or a user to authorPerson mapping for web2 XDS-I export.
+					<br/>
+	 				Mapping format: &lt;user&gt;=&lt;authorPerson&gt;<br/>
+	 				Use either newline or semicolon to seperate mappings.
+	 				<br/>
+	 				If '=' is ommited, a fix (global) authorPerson is set]]>
+      </description>
+      <name>AuthorPersonMapping</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE&#94;&#94;&#94;XDSITEST"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getAuthorRoles" setMethod="setAuthorRoles">
+      <description><![CDATA[List of author roles (with display name) for web2 XDS-I export.<br/>
+      				Format: &lt;role&gt;&#94;&lt;displayName&gt;<br/>
+      				Use either newline or semicolon to seperate codes.
+      				]]>
+      </description>
+      <name>AuthorRoles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="stdRole&#94;Standard Role;adminRole&#94;Admin Role"/>
+      </descriptors>
+   </attribute>
+
+   &defaultAttributes;
+
+   <!-- Operations -->
+   <operation impact="ACTION">
+     <description>Performs a NIST test.</description>
+     <name>nistTest</name>
+     <parameter>
+       <description>TestID</description>
+       <name>testID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Performs a simple soap test.</description>
+     <name>sendSOAP</name>
+     <parameter>
+       <description>SOP Instance UID of Key Object</description>
+       <name>kosIuid</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>Metadata properties</description>
+       <name>mdProps</name>
+       <type>java.util.Properties</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Performs a simple soap test.</description>
+     <name>sendSOAP</name>
+     <parameter>
+       <description>SOP Instance UID of Key Object</description>
+       <name>kosIuid</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Performs a simple soap test.</description>
+     <name>exportPDF</name>
+     <parameter>
+       <description>SOP Instance UID of PDF RID document</description>
+       <name>iuid</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>Metadata properties</description>
+       <name>mdProps</name>
+       <type>java.util.Properties</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Performs a simple soap test.</description>
+     <name>exportPDF</name>
+     <parameter>
+       <description>SOP Instance UID of PDF RID document</description>
+       <name>iuid</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Send a SOAP message to DocRepositoryURI.</description>
+     <name>sendSOAP</name>
+     <parameter>
+       <description>Filename of metadata file</description>
+       <name>metadataFilename</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>List of documents (Format:filename|mimiType|docUID[,filename|mimeType|docUID[,..]])</description>
+       <name>docNames</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+   <operation impact="ACTION">
+     <description>Send a SOAP message to DocRepositoryURI.</description>
+     <name>sendSOAP</name>
+     <parameter>
+       <description>Key Object Selection Dataset to submit.</description>
+       <name>kos</name>
+       <type>org.dcm4che.data.Dataset</type>
+     </parameter>
+     <parameter>
+       <description>Metadata Properties</description>
+       <name>mdProps</name>
+       <type>java.util.Properties</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+
+   <operation impact="ACTION">
+     <description>Create a new XDS Folder.</description>
+     <name>createFolder</name>
+     <parameter>
+       <description>Metadata properties</description>
+       <name>mdProps</name>
+       <type>java.util.Properties</type>
+     </parameter>
+     <return-type>boolean</return-type>
+	</operation>
+	
+   <operation impact="INFO">
+     <description>Get the authorPerson for a user.</description>
+     <name>getAuthorPerson</name>
+     <parameter>
+       <description>user</description>
+       <name>user</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <return-type>java.lang.String</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>Join Metadata Properties with properties from Metadata Property File.</description>
+     <name>joinMetadataProperties</name>
+     <parameter>
+       <description>Additional Metadata properties</description>
+       <name>props</name>
+       <type>java.util.Properties</type>
+     </parameter>
+     <return-type>java.util.Properties</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of roles used by web2 XDS-I export.</description>
+     <name>listAuthorRoles</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of document titles used by web2 XDS-I export.</description>
+     <name>listDocTitleCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of Event Type Codes used by web2 XDS-I export.</description>
+     <name>listEventCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of Class Codes used by web2 XDS-I export.</description>
+     <name>listClassCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of Content Type Codes used by web2 XDS-I export.</description>
+     <name>listContentTypeCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of Healthcare Facility Type Codes used by web2 XDS-I export.</description>
+     <name>listHealthCareFacilityTypeCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+   <operation impact="INFO">
+     <description>get list of Confidentiality Codes used by web2 XDS-I export.</description>
+     <name>listConfidentialityCodes</name>
+     <return-type>java.util.List</return-type>
+	</operation>
+	   <operation impact="INFO">
+     <description>clear CodeFileCache (only used by web2 XDS-I export).</description>
+     <name>clearCodeFileCache</name>
+     <return-type>void</return-type>
+	</operation>
+	
+   <operation impact="ACTION">
+     <description>Read the configured Metadata Property File</description>
+     <name>readPropertyFile</name>
+     <return-type>void</return-type>
+	</operation>
+	
+   <operation impact="INFO">
+     <description>Obtain Affinity Domain patient ID for given patient information</description>
+     <name>getAffinityDomainPatientID</name>
+     <parameter>
+       <description>Dataset containing local patient id and issuer of id</description>
+       <name>kos</name>
+       <type>org.dcm4che.data.Dataset</type>
+     </parameter>
+     <return-type>java.lang.String</return-type>
+    </operation>
+	
+   &defaultOperations;
+</mbean>
+

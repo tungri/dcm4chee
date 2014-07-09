@@ -1,0 +1,19 @@
+<mbean name="dcm4chee.archive:service=ContentEditService">
+<attribute name="ReceivingApplication"/>
+<attribute name="ReceivingFacility"/>
+<attribute name="SendingApplication"/>
+<attribute name="SendingFacility"/>
+<attribute name="CalledAETitle"/>
+<attribute name="CallingAETitle"/>
+<attribute name="CreateIANonMoveToTrash"/>
+<attribute name="KeepPriorPatientAfterMerge"/>
+<attribute name="auditEnabled"/>
+<attribute name="LogIUIDsForStudyUpdate"/>
+<attribute name="LogIUIDsForSeriesUpdate"/>
+<attribute name="LogDeletedOnMoveEntities"/>
+<attribute name="HL7SendServiceName"/>
+<attribute name="StudyMgtScuServiceName"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="MppsScpServiceName"/>
+<attribute name="State"/>
+</mbean>

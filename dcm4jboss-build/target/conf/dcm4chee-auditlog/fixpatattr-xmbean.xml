@@ -1,0 +1,4 @@
+<mbean name="dcm4chee.archive:service=FixPatientAttributesService">
+<attribute name="LimitNumberOfPatientsPerTask"/>
+<attribute name="State"/>
+</mbean>

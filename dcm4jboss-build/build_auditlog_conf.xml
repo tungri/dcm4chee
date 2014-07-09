@@ -1,0 +1,480 @@
+<project name="dcm4jboss-build" default="auditlog-conf" >
+
+  <target name="auditlog-conf">
+    <property name="dcm4jboss-hl7.xmdesc"
+              value="../dcm4jboss-hl7/src/etc/conf/xmdesc" />
+    <property name="dcm4jboss-sar.xmdesc"
+              value="../dcm4jboss-sar/src/etc/conf/xmdesc" />
+    <property name="dcm4jboss-wado.xmdesc"
+              value="../dcm4jboss-wado/src/etc/conf/xmdesc" />
+    <property name="dcm4jboss-rid.xmdesc"
+              value="../dcm4jboss-rid/src/etc/conf/xmdesc" />
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-attrsmodscp-xmbean.xml" />
+      <param name="out" value="attrsmodscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=AttributesModificationScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-attrsmodscu-xmbean.xml" />
+      <param name="out" value="attrsmodscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=AttributesModificationScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-auditlog-xmbean.xml" />
+      <param name="out" value="auditlog-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=AuditLogger" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in" value="${dcm4jboss-sar.xmdesc}/dcm4chee-ae-xmbean.xml" />
+      <param name="out" value="ae-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=AE" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-compression-xmbean.xml" />
+      <param name="out" value="compression-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=CompressionService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-consistency-xmbean.xml" />
+      <param name="out" value="consistency-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=ConsistencyService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-contentedit-xmbean.xml" />
+      <param name="out" value="contentedit-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=ContentEditService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-dcmsec-xmbean.xml" />
+      <param name="out" value="dcmsec-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=DicomSecurity" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-dcmsrv-xmbean.xml" />
+      <param name="out" value="dcmsrv-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=DcmServer" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-delstudy-xmbean.xml" />
+      <param name="out" value="delstudy-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=DeleteStudy" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-device-xmbean.xml" />
+      <param name="out" value="device-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=DeviceService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-dfcmd-xmbean.xml" />
+      <param name="out" value="dfcmd-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=dfcmd" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-echo-xmbean.xml" />
+      <param name="out" value="echo-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=ECHOService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-exportmanager-xmbean.xml" />
+      <param name="out" value="exportmanager-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=ExportManager" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-findscu-xmbean.xml" />
+      <param name="out" value="findscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=FindScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-filecopy-xmbean.xml" />
+      <param name="out" value="filecopy-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=FileCopy" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-fixpatattr-xmbean.xml" />
+      <param name="out" value="fixpatattr-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=FixPatientAttributesService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-forward-xmbean.xml" />
+      <param name="out" value="forward-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=Forward" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-forward2-xmbean.xml" />
+      <param name="out" value="forward2-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=Forward2" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-fsmgt-nearline-xmbean.xml" />
+      <param name="out" value="fsmgt-nearline-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=FileSystemMgt,group=NEARLINE_STORAGE" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-fsmgt-online-xmbean.xml" />
+      <param name="out" value="fsmgt-online-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=FileSystemMgt,group=ONLINE_STORAGE" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-fsmgt-lossy-xmbean.xml" />
+      <param name="out" value="fsmgt-lossy-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=FileSystemMgt,group=LOSSY_STORAGE" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-gpwlfeed-xmbean.xml" />
+      <param name="out" value="gpwlfeed-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=GPWLFeed" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-gpwlfeed2-xmbean.xml" />
+      <param name="out" value="gpwlfeed2-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=GPWLFeed2" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-gpwlscp-xmbean.xml" />
+      <param name="out" value="gpwlscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=GPWLScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-gpwlscu-xmbean.xml" />
+      <param name="out" value="gpwlscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=GPWLScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-hpscp-xmbean.xml" />
+      <param name="out" value="hpscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=HPScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-ianscp-xmbean.xml" />
+      <param name="out" value="ianscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=IANScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-ianscu-xmbean.xml" />
+      <param name="out" value="ianscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=IANScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-jms-xmbean.xml" />
+      <param name="out" value="jms-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=JMS" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-keyobject-xmbean.xml" />
+      <param name="out" value="keyobject-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=KeyObjectService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-lossycompression-xmbean.xml" />
+      <param name="out" value="lossycompression-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=LossyCompressionService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mcmscu-xmbean.xml" />
+      <param name="out" value="mcmscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MCMScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-md5check-xmbean.xml" />
+      <param name="out" value="md5check-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MD5CheckService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-movescu-xmbean.xml" />
+      <param name="out" value="movescu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MoveScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mppsemulator-xmbean.xml" />
+      <param name="out" value="mppsemulator-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MPPSEmulator" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mppsscp-xmbean.xml" />
+      <param name="out" value="mppsscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MPPSScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mppsscu-xmbean.xml" />
+      <param name="out" value="mppsscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MPPSScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mwlscp-xmbean.xml" />
+      <param name="out" value="mwlscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MWLFindScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mwlscu-xmbean.xml" />
+      <param name="out" value="mwlscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MWLScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-onswitchfs-xmbean.xml" />
+      <param name="out" value="onswitchfs-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=OnSwitchStorageFileSystem" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-pixquery-xmbean.xml" />
+      <param name="out" value="pixquery-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=PIXQuery" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-ppsexceptionmgt-xmbean.xml" />
+      <param name="out" value="ppsexceptionmgt-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=PPSExceptionMgtService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-ppsscu-xmbean.xml" />
+      <param name="out" value="ppsscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=PPSScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-qrscp-xmbean.xml" />
+      <param name="out" value="qrscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=QueryRetrieveScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-rejectionnotestored-xmbean.xml" />
+      <param name="out" value="rejectionnotestored-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=RejectionNoteStored" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-routeonpps-xmbean.xml" />
+      <param name="out" value="routeonpps-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=RouteOnPPS" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-routeonpps-xmbean.xml" />
+      <param name="out" value="routeonpps-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=RouteOnPPS" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-scheduler-xmbean.xml" />
+      <param name="out" value="scheduler-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=Scheduler" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-sendmail-xmbean.xml" />
+      <param name="out" value="sendmail-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=Sendmail" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-stgcmt-xmbean.xml" />
+      <param name="out" value="stgcmt-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StgCmtScuScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-storescp-xmbean.xml" />
+      <param name="out" value="storescp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StoreScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-studystatus-xmbean.xml" />
+      <param name="out" value="studystatus-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StudyStatus" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-stymgtscp-xmbean.xml" />
+      <param name="out" value="stymgtscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StudyMgtScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-stymgtscu-xmbean.xml" />
+      <param name="out" value="stymgtscu-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StudyMgtScu" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-syncfilestatus-xmbean.xml" />
+      <param name="out" value="syncfilestatus-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=SyncFileStatus" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-tarretriever-xmbean.xml" />
+      <param name="out" value="tarretriever-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=TarRetriever" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-tlsconf-xmbean.xml" />
+      <param name="out" value="tlsconf-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=TLSConfig" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-upgrade2emf-xmbean.xml" />
+      <param name="out" value="upgrade2emf-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=UpgradeToEMF" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-upsfeed-xmbean.xml" />
+      <param name="out" value="upsfeed-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=UPSFeed" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-upsscp-xmbean.xml" />
+      <param name="out" value="upsscp-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=UPSScp" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-wadoprefetch-xmbean.xml" />
+      <param name="out" value="wadoprefetch-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=WADOPrefetch" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-xdsi-xmbean.xml" />
+      <param name="out" value="xdsi-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=XDS-I" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-sar.xmdesc}/dcm4chee-mwlreplica-xmbean.xml" />
+      <param name="out" value="mwlreplica-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MWLReplica" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7adt-xmbean.xml" />
+      <param name="out" value="hl7adt-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=HL7Service,type=ADT" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7orm-xmbean.xml" />
+      <param name="out" value="hl7orm-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=HL7Service,type=ORM" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7oru-xmbean.xml" />
+      <param name="out" value="hl7oru-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=HL7Service,type=ORU" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7mdm-xmbean.xml" />
+      <param name="out" value="hl7mdm-xmbean.xml" />
+      <param name="mbean"
+             value="dcm4chee.archive:service=HL7Service,type=MDM" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7send-xmbean.xml" />
+      <param name="out" value="hl7send-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=HL7Send" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-hl7srv-xmbean.xml" />
+      <param name="out" value="hl7srv-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=HL7Server" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-mpps2orm-xmbean.xml" />
+      <param name="out" value="mpps2orm-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=MPPS2ORM" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-prefetch-xmbean.xml" />
+      <param name="out" value="prefetch-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=Prefetch" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-hl7.xmdesc}/dcm4chee-permission-xmbean.xml" />
+      <param name="out" value="permission-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=StudyPermission" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-rid.xmdesc}/dcm4chee-rid-xmbean.xml" />
+      <param name="out" value="rid-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=RIDService" />
+    </antcall>
+    <antcall target="xslt">
+      <param name="in"
+             value="${dcm4jboss-wado.xmdesc}/dcm4chee-wado-xmbean.xml" />
+      <param name="out" value="wado-xmbean.xml" />
+      <param name="mbean" value="dcm4chee.archive:service=WADOService" />
+    </antcall>
+  </target>
+
+  <target name="xslt">
+    <xslt style="dcm4chee-auditlog.xsl" in="${in}"
+      out="${target.dir}/conf/dcm4chee-auditlog/${out}">
+      <xmlcatalog>
+        <dtd
+         publicId="-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+         location="${jboss.dtd}/jboss_xmbean_1_1.dtd"/>
+      </xmlcatalog>
+      <param name="mbean" expression="${mbean}"/>
+    </xslt>
+  </target>
+</project>

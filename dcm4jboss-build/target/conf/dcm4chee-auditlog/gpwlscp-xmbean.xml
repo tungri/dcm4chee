@@ -1,0 +1,20 @@
+<mbean name="dcm4chee.archive:service=GPWLScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="GeneratePatientID"/>
+<attribute name="IssuerOfPatientIDGeneratedPatientID"/>
+<attribute name="SupplementIssuerOfPatientID"/>
+<attribute name="SupplementByHostName"/>
+<attribute name="SupplementByHostAddress"/>
+<attribute name="PatientMatching"/>
+<attribute name="AcceptedSOPClasses"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="MaximumOperationsInvoked"/>
+<attribute name="MaximumOperationsPerformed"/>
+<attribute name="AccessBlobAsLongVarBinary"/>
+<attribute name="TransactionIsolationLevel"/>
+<attribute name="DcmServerName"/>
+<attribute name="AEServiceName"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>Command based HSM Module for File Copy Service.</description>
+
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.module.HSMCommandModule</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>HSMCommandModule</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" 
+     getMethod="getCopyCommand" 
+     setMethod="setCopyCommand">
+      <description><![CDATA[External command to copy files or tarballs to the destination,
+      with
+         <br>%p will be replaced by the path of file/tarball to copy,
+         <br>%d will be replaced by the destination file system name,
+         <br>%f will be replaced by the destination filename
+         <br>Alternatively a suffix of ':%f' specifies, that the filename
+         on the destination file system shall be returned from the command 
+         in stdout.
+         <br>NONE = write tarball on local accessable file system.
+       ]]>
+      </description>
+      <name>CopyCommand</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+     getMethod="getOutgoingDir" 
+     setMethod="setOutgoingDir">
+      <description><![CDATA[Directory from which files/tarballs shall be copied
+      by external <b>CopyCommand</b>. A relative path name is resolved
+      relative to <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>OutgoingDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-outgoing"/>
+      </descriptors>
+   </attribute>
+      <attribute access="read-write" 
+     getMethod="getFetchCommand" 
+     setMethod="setFetchCommand">
+      <description><![CDATA[External command to fetch files/tarballs from the source
+      file system, with
+         <br />%d will be replaced by the source file system name,
+         <br />%f will be replaced by the path of tarball on the source file system,
+         <br />%p will be replaced by the destination path.
+         <br />NONE = TAR file on local accessable file system.
+         <br />Note: The destination file given with %p always exists and must be overwritten!
+       ]]>
+      </description>
+      <name>FetchCommand</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" 
+     getMethod="getIncomingDir" 
+     setMethod="setIncomingDir">
+      <description><![CDATA[Directory in which files/tarballs shall be retrieved
+      by external <b>FetchCommand</b>. A relative path name is resolved
+      relative to <i>archive-install-directory</i>/server/default/.
+      Not effective if FetchCommand=<code>NONE<code>]]>
+      </description>
+      <name>IncomingDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="tar-incoming"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getQueryCommand"
+      setMethod="setQueryCommand">
+      <description><![CDATA[Command to query status of specific file.
+         <br>%d will be replaced by file system name (directory path/mount point),
+         <br>%f will be replaced by the file path,
+         <br>%i will be replaced by user info associated with the file system.
+       ]]>
+      </description>
+      <name>QueryCommand</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="mmls %i/%f"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPattern"
+      setMethod="setPattern">
+      <description><![CDATA[Regular expression, applied to stdout of
+      command. Result determines if status is changed to MatchFileStatus
+      or NoMatchFileStatus.
+       ]]>
+      </description>
+      <name>Pattern</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value=".*\bArchived\b.*"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCommandFailedFileStatus"
+      setMethod="setCommandFailedFileStatus">
+      <description>New file status, if the query command could not be executed.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>CommandFailedFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TO_ARCHIVE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getNonZeroExitFileStatus"
+      setMethod="setNonZeroExitFileStatus">
+      <description>New file status, if query command returns non-zero exit code.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>NonZeroExitFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="QUERY_HSM_FAILED"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getNoMatchFileStatus"
+      setMethod="setNoMatchFileStatus">
+      <description>New file status, if the query result does NOT match specified pattern.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>NoMatchFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TO_ARCHIVE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMatchFileStatus"
+      setMethod="setMatchFileStatus">
+      <description>New file status, if the query result does match specified pattern.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>MatchFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ARCHIVED"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getFileCopyServiceName"
+      setMethod="setFileCopyServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>FileCopyServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>   
+   
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   
+   <operation impact="ACTION">
+      <description><![CDATA[Prepare File for storage to HSM. Return File Object that is used in FileCopy Service.<br/>
+      ]]></description>
+      <name>prepareHSMFile</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Store given File to HSM. Return filename (fileID)</description>
+      <name>storeHSMFile</name>
+     <parameter>
+       <description>File to store in HSM</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.lang.String</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Called if FileCopy failed.</description>
+      <name>failedHSMFile</name>
+     <parameter>
+       <description>File to store in HSM</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>void</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Fetch a File from HSM.</description>
+      <name>fetchHSMFile</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.io.File</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description>Called from TarRetriever to finish Fetch of a File from HSM. (Cleanup temporary resources)</description>
+      <name>fetchHSMFileFinished</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File object (returned from fetchHSMFile)</description>
+       <name>file</name>
+       <type>java.io.File</type>
+     </parameter>
+      <return-type>void</return-type>
+   </operation>
+
+   <operation impact="ACTION">
+      <description>Query status of file in HSM.</description>
+      <name>queryStatus</name>
+     <parameter>
+       <description>File system ID</description>
+       <name>fsID</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>File path relative to file system (fsID)</description>
+       <name>filePath</name>
+       <type>java.lang.String</type>
+     </parameter>
+     <parameter>
+       <description>User info associated with the file system</description>
+       <name>userInfo</name>
+       <type>java.lang.String</type>
+     </parameter>
+      <return-type>java.lang.Integer</return-type>
+   </operation>
+
+   <operation impact="INFO">
+      <description>Apply pattern to given string</description>
+      <name>applyPattern</name>
+      <parameter>
+        <name>string</name>
+        <type>java.lang.String</type>
+      </parameter>
+      <return-type>boolean</return-type>
+   </operation>
+
+</mbean>
+

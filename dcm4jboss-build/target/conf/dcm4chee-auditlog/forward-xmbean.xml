@@ -1,0 +1,13 @@
+<mbean name="dcm4chee.archive:service=Forward">
+<attribute name="ForwardingRules"/>
+<attribute name="ForwardOnInstanceLevelFromAETitles"/>
+<attribute name="EnablePatientUpdated"/>
+<attribute name="EnableSeriesUpdated"/>
+<attribute name="IgnoreNotLocalRetrievable"/>
+<attribute name="ForwardModifiedToAETitles"/>
+<attribute name="ForwardPriority"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="MoveScuServiceName"/>
+<attribute name="EditContentServiceName"/>
+<attribute name="State"/>
+</mbean>

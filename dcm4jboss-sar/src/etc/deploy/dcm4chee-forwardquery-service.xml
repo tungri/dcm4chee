@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-forward2-service.xml 3310 2007-05-06 23:42:06Z gunterze $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.movescu.ForwardByQueryService"
+    name="dcm4chee.archive:service=ForwardByQuery"
+    xmbean-dd="xmdesc/dcm4chee-forwardquery-xmbean.xml">
+    <depends optional-attribute-name="MoveScuServiceName"
+    	>dcm4chee.archive:service=MoveScu</depends>
+	<depends optional-attribute-name="SchedulerServiceName"
+		>dcm4chee.archive:service=Scheduler</depends>
+	<!--  <depends>jboss.jdbc:datasource=pacsDS,service=metadata</depends> 
+	<depends>jboss.j2ee:jndiName=ejb/MPPSEmulator,service=EJB</depends> -->
+  </mbean>
+</server>

@@ -1,0 +1,9 @@
+<mbean name="dcm4chee.archive:service=TLSConfig">
+<attribute name="EnabledProtocols" type="Security"/>
+<attribute name="NeedClientAuthentication" type="Security"/>
+<attribute name="KeyStoreURL" type="Security"/>
+<attribute name="KeyStorePassword" type="Security"/>
+<attribute name="TrustStoreURL" type="Security"/>
+<attribute name="TrustStorePassword" type="Security"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-prefetch-service.xml 5630 2008-01-02 14:15:30Z gunterze $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee-hl7.jar"/>
+  <mbean code="org.dcm4chex.archive.hl7.HL7CmdService"
+    name="dcm4chee.archive:service=HL7Cmd"
+    xmbean-dd="xmdesc/dcm4chee-hl7cmd-xmbean.xml">
+    <depends optional-attribute-name="HL7ServerName"
+      >dcm4chee.archive:service=HL7Server</depends>
+    <depends optional-attribute-name="TemplatesServiceName"
+      >dcm4chee.archive:service=Templates</depends>
+  </mbean>
+</server>

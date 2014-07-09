@@ -1,0 +1,19 @@
+<mbean name="dcm4chee.archive:service=CompressionService">
+<attribute name="MaxConcurrentCodec"/>
+<attribute name="MaxConcurrentCompression"/>
+<attribute name="MaxConcurrentDecompression"/>
+<attribute name="FileSystemGroupIDs"/>
+<attribute name="MaxBufferedImagePoolSize"/>
+<attribute name="MaxBufferedImagePoolMemory"/>
+<attribute name="TaskInterval"/>
+<attribute name="LimitNumberOfFilesPerTask"/>
+<attribute name="CompressionRules"/>
+<attribute name="VerifyCompression"/>
+<attribute name="TempDirectory"/>
+<attribute name="KeepTempFileIfVerificationFails"/>
+<attribute name="TempFileCleanupInterval"/>
+<attribute name="BufferSize"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="TimerIDCheckFilesToCompress"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server PUBLIC
+    "-//JBoss//DTD MBean Service 4.2//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-service_4_2.dtd">
+
+<!-- $Id: dcm4chee-stgcmt-service.xml 14262 2010-11-03 14:44:55Z javawilli $ -->
+
+<server>
+
+  <mbean code="org.dcm4chex.archive.dcm.stgcmt.StgCmtScuBySeriesStoredService"
+    name="dcm4chee.archive:service=StgCmtScuBySeriesStored"
+    xmbean-dd="xmdesc/dcm4chee-stgcmtscu-stored-xmbean.xml">
+    <depends optional-attribute-name="StgCmtServiceName"
+      >dcm4chee.archive:service=StgCmtScuScp</depends>
+    <depends optional-attribute-name="StoreScpServiceName"
+      >dcm4chee.archive:service=StoreScp</depends>
+  </mbean>
+</server>

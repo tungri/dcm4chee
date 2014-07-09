@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC "-//JBoss//DTD JBOSS XMBEAN 1.1//EN" "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description>DICOM General Purpose Worklist related Service Class Providers</description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager"/>
+   </descriptors>
+
+   <class>org.dcm4chex.archive.dcm.gpwlscp.GPWLScpService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>GPWLScpService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write" getMethod="getCalledAETs" setMethod="setCalledAETs">
+      <description>List of accepted called AE titles, separated by \(backslash). 
+      For example, DCM4CHEE\DCM4CHEE2.
+      </description>
+      <name>CalledAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write" getMethod="getCallingAETs" setMethod="setCallingAETs">
+      <description><![CDATA[
+      	List of accepted calling AE titles, separated by \(backslash).<br/>
+      	ANY = accept any. <br/>
+      	CONFIGURED_AETS = accept any configured AE Title.
+      	]]>       
+      </description>
+      <name>CallingAETitles</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ANY"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getGeneratePatientID"
+      setMethod="setGeneratePatientID">
+      <description><![CDATA[Generate a patient ID from a hash of the patient
+name and birth date and/or study instance uid, if the received GP-PPS N-CREATE
+message contains no patient ID.
+<br>Use ### and/or $$$ as a placeholder for the decimal hash value of patient
+name and/or study instance uid. For example, PACS-##########.
+<br>NONE = do not generate patient IDs..
+<br><i>Issuer of Patient ID</i> for generated <i>Patient IDs</i> will be set to
+the <i>Issuer of Patient ID</i> associated to the GP-PPS SCP (=Called) AE by
+its AE configuration entry. If no <i>Issuer of Patient ID</i> is configured for
+the GP-PPS SCP, <i>Issuer of Patient ID</i> is set to the value configured by
+attribute <b>IssuerOfPatientIDGeneratedPatientID</b>.]]>
+      </description>
+      <name>GeneratePatientID</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="PACS-##########"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getIssuerOfGeneratedPatientID"
+      setMethod="setIssuerOfGeneratedPatientID">
+      <description><![CDATA[<i>Issuer of Patient ID</i> for generated
+<i>Patient ID's</i>, if no <i>Issuer of Patient ID</i> is associated with the
+GP-PPS SCP (=Called) AE by its AE Configuration entry.]]>
+      </description>
+      <name>IssuerOfPatientIDGeneratedPatientID</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DCM4CHEE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementIssuerOfPatientID"
+      setMethod="setSupplementIssuerOfPatientID">
+      <description><![CDATA[Supplement received GP-PPS N-CREATE message containing
+          a <i>Patient ID</i>, but no <i>Issuer of Patient ID</i>, with a value
+          for <i>Issuer of Patient ID</i>, if such is associated with the
+          GP-PPS SCU AE by its AE Configuration entry.]]>
+      </description>
+      <name>SupplementIssuerOfPatientID</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementByHostName"
+      setMethod="setSupplementByHostName">
+      <description><![CDATA[If there is no <i>Issuer of Patient ID</i>
+          associated to the GP-PPS SCU AE by an AE configuration entry with
+          matching AE Title, AE configuration entries which host name is equals
+          to the host name of the GP-PPS SCU AE will be considered to determine
+          the associated <i>Issuer of Patient ID</i>. If there are several
+          AE configuration entries with matching host name with different
+          non-zero values for <i>Issuer of Patient ID</i>, no 
+          <i>Issuer of Patient ID</i> will be supplemented.]]>
+      </description>
+      <name>SupplementByHostName</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isSupplementByHostAddress"
+      setMethod="setSupplementByHostAddress">
+      <description><![CDATA[If there is no <i>Issuer of Patient ID</i>
+          associated to the GP-PPS SCU AE by an AE configuration entry with
+          matching AE Title, AE configuration entries which host name is equals
+          to the IP address of the GP-PPS SCU AE will be considered to determine
+          the associated <i>Issuer of Patient ID</i>. If there are several
+          AE configuration entries with matching host name with different
+          non-zero values for <i>Issuer of Patient ID</i>, no 
+          <i>Issuer of Patient ID</i> will be supplemented.]]>
+      </description>
+      <name>SupplementByHostAddress</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientMatching"
+      setMethod="setPatientMatching">
+       <description><![CDATA[Defines which Patient Attributes in received 
+GP-PPS N-CREATE requests shall be considered for the selection of an existing
+Patient record in the archive.
+<p>
+Format: 'pid'['?']',issuer'['?'][',' ['['] <i>demograhic-matches</i> [']'] ]
+<br/><i>demograhic-matches</i> ::= <i>demograhic-match</i>['|' ...]
+<br/><i>demograhic-match</i> ::= [<i>ignore</i>',']<i>demograhic-fields</i>
+<br/><i>ignore</i> ::= 'ignore("' <i>regular-expression</i> '")'
+<br/><i>demograhic-fields</i> ::= <i>demograhic-field</i>['?'][',' ...]
+<br/><i>demograhic-field</i> ::= 'familyname'['(1)'] | 'givenname'['(1)'] | 'middlename'['(1)'] | 'nameprefix'['(1)'] | 'namesuffix'['(1)'] | birthdate | sex
+<p>
+Multiple alternative <i>demograhic-matches</i> can be specified using '|' as
+delimiter.
+<p>
+Substrings specified by 'ignore("' <i>regular-expression</i> '")' will be ignored for matching patient name
+components.
+<p>
+A '(1)' suffix of the attribute name specifies that only the first character
+need to match.
+<p>
+A question mark('?') after a attribute name specifies that a missing value in
+received DICOM N-CREATE requests will match with any value for that attribute
+in existing Patient Records, as Patient Records with missing values for that
+attribute will match with any value for that attribute in received DICOM GP-PPS
+N-CREATE request. Attribute names without question marks specifies, that DICOM
+GP-PPS N-CREATE requests without values for such attributes will not match any
+existing Patient Record, and Patient Records without values for such attributes
+will not get selected on receive of any DICOM GP-PPS N-CREATE request.
+<p>
+With 'pid<b>?</b>', you have to configure the Patient's family name complex 
+('familyname') as additional matching criterium.
+<p>
+Surrounding <i>demograhic-match</i> by brackets('[]') defines, that
+demographic fields shall *not* be considered for the selection of an existing
+Patient record, if the Patient ID is qualified by an Issuer/Authority in the
+received GP-PPS N-CREATE request *and* in the matching Patient Record.
+<p><b>Warning:</b>Improper configuration may cause GPPPS assignments to wrong patient.<br/>
+<p>Default: <code>pid,issuer?[familyname,givenname,middlename?,birthdate]</code>
+]]>
+      </description>
+      <name>PatientMatching</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid,issuer?[familyname,givenname,middlename?,birthdate]" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAcceptedSOPClasses"
+      setMethod="setAcceptedSOPClasses">
+      <description><![CDATA[
+        List of accepted GPWL related SOP Classes. Use either the SOP Class 
+        UID value, or following defined symbolic names:
+        GeneralPurposeWorklistInformationModelFIND,
+        GeneralPurposeScheduledProcedureStepSOPClass,
+        GeneralPurposePerformedProcedureStepSOPClass,
+        GeneralPurposeWorklistManagementMetaSOPClass,
+        ]]>
+      </description>
+      <name>AcceptedSOPClasses</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+            GeneralPurposeWorklistInformationModelFIND
+            GeneralPurposeScheduledProcedureStepSOPClass
+            GeneralPurposePerformedProcedureStepSOPClass
+            GeneralPurposeWorklistManagementMetaSOPClass
+           "/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAcceptedTransferSyntax"
+      setMethod="setAcceptedTransferSyntax">
+      <description><![CDATA[
+        List of accepted Transfer Syntaxes. Order defines selection preference.
+        Use either the  Transfer Syntaxes UID value or following defined
+        symbolic names: 
+        ImplicitVRLittleEndian,
+        ExplicitVRLittleEndian,
+        DeflatedExplicitVRLittleEndian,
+        ExplicitVRBigEndian
+        ]]>
+      </description>
+      <name>AcceptedTransferSyntax</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+           ExplicitVRLittleEndian
+           ImplicitVRLittleEndian
+         "/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxPDULength"
+      setMethod="setMaxPDULength">
+      <description>Maximum protocol data unit (PDU) package length for receiving PDUs.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumPDULength</name>
+      <type>int</type>
+      <descriptors>
+         <value value="16352"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxOpsInvoked"
+      setMethod="setMaxOpsInvoked">
+      <description>The maximum number of outstanding operations and/or
+      sub-operations it allows the Association-requester to invoke asynchronously.
+      A value of zero indicates an unlimited number of outstanding operations.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumOperationsInvoked</name>
+      <type>int</type>
+      <descriptors>
+         <value value="1"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMaxOpsPerformed"
+      setMethod="setMaxOpsPerformed">
+      <description>The maximum number of outstanding operations and/or
+      sub-operations it allows the Association-requester to perform asynchronously.
+      A value of zero indicates an unlimited number of outstanding operations.
+      Attention: This property should be set to equal values for all DICOM SCP
+      services with same called AE Title(s)! Otherwise it is non-deterministic,
+      which configured value is effective! 
+      </description>
+      <name>MaximumOperationsPerformed</name>
+      <type>int</type>
+      <descriptors>
+         <value value="1"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAccessBlobAsLongVarBinary"
+      setMethod="setAccessBlobAsLongVarBinary">
+      <description>Change JDBC binding for Oracle BLOB's to LONGVARBINARY for
+      accessing attributes stored in BLOB columns of DB records.
+      </description>
+      <name>AccessBlobAsLongVarBinary</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTransactionIsolationLevel"
+      setMethod="setTransactionIsolationLevel">
+      <description>Transaction isolation level for queries. Values can be one of: 
+      DEFAULT|READ_UNCOMMITTED|READ_COMMITTED|REPEATABLE_READ|SERIALIZABLE.
+      </description>
+      <name>TransactionIsolationLevel</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DEFAULT"/>
+      </descriptors>
+   </attribute>
+      <attribute access="read-write"
+      getMethod="getDcmServerName"
+      setMethod="setDcmServerName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>DcmServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getAEServiceName"
+      setMethod="setAEServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>AEServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+   
+   <!-- Notifications -->
+   
+</mbean>
+

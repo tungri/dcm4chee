@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[Check File Status Service.<br />
+   		Check one or more file systems for files with given file status <b>CheckFileStatus</b> and query file stati via
+   		configured HSM Module for update.<br />
+   		By configuring <b>HSMModulServicename</b> to Mapped HSMModule (<i>service=FileCopyHSMModule,type=Mapped</i>) 
+   		the monitored file systems can be of different types (FileBased, Command,..)
+   ]]></description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hsm.SyncFileStatusService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>SyncFileStatusService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getFileSystem"
+      setMethod="setFileSystem">
+      <description><![CDATA[Directory/Mount Points of the monitored File Systems. <br />
+        NONE = disabled this service.]]>
+      </description>
+      <name>MonitoredFileSystem</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getHSMModulServicename"
+      setMethod="setHSMModulServicename">
+      <description><![CDATA[HSM Module to query status of files on HSM systems.<br />
+      	Module 'dcm4chee.archive:service=FileCopyHSMModule,type=Mapped' can be used if more than one HSM modules are active.
+      ]]></description>
+      <name>HSMModulServicename</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="dcm4chee.archive:service=FileCopyHSMModule,type=Command"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMinimumFileAge"
+      setMethod="setMinimumFileAge">
+      <description><![CDATA[Only files created longer ago than the specified intervall
+      ##w (in weeks), ##d (in days), ##h (in hours) are checked for status change.]]>
+      </description>
+      <name>MinimumFileAge</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="1w"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getCheckFileStatus"
+      setMethod="setCheckFileStatus">
+      <description>Checks files with the specified status for status change.
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED
+      </description>
+      <name>CheckFileStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="TO_ARCHIVE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isVerifyTar"
+      setMethod="setVerifyTar">
+      <description><![CDATA[Enables verification of tar files.<br />
+         If enabled the tar file is verified by <br />
+         1) checking MD5 sums of the tar content.<br />
+         2) check if tar file contains the file.<br />
+         Only applicable if filesystem is a tar filesystem!
+      ]]></description>
+      <name>VerifyTar</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="true"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSkipVerifyTarHSMStati"
+      setMethod="setSkipVerifyTarHSMStati">
+      <description><![CDATA[List of HSM stati for which tar verify should be skipped.<br />
+      Enumerated values: DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED or NONE.<br />
+      Optionally HSM status can be overwritten by &lt;hsmStatus&gt;=&lt;newStatus&gt;<br />
+      newStatus can be DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED or DELETE.<br />
+      Only applicable if VeryfyTar is enabled!
+      ]]></description>
+      <name>SkipVerifyTarHSMStati</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NONE"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getInvalidTarStatus"
+      setMethod="setInvalidTarStatus">
+      <description><![CDATA[New file status or DELETE if verification of tar failed.<br />
+      Enumerated values: DELETE or DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED, MD5_CHECK_FAILED<br />
+      DELETE..Delete all file entities related to this invalid tar file.<br /> 
+      Only applicable if VerifyTar is enabled.
+      ]]></description>
+      <name>InvalidTarStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DEFAULT"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getNotInTarStatus"
+      setMethod="setNotInTarStatus">
+      <description><![CDATA[New file status or DELETE if file is not found in related tar file.<br />
+      Enumerated values: DELETE or DEFAULT, TO_ARCHIVE, ARCHIVED, QUERY_HSM_FAILED<br />
+      DELETE..Delete such invalid file entities. 
+      Only applicable if VerifyTar is enabled.
+      ]]></description>
+      <name>NotInTarStatus</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="DEFAULT"/>
+      </descriptors>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getTaskInterval"
+      setMethod="setTaskInterval">
+      <description><![CDATA[Interval in which the File status is checked.
+         <br>Format: 
+		 <br><i>interval</i>!<i>from</i>-<i>to</i> or NEVER
+         <br><i>interval</i> = ##m (in minutes), ##h (in hours).
+         <br><i>from</i> = start hour (0-23) when no file status check should be performed
+         <br><i>to</i> = end hour (0-23) when no file status check should be performed
+         <br>NEVER = disable file status checking
+         <br>Example:<br>1h!9-17 means every hour,
+         synchronize file status, except between the hours of 9:00am and 5:00pm.
+         By setting this type of TaskInterval, you can perform file status synchronisation outside of peak hours.
+         ]]>
+      </description>
+      <name>TaskInterval</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="NEVER"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-only"
+      getMethod="getOldestCreatedTimeOfCheckFileStatus">
+      <description>Creation Date of oldest file on configured filesystem with file status of configured CheckFileStatus.
+      </description>
+      <name>OldestCreatedTimeOfCheckFileStatus</name>
+      <type>java.lang.String</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getLimitNumberOfFilesPerTask"
+      setMethod="setLimitNumberOfFilesPerTask">
+      <description>Maximum number of files which are checked for status change in one task.
+      </description>
+      <name>NumberOfFilesPerTask</name>
+      <type>int</type>
+      <descriptors>
+         <value value="1000"/>
+      </descriptors>
+   </attribute>
+
+   <attribute access="read-only"
+      getMethod="isRunning">
+      <description>Current state if syncFileStatus task is running. Used to avoid concurrency!
+      </description>
+      <name>isRunning</name>
+      <type>boolean</type>
+   </attribute>
+
+   <attribute access="read-write"
+      getMethod="getTimerIDCheckSyncFileStatus"
+      setMethod="setTimerIDCheckSyncFileStatus">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TimerIDCheckSyncFileStatus</name>
+      <type>java.lang.String</type>
+   </attribute>
+   
+   <attribute access="read-write"
+      getMethod="getTarRetrieverName"
+      setMethod="setTarRetrieverName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TarRetrieverName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getSchedulerServiceName"
+      setMethod="setSchedulerServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>SchedulerServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+
+   <operation impact="ACTION">
+      <description><![CDATA[Check files for status changes.<br />
+      	Return number of updated files or -1 if check is already running (Timer).
+      ]]></description>
+      <name>check</name>
+      <return-type>int</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description><![CDATA[Update OldestCreatedTimeOfCheckFileStatus. 
+      This will be done automatically every day after midnight if this service is enabled.
+      ]]></description>
+      <name>updateOldestCreatedTimeOfCheckFileStatus</name>
+      <return-type>void</return-type>
+   </operation>
+   <operation impact="ACTION">
+      <description><![CDATA[Set ARCHIVED flag of Instances where files on given file system has file_status=2 (ARCHIVED).<br /> 
+      This can be used to update instances that are already copied with a version prior to 2.16.0.
+      ]]></description>
+      <name>syncArchivedStatusOfInstances</name>
+    <parameter>
+      <description>File System ID where files must have file status ARCHIVED.
+      </description>
+      <name>fsID</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <parameter>
+      <description><![CDATA[Limit number of files that are processed. (values &lt; 1 --&gt; default of 1000)
+      ]]></description>
+      <name>limit</name>
+      <type>java.lang.String</type>
+    </parameter>
+    <return-type>int</return-type>
+   </operation>
+
+</mbean>
+    

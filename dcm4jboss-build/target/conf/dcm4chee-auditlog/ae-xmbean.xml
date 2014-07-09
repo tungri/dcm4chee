@@ -1,0 +1,10 @@
+<mbean name="dcm4chee.archive:service=AE">
+<attribute name="PortNumbers" type="Network"/>
+<attribute name="DontSaveIP"/>
+<attribute name="AutoUpdateIP"/>
+<attribute name="MaxCacheSize"/>
+<attribute name="UpdateStudiesBatchSize"/>
+<attribute name="OtherServiceAETitleAttributesToUpdate"/>
+<attribute name="EchoServiceName"/>
+<attribute name="State"/>
+</mbean>

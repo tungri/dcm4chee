@@ -1,0 +1,11 @@
+<mbean name="dcm4chee.archive:service=IANScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="MaximumOperationsInvoked"/>
+<attribute name="MaximumOperationsPerformed"/>
+<attribute name="DcmServerName"/>
+<attribute name="AEServiceName"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,15 @@
+<mbean name="dcm4chee.archive:service=StudyMgtScp">
+<attribute name="CalledAETitles"/>
+<attribute name="CallingAETitles"/>
+<attribute name="IgnoreStudyDeleteFailed"/>
+<attribute name="PatientMatching"/>
+<attribute name="StudyMovePatientMatching"/>
+<attribute name="AcceptedTransferSyntax"/>
+<attribute name="MaximumPDULength"/>
+<attribute name="MaximumOperationsInvoked"/>
+<attribute name="MaximumOperationsPerformed"/>
+<attribute name="DcmServerName"/>
+<attribute name="AEServiceName"/>
+<attribute name="ContentEditServiceName"/>
+<attribute name="State"/>
+</mbean>

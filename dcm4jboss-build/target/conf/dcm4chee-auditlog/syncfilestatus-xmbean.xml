@@ -1,0 +1,16 @@
+<mbean name="dcm4chee.archive:service=SyncFileStatus">
+<attribute name="MonitoredFileSystem"/>
+<attribute name="HSMModulServicename"/>
+<attribute name="MinimumFileAge"/>
+<attribute name="CheckFileStatus"/>
+<attribute name="VerifyTar"/>
+<attribute name="SkipVerifyTarHSMStati"/>
+<attribute name="InvalidTarStatus"/>
+<attribute name="NotInTarStatus"/>
+<attribute name="TaskInterval"/>
+<attribute name="NumberOfFilesPerTask"/>
+<attribute name="TimerIDCheckSyncFileStatus"/>
+<attribute name="TarRetrieverName"/>
+<attribute name="SchedulerServiceName"/>
+<attribute name="State"/>
+</mbean>

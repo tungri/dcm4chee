@@ -1,0 +1,5 @@
+<mbean name="dcm4chee.archive:service=dfcmd">
+<attribute name="DFCommand"/>
+<attribute name="DFCommandOption"/>
+<attribute name="State"/>
+</mbean>

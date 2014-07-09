@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-hpscp-service.xml 12275 2009-10-12 07:07:31Z javawilli $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  <mbean code="org.dcm4chex.archive.dcm.hpscp.HPScpService"
+    name="dcm4chee.archive:service=HPScp"
+    xmbean-dd="xmdesc/dcm4chee-hpscp-xmbean.xml">
+    <depends optional-attribute-name="AEServiceName"
+      >dcm4chee.archive:service=AE</depends>
+    <depends>dcm4chee.archive:service=AuditLogger</depends>
+    <depends optional-attribute-name="TLSConfigName"
+      >dcm4chee.archive:service=TLSConfig</depends>
+    <depends optional-attribute-name="DcmServerName"
+      >dcm4chee.archive:service=DcmServer</depends>
+  </mbean>
+</server>

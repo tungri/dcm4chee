@@ -1,0 +1,145 @@
+-- Update DB from dcm4chee-2.14.x to dcm4chee-2.15.x
+
+ALTER TABLE ae ADD (station_name VARCHAR(250) BINARY,
+                   institution VARCHAR(250) BINARY,
+                   department VARCHAR(250) BINARY,
+                   installed BIT,
+                   vendor_data LONGBLOB);
+
+UPDATE ae SET installed=1;
+ALTER TABLE ae MODIFY installed BIT NOT NULL;
+
+CREATE TABLE ups (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    patient_fk        BIGINT,
+    code_fk           BIGINT,
+    ups_iuid          VARCHAR(250) BINARY NOT NULL,
+    ups_tuid          VARCHAR(250) BINARY,
+    adm_id            VARCHAR(250) BINARY,
+    adm_id_issuer_id  VARCHAR(250) BINARY,
+    adm_id_issuer_uid VARCHAR(250) BINARY,
+    ups_label         VARCHAR(250) BINARY NOT NULL,
+    uwl_label         VARCHAR(250) BINARY NOT NULL,
+    ups_start_time    DATETIME NOT NULL,
+    ups_compl_time    DATETIME,
+    ups_state         INTEGER,
+    ups_prior         INTEGER,
+    created_time      DATETIME,
+    updated_time      DATETIME,
+    ups_attrs         LONGBLOB,
+FOREIGN KEY (patient_fk) REFERENCES patient(pk)
+);
+CREATE INDEX ups_patient_fk ON ups(patient_fk);
+CREATE INDEX ups_code_fk ON ups(code_fk);
+CREATE UNIQUE INDEX ups_iuid ON ups(ups_iuid);
+CREATE INDEX ups_tuid ON ups(ups_tuid);
+CREATE INDEX ups_adm_id ON ups(adm_id);
+CREATE INDEX ups_adm_id_issuer_id ON ups(adm_id_issuer_id);
+CREATE INDEX ups_adm_id_issuer_uid ON ups(adm_id_issuer_uid);
+CREATE INDEX ups_label ON ups(ups_label);
+CREATE INDEX uwl_label ON ups(uwl_label);
+CREATE INDEX ups_start_time ON ups(ups_start_time);
+CREATE INDEX ups_compl_time ON ups(ups_compl_time);
+CREATE INDEX ups_state ON ups(ups_state);
+CREATE INDEX ups_prior ON ups(ups_prior);
+CREATE INDEX ups_updated_time ON ups(updated_time);
+
+CREATE TABLE rel_ups_appcode (
+    ups_fk            BIGINT,
+    appcode_fk        BIGINT,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk),
+FOREIGN KEY (appcode_fk) REFERENCES code(pk)
+);
+CREATE INDEX appcode_ups_fk ON rel_ups_appcode(ups_fk);
+CREATE INDEX ups_appcode_fk ON rel_ups_appcode(appcode_fk);
+
+CREATE TABLE rel_ups_devname (
+    ups_fk            BIGINT,
+    devname_fk        BIGINT,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk),
+FOREIGN KEY (devname_fk) REFERENCES code(pk)
+);
+CREATE INDEX devname_ups_fk ON rel_ups_devname(ups_fk);
+CREATE INDEX ups_devname_fk ON rel_ups_devname(devname_fk);
+
+CREATE TABLE rel_ups_devclass (
+    ups_fk            BIGINT,
+    devclass_fk       BIGINT,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk),
+FOREIGN KEY (devclass_fk) REFERENCES code(pk)
+);
+CREATE INDEX devclass_ups_fk ON rel_ups_devclass(ups_fk);
+CREATE INDEX ups_devclass_fk ON rel_ups_devclass(devclass_fk);
+
+CREATE TABLE rel_ups_devloc (
+    ups_fk            BIGINT,
+    devloc_fk         BIGINT,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk),
+FOREIGN KEY (devloc_fk) REFERENCES code(pk)
+);
+CREATE INDEX devloc_ups_fk ON rel_ups_devloc(ups_fk);
+CREATE INDEX ups_devloc_fk ON rel_ups_devloc(devloc_fk);
+
+CREATE TABLE rel_ups_performer (
+    ups_fk            BIGINT,
+    performer_fk      BIGINT,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk),
+FOREIGN KEY (performer_fk) REFERENCES code(pk)
+);
+CREATE INDEX performer_ups_fk ON rel_ups_performer(ups_fk);
+CREATE INDEX ups_performer_fk ON rel_ups_performer(performer_fk);
+
+CREATE TABLE ups_req (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    ups_fk            BIGINT,
+    req_proc_id       VARCHAR(250) BINARY,
+    accession_no      VARCHAR(250) BINARY,
+    confidentiality   VARCHAR(250) BINARY,
+    req_service       VARCHAR(250) BINARY,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk)
+);
+CREATE INDEX ups_req_ups_fk ON ups_req(ups_fk);
+CREATE INDEX ups_req_proc_id ON ups_req(req_proc_id);
+CREATE INDEX ups_req_acc_no ON ups_req(accession_no);
+CREATE INDEX ups_confidentiality ON ups_req(confidentiality);
+CREATE INDEX ups_req_service ON ups_req(req_service);
+
+CREATE TABLE ups_rel_ps (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    ups_fk            BIGINT,
+    sop_iuid          VARCHAR(250) BINARY NOT NULL,
+    sop_cuid          VARCHAR(250) BINARY NOT NULL,
+ FOREIGN KEY (ups_fk) REFERENCES ups(pk)
+);
+CREATE INDEX ups_rel_ps_ups_fk ON ups_rel_ps(ups_fk);
+CREATE INDEX ups_rel_ps_iuid ON ups_rel_ps(sop_iuid);
+CREATE INDEX ups_rel_ps_cuid ON ups_rel_ps(sop_cuid);
+
+CREATE TABLE ups_repl_ps (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    ups_fk            BIGINT,
+    sop_iuid          VARCHAR(250) BINARY NOT NULL,
+    sop_cuid          VARCHAR(250) BINARY NOT NULL,
+ FOREIGN KEY (ups_fk) REFERENCES ups(pk)
+);
+CREATE INDEX ups_repl_ps_ups_fk ON ups_repl_ps(ups_fk);
+CREATE INDEX ups_repl_ps_iuid ON ups_repl_ps(sop_iuid);
+CREATE INDEX ups_repl_ps_cuid ON ups_repl_ps(sop_cuid);
+
+CREATE TABLE ups_subscr (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    ups_fk            BIGINT,
+    aet               VARCHAR(250) BINARY NOT NULL,
+    deletion_lock     BIT NOT NULL,
+FOREIGN KEY (ups_fk) REFERENCES ups(pk)
+);
+CREATE INDEX ups_subscr_ups_fk ON ups_subscr(ups_fk);
+CREATE INDEX ups_deletion_lock ON ups_subscr(deletion_lock);
+CREATE INDEX ups_subscr_aet ON ups_subscr(aet);
+
+CREATE TABLE ups_glob_subscr (
+    pk                BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    aet               VARCHAR(250) BINARY NOT NULL,
+    deletion_lock     BIT NOT NULL
+);
+CREATE UNIQUE INDEX ups_glob_subscr_aet ON ups_glob_subscr(aet);

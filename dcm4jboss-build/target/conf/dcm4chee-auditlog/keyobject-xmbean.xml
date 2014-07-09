@@ -1,0 +1,7 @@
+<mbean name="dcm4chee.archive:service=KeyObjectService">
+<attribute name="CompositeSopClassUIDs"/>
+<attribute name="WaveformSopClassUIDs"/>
+<attribute name="FileSystemGroupID"/>
+<attribute name="StoreScpServiceName"/>
+<attribute name="State"/>
+</mbean>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: dcm4chee-syncfilestatus-service.xml 14767 2011-01-26 12:57:31Z javawilli $ -->
+<server>
+  <classpath codebase="lib" archives="dcm4chee.jar"/>
+  
+  <mbean code="org.dcm4chex.archive.hsm.HSMMigrateService" 
+	  name="dcm4chee.archive:service=HSMMigrate"
+	  xmbean-dd="xmdesc/dcm4chee-hsm-migrate-xmbean.xml">
+	  <depends optional-attribute-name="SchedulerServiceName"
+      >dcm4chee.archive:service=Scheduler</depends>
+      <depends optional-attribute-name="HSMModuleServicename"
+      >dcm4chee.archive:service=FileCopyHSMModule,type=Mapped</depends>
+      <!-- To avoid NameNotBoundExceptions during server startup. MUST be
+	    removed, if the service is NOT deployed in the same jboss instance
+	    as the FileSystemMgt EJB!
+	  -->
+    <depends>jboss.j2ee:jndiName=ejb/FileSystemMgt2,service=EJB</depends>
+    <attribute name="TimerIDHSMMigrate">HSMMigrate</attribute>
+    <attribute name="TimerIDHSMRetry">HSMMigrateRetry</attribute>
+    <attribute name="TimerIDHSMRemove">HSMMigrateRemove</attribute>
+  </mbean>
+
+</server>
+
+

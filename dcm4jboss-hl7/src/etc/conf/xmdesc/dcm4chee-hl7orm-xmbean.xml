@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mbean PUBLIC
+   "-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+   "http://www.jboss.org/j2ee/dtd/jboss_xmbean_1_1.dtd">
+
+<mbean>
+   <description><![CDATA[ORM HL7 Service. Create, update or delete entries of 
+   the Modality Worklist provided by [Modality Worklist SCP] according to 
+   received ORM^O01 messages. Generally, this service is used if the connected 
+   RIS cannot provide the modality worklist.]]>
+   </description>
+   <descriptors>
+      <persistence persistPolicy="OnUpdate"/>
+      <persistence-manager value="org.jboss.mx.persistence.DelegatingPersistenceManager" />
+   </descriptors>
+
+   <class>org.dcm4chex.archive.hl7.ORMService</class>
+
+   <constructor>
+      <description>The default constructor</description>
+      <name>ORMService</name>
+   </constructor>
+
+   <!-- Attributes -->
+   <attribute access="read-write"
+      getMethod="getMessageTypes"
+      setMethod="setMessageTypes">
+      <description>Comma separated list of Message Types handled by this Service.
+      </description>
+      <name>MessageTypes</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="ORM^O01" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getOrderControlOperationMap"
+      setMethod="setOrderControlOperationMap">
+      <description><![CDATA[Maps Order Control (Order Status) or - if no Order
+      Status is specified - Order Control (Result Status) in received ORM
+      to Operation to perform. This controls what happens to worklist items.
+      <p><b>Syntax:</b><br/>
+      map = entry+<br/>
+      entry = orderContol [ '(' orderStatus ')' ] ':' operation<br/>
+      operation = 'NW' (* create worklist item(s) *)<br/>
+          | 'XO' (* update worklist item(s) *)<br/>
+          | 'XO(' ('SCHEDULED' | 'COMPLETED') ')' (* update worklist item(s) and set status *)<br/>
+          | 'CA' (* remove worklist item(s) *)<br/>
+          | 'SC(' ('SCHEDULED' | 'ARRIVED' | 'READY' | 'STARTED' | 'COMPLETED' | 'DISCONTINUED') ')' (* update status of worklist item(s) *)<br/>
+          | 'NOOP' (* no operation *)</p>
+      ]]>
+      </description>
+      <name>OrderControlOperationMap</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="
+         NW:NW
+         XO:XO
+         XO(SC):XO(SCHEDULED)
+		 XO(CM):XO(COMPLETED)
+         CA:CA
+         OC:CA
+         DC:SC(DISCONTINUED)
+         OD:SC(DISCONTINUED)
+         SC(IP):SC(STARTED)
+         SC(CM):SC(COMPLETED)
+         SC(DC):SC(DISCONTINUED)
+         SC(CA):CA
+         SC:NOOP
+         " />
+      </descriptors>
+   </attribute>   
+   <attribute access="read-write"
+      getMethod="isCreateMissingOrderOnStatusChange"
+      setMethod="setCreateMissingOrderOnStatusChange">
+      <description><![CDATA[Create a new order if a 'Status Changed (SC)' order message
+(see <i>OrderControlOperationMap</i>) for an unknown order is received.<br />
+Default behaviour (<i>false</i>) is to ignore such SC messages.
+		]]></description>
+      <name>CreateMissingOrderOnStatusChange</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isUpdateRequestAttributesForXO"
+      setMethod="setUpdateRequestAttributesForXO">
+      <description><![CDATA[Update Request Attributes if XO message is received after instances/MPPS are received.<br />
+                If disabled, Attributes are only updated by NW and CA messages.<br />
+                You should only enable this feature if the Order Filler fully supports linking via ORM messages.<br />
+                Note: Request Attributes will be also updated if the order is created for an update message (XO or SC, 
+                see <i>OrderControlOperationMap</i> and <i>CreateMissingOrderOnStatusChange</i>)
+		]]></description>
+      <name>UpdateRequestAttributesForXO</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="isUpdateDifferentPatientOfExistingStudy"
+      setMethod="setUpdateDifferentPatientOfExistingStudy">
+      <description><![CDATA[Controls the behavior on receive of an order
+message to an already performed procedure (=matching Study Instance UID),
+where the Patient referenced in the HL7 order message differs from the Patient
+referenced in the DICOM Performed Procedure Step message(s) received  before:
+<br/>If <b>UpdateDifferentPatientOfExistingStudy</b>=<tt>true</tt>, already
+existing DICOM Performed Procedure Step(s) and DICOM Study for that order will
+be moved to the Patient referenced in the HL7 order message.
+<br/>If <b>UpdateDifferentPatientOfExistingStudy</b>=<tt>false</tt>, the HL7
+order message will be rejected, if the referenced Patient differs from the
+Patient associated with an already existing Performed Procedure Step(s) for
+that order.]]></description>
+      <name>UpdateDifferentPatientOfExistingStudy</name>
+      <type>boolean</type>
+      <descriptors>
+         <value value="false"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getPatientMatching"
+      setMethod="setPatientMatching">
+      <description><![CDATA[Defines which Patient Attributes in received HL7
+ORM messages are considered for selecting existing Patient records in the
+archive.
+<p>
+Format: 'pid'['?']',issuer'['?'][',' ['['] <i>demograhic-matches</i> [']'] ]
+<br/><i>demograhic-matches</i> ::= <i>demograhic-match</i>['|' ...]
+<br/><i>demograhic-match</i> ::= [<i>ignore</i>',']<i>demograhic-fields</i>
+<br/><i>ignore</i> ::= 'ignore("' <i>regular-expression</i> '")'
+<br/><i>demograhic-fields</i> ::= <i>demograhic-field</i>['?'][',' ...]
+<br/><i>demograhic-field</i> ::= 'familyname'['(1)'] | 'givenname'['(1)'] | 'middlename'['(1)'] | 'nameprefix'['(1)'] | 'namesuffix'['(1)'] | birthdate | sex
+<p>
+Multiple alternative <i>demograhic-matches</i> can be specified using '|' as
+delimiter.
+<p>
+Substrings specified by 'ignore("' <i>regular-expression</i> '")' will be ignored for matching patient name
+components.
+<p>
+A '(1)' suffix of the attribute name specifies that only the first character
+need to match.
+<p>
+A question mark('?') after a field name specifies that a missing value in
+received HL7 ORM messages will match with any value for that field in
+existing Patient Records, as Patient Records with missing values for that field
+will match with any value for that field in received HL7 ORM messages. Field
+names without question marks specifies, that HL7 ORM messages without values
+for such fields will not match any existing Patient Record, and Patient Records
+without values for such fields will not get selected on receive of any HL7 ORM
+message.
+<p>
+Surrounding <i>demograhic-match</i> by brackets('[]') defines, that
+demographic fields shall *not* be considered for the selection of an existing
+Patient record, if the Patient ID is qualified by an Issuer/Authority in the
+HL7 ORM message *and* in the matching Patient Record.
+<p><b>Warning:</b>Improper configuration may cause assignments of Modality Worklist Items 
+to wrong patient.<br/>
+Furthermore, the consideration of demographic fields for the selection of
+existing Patient records disables the update of such Patient Demographics
+attributes by HL7 ORM messages!
+<p>Default: <code>pid,issuer?</code>
+]]>
+      </description>
+      <name>PatientMatching</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="pid,issuer?" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDefaultStationName"
+      setMethod="setDefaultStationName">
+      <description>Scheduled Station Name in generated MWL item,
+          if there is no device configured for the scheduled protocol.
+      </description>
+      <name>DefaultStationName</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="UNKOWN" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDefaultStationAET"
+      setMethod="setDefaultStationAET">
+      <description>Scheduled Station AET in generated MWL item,
+          if there is no device configured for the scheduled protocol.          
+      </description>
+      <name>DefaultStationAET</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="UNKOWN" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDefaultModality"
+      setMethod="setDefaultModality">
+      <description>Modality in generated MWL item, if the ORM message
+          does not contain modality information and if there is also no device
+          configured for the scheduled protocol.
+      </description>
+      <name>DefaultModality</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="OT" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getTemplateDir"
+      setMethod="setTemplateDir">
+      <description><![CDATA[Directory where template file(s) are located.<br />
+      A stylesheet can be placed in this directory or in a sub-directory equal to '&lt;Sending Application&gt;^&lt;Sending Facility&gt;'.<br />
+      A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>TemplateDir</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-hl7"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getStylesheet"
+      setMethod="setStylesheet">
+      <description><![CDATA[Name of stylesheet for HL7 ORM^O01 to DICOM MWL mapping.<br />
+      Base dir: <code>TemplateDir</code><br/>
+      If this name contains a '/' or '\' the configured <code>TemplateDir</code> will be NOT applied! 
+      In this case the name is the full path of the stylesheet and a relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>Stylesheet</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="orm2dcm.xsl" />
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getMWL2StoreConfigDir"
+      setMethod="setMWL2StoreConfigDir">
+      <description><![CDATA[Directory where configuration file(s)
+      for coercion of request attributes in already stored instances are located:
+      if there is a XSL stylesheet "mwl-cfindrsp2cstorerq.xsl" in this directory
+      or in a sub-directory equal to the AE Title of the Storage SCU, attributes
+      of already received instances from this SCU will be coerced according
+      these stylesheet(s) on create or update of worklist item(s).
+      A relative path name is resolved relative to
+      <i>archive-install-directory</i>/server/default/.]]>
+      </description>
+      <name>MWL2StoreConfigDirectory</name>
+      <type>java.lang.String</type>
+      <descriptors>
+         <value value="conf/dcm4chee-ae"/>
+      </descriptors>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getDeviceServiceName"
+      setMethod="setDeviceServiceName">
+      <description>Used internally - do NOT modify.
+      </description>
+      <name>DeviceServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write"
+      getMethod="getHL7ServerName"
+      setMethod="setHL7ServerName">
+      <description>Used internally - do NOT modify.
+      </description>
+      <name>HL7ServerName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   <attribute access="read-write" 
+      getMethod="getTemplatesServiceName"
+      setMethod="setTemplatesServiceName">
+      <description>Used internally. Do NOT modify.
+      </description>
+      <name>TemplatesServiceName</name>
+      <type>javax.management.ObjectName</type>
+   </attribute>
+   &defaultAttributes;
+
+   <!-- Operations -->
+   &defaultOperations;
+</mbean>
