@@ -13,6 +13,9 @@
 	<classpathentry kind="lib" path="lib/xhl7.jar" sourcepath="/xhl7"/>
 	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/jbosssx.jar" sourcepath="/JBOSS_SRC/security/src/main"/>
 	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="/dcm4jboss-sar/lib/dcm4che-audit-2.0.25.jar"/>
+	<classpathentry kind="lib" path="C:/Apps/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Apps/.m2/repository/jboss/web/jbossweb/2.0.1.GA/jbossweb-2.0.1.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Apps/.m2/repository/jboss/jboss-system/4.0.2/jboss-system-4.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/git/dcm4chee-web/dcm4che-svn-18306-dcm4chee-dcm4chee-web-trunk/dcm4chee-web-sar/dcm4chee-web-sar-contentedit/target/classes"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
-import ij.plugin.DICOM;
+//import ij.plugin.DICOM;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -31,12 +31,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CORBA.portable.InputStream;
 
-import com.sun.javafx.geom.Rectangle;
-import com.sun.javafx.tk.Toolkit;
+//import com.sun.javafx.geom.Rectangle;
+//import com.sun.javafx.tk.Toolkit;
 
-import fr.apteryx.imageio.dicom.DicomMetadata;
-import fr.apteryx.imageio.dicom.DicomReader;
-import fr.apteryx.imageio.dicom.Tag;
+//import fr.apteryx.imageio.dicom.DicomMetadata;
+//import fr.apteryx.imageio.dicom.DicomReader;
+//import fr.apteryx.imageio.dicom.Tag;
 //import ij.plugin.DICOM;
 //import java.awt.image.BufferedImage;
 //import java.io.BufferedInputStream;

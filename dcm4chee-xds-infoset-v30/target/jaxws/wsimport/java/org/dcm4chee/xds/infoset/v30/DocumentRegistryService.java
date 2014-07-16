@@ -60,7 +60,7 @@ public class DocumentRegistryService
      */
     @WebEndpoint(name = "DocumentRegistry_Port_Soap11")
     public DocumentRegistryPortType11 getDocumentRegistryPortSoap11(WebServiceFeature... features) {
-        return (DocumentRegistryPortType11)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRegistry_Port_Soap11"), DocumentRegistryPortType11.class, features);
+        return (DocumentRegistryPortType11)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRegistry_Port_Soap11"), DocumentRegistryPortType11.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class DocumentRegistryService
      */
     @WebEndpoint(name = "DocumentRegistry_Port_Soap12")
     public DocumentRegistryPortType12 getDocumentRegistryPortSoap12(WebServiceFeature... features) {
-        return (DocumentRegistryPortType12)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRegistry_Port_Soap12"), DocumentRegistryPortType12.class, features);
+        return (DocumentRegistryPortType12)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRegistry_Port_Soap12"), DocumentRegistryPortType12.class);
     }
 
 }

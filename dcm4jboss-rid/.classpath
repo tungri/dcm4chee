@@ -12,6 +12,6 @@
 	<classpathentry kind="src" path="/dcm4jboss-ejb"/>
 	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/activation.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/dcm4chee-docstore-store"/>
-	<classpathentry kind="lib" path="C:/Users/Satya/.m2/repository/dcm4che/dcm4che-audit/2.0.28/dcm4che-audit-2.0.28.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/dcm4che-audit-2.0.28.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

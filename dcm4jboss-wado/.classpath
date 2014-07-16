@@ -9,6 +9,6 @@
 	<classpathentry kind="var" path="JBOSS_HOME/lib/jboss-system.jar"/>
 	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/servlet-api.jar"/>
 	<classpathentry kind="src" path="/dcm4jboss-ejb"/>
-	<classpathentry kind="lib" path="C:/Users/Satya/.m2/repository/dcm4che/dcm4che-audit/2.0.28/dcm4che-audit-2.0.28.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/dcm4che-audit-2.0.28.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

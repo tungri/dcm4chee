@@ -60,7 +60,7 @@ public class DocumentRepositoryService
      */
     @WebEndpoint(name = "DocumentRepository_Port_Soap11")
     public DocumentRepositoryPortType getDocumentRepositoryPortSoap11(WebServiceFeature... features) {
-        return (DocumentRepositoryPortType)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRepository_Port_Soap11"), DocumentRepositoryPortType.class, features);
+        return (DocumentRepositoryPortType)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRepository_Port_Soap11"), DocumentRepositoryPortType.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class DocumentRepositoryService
      */
     @WebEndpoint(name = "DocumentRepository_Port_Soap12")
     public DocumentRepositoryPortType getDocumentRepositoryPortSoap12(WebServiceFeature... features) {
-        return (DocumentRepositoryPortType)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRepository_Port_Soap12"), DocumentRepositoryPortType.class, features);
+        return (DocumentRepositoryPortType)super.getPort(new QName("urn:ihe:iti:xds-b:2007", "DocumentRepository_Port_Soap12"), DocumentRepositoryPortType.class);
     }
 
 }

@@ -4,16 +4,23 @@
 	<classpathentry kind="src" path="target/xdoclet/java"/>
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="src" path="src/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/dcm4che14"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="src" path="/dcm4che14"/>
 	<classpathentry exported="true" kind="var" path="JBOSS_HOME/server/default/lib/jboss-j2ee.jar" sourcepath="/JBOSS_SRC/j2ee/src/main"/>
-	<classpathentry kind="var" path="JBOSS_HOME/lib/concurrent.jar"/>
-	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/jboss-common-jdbc-wrapper.jar"/>
-	<classpathentry kind="var" path="JBOSS_HOME/lib/jboss-system.jar" sourcepath="/JBOSS_SRC/system/src/main"/>
-	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/jboss.jar"/>
-	<classpathentry kind="var" path="JBOSS_HOME/lib/jboss-common.jar" sourcepath="/JBOSS_SRC/system/src/main"/>
-	<classpathentry kind="var" path="CACTUS_HOME/lib/cactus.core.framework.uberjar.javaEE.14-1.8.1.jar"/>
-	<classpathentry kind="var" path="CACTUS_HOME/lib/junit-3.8.2.jar"/>
+	<classpathentry exported="true" kind="var" path="JBOSS_HOME/lib/concurrent.jar"/>
+	<classpathentry exported="true" kind="var" path="JBOSS_HOME/server/default/lib/jboss-common-jdbc-wrapper.jar"/>
+	<classpathentry exported="true" kind="var" path="JBOSS_HOME/lib/jboss-system.jar" sourcepath="/JBOSS_SRC/system/src/main"/>
+	<classpathentry exported="true" kind="var" path="JBOSS_HOME/server/default/lib/jboss.jar"/>
+	<classpathentry exported="true" kind="var" path="JBOSS_HOME/lib/jboss-common.jar" sourcepath="/JBOSS_SRC/system/src/main"/>
+	<classpathentry exported="true" kind="var" path="CACTUS_HOME/lib/cactus.core.framework.uberjar.javaEE.14-1.8.1.jar"/>
+	<classpathentry exported="true" kind="var" path="CACTUS_HOME/lib/junit-3.8.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/etc/common/lib/dcm4che-soundex-2.0.25.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/git/dcm4chee-web/dcm4chee-cleanup/dcm4chee-cleanup-ejb/target/dcm4chee-cleanup-ejb-3.0.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/apache-logging-log4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/dcm4che.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/javax.ejb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/jboss-3.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/jboss-common-jdbc-wrapper.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/jboss-system-4.0.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

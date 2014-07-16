@@ -46,7 +46,7 @@ import java.util.Set;
 
 /**
  * 
- * @author franz.willer@gwi-ag.com
+ * @author Satya
  * @version $Revision: 11261 $ $Date: 2009-05-08 08:15:19 +0000 (Fri, 08 May 2009) $
  * @since 13.04.2006
  */
